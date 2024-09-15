@@ -1,0 +1,64 @@
+% Não será utilizado no momento. Versão antiga da seção 2.3
+
+\subsection{Técnicas de ajuste de hiper-parâmetros}\label{subsec:tecnicas_de_ajuste_de_hps}
+
+Problemas de otimização de hiper-parâmetros podem ser solucionadas por meio de diversas técnicas, dependendo do tipo dos hiper-parâmetros e do modelo de aprendizado de máquina ao qual eles estão associados. \citeonline{automated_architecture_design_for_deep_neural_networks} explica que, em pesquisas científicas envolvendo otimização de modelos de aprendizado de máquina, a técnica comumente usada é a testagem manual. Os pesquisadores manualmente testam combinações diferentes baseando-se em sua própria experiência e intuição a fim de encontrarem a configuração que gera os melhores resultados.
+
+Segundo \citeonline{a_comparative_study_of_blackbox_optimization} uma grande quantidade de hiper-parâmetros que interagem entre si de forma não linear e o tempo necessário para treinar os modelos com cada configuração de hiper-parâmetros escolhida tornam a testagem manual uma tarefa inviável. Por conta disso, muitas técnicas de ajustes automático de hiper-parâmetros foram desenvolvidas. Nas subseções seguintes serão descritos brevemente algumas das técnicas disponíveis~\cite{on_hyperparameter_optimization_of_machine_learning_algorithms}.
+
+\subsubsection{\textit{Grid Search}}\label{subsubsec:grid_search}
+
+É a técnica mais simples de ajuste automático de hiper-parâmetros, em que todas as combinações possíveis de hiper-parâmetros são testadas. Sua desvantagem é que ela pode ser computacionalmente muito cara, já que a quantidade de configurações possíveis segue uma relação exponencial com a quantidade de hiper-parâmetros. Uma alternativa a essa técnica é a \textit{Random Search}, em que configurações de hiper-parâmetros são selecionadas e testadas de forma aleatória enquanto os recursos disponibilizados para a tarefa não se esgotarem, e então retorna a que gerou os melhores resultados.
+
+Para que essa técnica seja utilizada de forma mais eficiente é possível processar de forma paralela o conjunto de configurações possíveis, e também restringir as buscas em regiões que contém as configurações que tornaram o modelo mais performático.
+
+\subsubsection{Otimização baseada em Gradientes}\label{otimizacao_baseada_em_gradiente}
+
+Para encontrar a melhor configuração de hiper-parâmetros, é possível calcular o gradiente das variáveis em um ponto aleatório e então buscar por novas configurações na direção oposta a do vetor gradiente com o maior módulo. Dessa forma, uma configuração ótima dentre um subconjunto de todas as configurações possíveis sempre é encontrada e, se a função objetivo tiver uma imagem convexa, a configuração ótima encontrada será global.
+
+Como já foi dito anteriormente, a aplicabilidade de métodos numéricos em problemas de otimização de hiper-parâmetros é muito limitada, visto que eles só podem otimizar hiper-parâmetros que assumem valores contínuos, e só convergem para uma configuração ótima se a função objetivo for convexa, o que geralmente não é o caso. Entretanto, dentro dessas restrições, a otimização baseada em gradientes converge para uma configuração ótima de forma mais rápida do que técnicas como \textit{Grid Search} e \textit{Random Search}, por exemplo, para encontrar a melhor taxa de aprendizado em Redes Neurais.
+
+\subsubsection{Otimização Bayesiana}\label{otimizacao_bayesiana}
+
+
+Com a atualização do modelo substituto após cada seção de treino, com base em todo o histórico de resultados obtidos em configurações anteriores, a configuração ótima global pode ser encontrada em poucas interações. Assim, a Otimização Bayesiana é mais eficiente do que a \textit{Grid Search} e \textit{Random Search}, inclusive do ponto de vista computacional, já que executar o modelo substituto é menos custoso do que executar a função objetivo. Sua única desvantagem é que ela é facilmente paralelizada.
+
+\subsubsection{\textit{Successive Halving}}\label{successive_halving}
+
+Nesta técnica, o conjunto de todas as configurações de hiper-parâmetros é dividida em n partes iguais e cada uma é testada uma parcela dos recursos computacionais disponíveis. Por exemplo, se $B$ representa os recursos disponíveis, então cada subconjunto de configurações de hiper-parâmetros será avaliado com uma quantidade de recursos $b = b / n$. Após cada iteração, metade das configurações de hiper-parâmetros que geraram resultados ruins é eliminada, e a metade restante é passada para a próxima iteração com o dobro de recursos $(b_{i+1} = 2b_{i})$. O processo é repetido até que a configuração ótima seja obtida.
+
+No geral, ela é mais eficiente do que a \textit{Random Search}, mas seus resultados são dependentes de um equilíbrio entre a quantidade de configurações a serem testadas e os recursos alocados para cada a avaliação de cada uma delas.
+
+\subsubsection{\textit{Hyperband}}\label{hyperband}
+
+Na técnica \textit{Hyperband}, introduzida por \citeonline{hyperband} para determinar um equilíbrio entre a quantidade $n$ de configurações de hiper-parâmetros a serem testadas e a quantidade $b$ de recursos empregados para cada a avaliação de cada uma, múltiplos valores de $n$ são testados para uma quantidade de recursos totais $B$ fixa, de forma que $b \in [b_{min}, b_{max}] $ e, para cada valor possível de $n$, o algoritmo \textit{Successive Halving} é aplicado.
+
+\subsubsection{Algoritmo Genético}\label{algoritmos_geneticos}
+
+O Algoritmo Genético é um dos algoritmos baseados em meta-heurísticas e na Teoria da Evolução. Ela supõe, resumidamente, que indivíduos com maior adaptabilidade ao ambiente em que estão inseridos tem a maior probabilidade de se reproduzirem e passarem as suas características para as próximas gerações. Tais características são comunicadas através do código genético de cada indivíduo, que é dividido entre um número fixo de cromossomos. Ele pode sofrer mutações que possivelmente resultaram em uma melhoria ou defasagem na capacidade de suportar as adversidades do meio. Aliado a isso, durante a reprodução, existe a chance de permutações aleatórias entre os genes que serão herdados dos pais, o que aumenta ainda mais a variabilidade genética.
+
+Quando o Algoritmo Genético é aplicado a problemas de otimização de hiper-parâmetros, um indivíduo representa uma configuração específica de hiper-parâmetros. Cada cromossomo representa um dos hiper-parâmetros envolvidos, e cada bit do código binário do valor que será atribuído ao hiper-parâmetro é considerado um gene do cromossomo. Dessa forma, operações de mutação e permutação genética (também conhecida como \textit{crossing over}) podem ser realizadas alterando os valores dos bits. Uma população de indivíduos representa um conjunto de possíveis configurações de hiper-parâmetros, selecionadas de forma aleatória dentre todas as possíveis.
+
+A partir de uma população inicial, cada indivíduo é testado para verificar se a configuração de hiper-parâmetros assegura um bom desempenho para o modelo. Em seguida, uma parte dos indivíduos que obtiveram um desempenho inferior serão eliminados e novos indivíduos serão gerados a partir de combinações dos cromossomos dos indivíduos restantes de forma que o tamanho da população permaneça constante, com a possibilidade de permutações e mutações.
+
+Uma vantagem de se utilizar o algoritmo genético em problemas de otimização de hiper-parâmetros é que não é necessário um conhecimento profundo das relações entre os hiper-parâmetros e o modelo de aprendizado de máquina, pois, mesmo que a população seja inicializada com configurações arbitrárias de hiper-parâmetros a seleção, mutações e permutações genéticas reduzem a possibilidade de uma configuração ótima ou aproximada não ser encontrada, mesmo que isso exija mais iterações.
+
+A principal limitação do algoritmo genético é que ele introduz novos hiper-parâmetros para o problema, como as taxas de mutação e permutação genética, a função que será usada para avaliar o desempenho de cada indivíduo e o tamanho da população.
+
+\subsubsection{\textit{Particle Swarm Optimization}}\label{particle_swarm_optimization}
+
+\textit{Particle swarm optimization} \cite{parameter_selection_in_pso} também é uma técnica de otimização baseada na Teoria da Evolução, porém, diferente do algoritmo genético, ela busca simular os comportamento social dos indivíduos. Ao invés de utilizar operadores genéticos, cada partícula (indivíduo, ou configuração de hiper-parâmetros) é representada por um ponto em espaço de $D$ dimensões. A $i$-ésima partícula é representada por $X_{i} = (x_{i1}, x_{i2},\ldots,x_{iD})$, sua melhor posição (que gerou os melhores resultados) é representada por $P_{i} = (p_{i1}, p_{i2},\ldots,p_{iD})$ e a sua velocidade atual é representada por $V_{i} = (v_{i1}, v_{i2},\ldots,v_{iD})$. O índice da partícula que obteve o melhor desempenho dentre as demais é representado pelo símbolo $g$. Em cada iteração a velocidade e posição de cada partícula são atualizados através das seguintes equações
+
+\begin{equation}\label{eq:pso_v}
+    v_{id} = w \cdot v_{id} + c_{1} \cdot rand() \cdot (p_{id} - x_{id}) + c_{2} \cdot Rand() \cdot (p_{gd} - x_{id})
+\end{equation}
+
+\begin{equation}\label{eq:pso_x}
+    x_{id} = x_{id} + v_{id}
+\end{equation}
+
+em que $c_{1}$ e $c_{2}$ são constantes positivas, $rand()$ e $Rand()$ são duas funções que retornam números aleatórios dentro do intervalo $[0,1]$, e $w$ é o peso de inércia. A Equação~\eqref{eq:pso_v} a nova velocidade da partícula com base na sua velocidade atual, a distância entre ela e a sua melhor posição até o momento e a distância entre ela e a melhor posição dentre todas as observadas pelo grupo. Em seguida, a partícula se desloca para a posição seguinte de acordo com a Equação~\eqref{eq:pso_x}.
+
+O parâmetro de inércia $w$ serve para balancear os impactos da melhor posição da partícula e da melhor posição global na velocidade. Um maior valor para $w$ favorece a exploração de novas regiões no espaço de configurações possíveis, , enquanto menores valores favorecem a exploração em regiões ao redor de cada partícula e a descoberta de pontos ótimos locais. Dessa forma, ele influência diretamente o número de iterações necessárias para se encontrar a configuração ótima global, e deve ser otimizado.
+
+\citeonline{on_hyperparameter_optimization_of_machine_learning_algorithms} afirma que a principal desvantagem da técnica \textit{Particle Swarm Optimization} é que ela requer uma inicialização adequada para que um ótimo global seja encontrado, ao invés de somente ótimos locais, especialmente para hiper-parâmetros discretos. Entretanto, em comparação com o algoritmo genético, ela é mais fácil de ser implementada, já que o compartilhamento de informações ocorre somente entre a melhor partícula e as demais, isso é, em um fluxo unidirecional. Isso também implica que ele pode ser facilmente paralelizado.
