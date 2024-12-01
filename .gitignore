@@ -307,3 +307,6 @@ TSWLatexianTemp*
 
 # Datasets
 **/*.csv
+
+# Python virtual environment
+.venv/
