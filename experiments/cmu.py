@@ -28,23 +28,35 @@ class CMUDatabase:
     def user_keys(self) -> set[str]:
         return self._user_keys
 
-    def user_training_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+    def one_vs_one_training_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
         vectors = self.training_df_query(lambda df: df[df['subject'] == user_subject])
         labels = create_labels(vectors, GENUINE_LABEL)
         return (vectors, labels)
     
-    def other_training_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
-        others_typing_samples = self.training_df_query(lambda df: df[df['subject'] != user_subject])
-        vectors = others_typing_samples.sample(n=50, random_state=RANDOM_STATE)
-        labels = create_labels(vectors, IMPOSTOR_LABEL)
-        return (vectors, labels)
-
-    def user_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+    def one_vs_one_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
         vectors = self.test_df_query(lambda df: df[df['subject'] == user_subject])
         labels = create_labels(vectors, GENUINE_LABEL)
         return (vectors, labels)
+
+    def one_vs_rest_training_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+        user_vectors = self.training_df_query(lambda df: df[df['subject'] == user_subject])
+        user_vectors_len = data_frame_length(user_vectors)
+        others_typing_samples = self.training_df_query(lambda df: df[df['subject'] != user_subject])
+        other_vectors = others_typing_samples.sample(n=user_vectors_len, random_state=RANDOM_STATE)
+        df = pd.concat([user_vectors, other_vectors])
+        labels = create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL)
+        return (df, labels)
+
+    def one_vs_rest_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+        user_vectors = self.test_df_query(lambda df: df[df['subject'] == user_subject])
+        other_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject])
+        df = pd.concat([user_vectors, other_vectors])
+        labels = create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL)
+        return (df, labels)
+
+    def one_vs_one_attacks_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+        attack_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject]) 
+        labels = create_labels(attack_vectors, IMPOSTOR_LABEL)
+        return (attack_vectors, labels)
+
     
-    def other_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
-        vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject])
-        labels = create_labels(vectors, IMPOSTOR_LABEL)
-        return (vectors, labels)

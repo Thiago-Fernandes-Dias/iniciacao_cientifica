@@ -14,8 +14,8 @@ y_training: dict[str, list[int]] = {}
 y_test: dict[str, list[int]] = {}
 
 for uk in cmu_database.user_keys():
-    X_training[uk], y_training[uk] = cmu_database.user_training_rows(uk)
-    X_test[uk], y_test[uk] = cmu_database.user_test_rows(uk)
+    X_training[uk], y_training[uk] = cmu_database.one_vs_one_training_rows(uk)
+    X_test[uk], y_test[uk] = cmu_database.one_vs_one_test_rows(uk)
 
 one_class_estimators_map: dict[str, OneClassSVM] = {}
 
@@ -37,7 +37,7 @@ print(f"Acurácia dos modelos One-Vs-One: {average_acc}")
 user_model_far_on_attack_samples_map: dict[str, float] = {}
 
 for uk in cmu_database.user_keys():
-    X_attacks, y_attacks = cmu_database.other_test_rows(uk)
+    X_attacks, y_attacks = cmu_database.one_vs_one_attacks_rows(uk)
     predictions = one_class_estimators_map[uk].predict(X_attacks).flatten().tolist()
     user_model_far_on_attack_samples_map[uk] = accuracy_score(y_attacks, predictions)
 
@@ -48,34 +48,19 @@ print(f"FAR dos modelos One-Vs-One: {average_far}")
 # Divisão dos dados: (80:20), sendo que em cada conjunto 50% dos dados são do 
 # próprio usuário e 50% são registros aleatórios de outros usuários 
 
-X_user_training: dict[str, pd.DataFrame] = {}
-X_user_test: dict[str, pd.DataFrame] = {}
-y_user_training: dict[str, list[int]] = {}
-y_user_test: dict[str, list[int]] = {}
-X_other_training: dict[str, pd.DataFrame] = {}
-X_other_test: dict[str, pd.DataFrame] = {}
-y_other_training: dict[str, list[int]] = {}
-y_other_test: dict[str, list[int]] = {}
-
 for uk in cmu_database.user_keys():
-    X_user_training[uk], y_user_training[uk] = cmu_database.user_training_rows(uk)
-    X_other_training[uk], y_other_training[uk] = cmu_database.other_training_rows(uk)
-    X_user_test[uk], y_user_test[uk] = cmu_database.user_test_rows(uk)
-    X_other_test[uk], y_other_test[uk] = cmu_database.other_test_rows(uk)
+    X_training[uk], y_training[uk] = cmu_database.one_vs_rest_training_rows(uk)
+    X_test[uk], y_test[uk] = cmu_database.one_vs_rest_test_rows(uk)
 
 two_class_estimators_map: dict[str, RandomForestClassifier] = {}
 two_class_acc_map: dict[str, float] = {}
 
 for uk in cmu_database.user_keys():
-    X = pd.concat([X_user_training[uk], X_other_training[uk]])
-    y = y_user_training[uk] + y_other_training[uk]
-    two_class_estimators_map[uk] = RandomForestClassifier().fit(X, y)
+    two_class_estimators_map[uk] = RandomForestClassifier().fit(X_training[uk], y_training[uk])
 
 for uk in cmu_database.user_keys():
-    X_test = pd.concat([X_user_test[uk], X_other_test[uk]])
-    predictions = two_class_estimators_map[uk].predict(X_test)
-    y_true = y_user_test[uk] + y_other_test[uk]
-    two_class_acc_map[uk] = balanced_accuracy_score(y_true, predictions)
+    predictions = two_class_estimators_map[uk].predict(X_test[uk])
+    two_class_acc_map[uk] = balanced_accuracy_score(y_test[uk], predictions)
 
 average_acc = np.average(list(two_class_acc_map.values()))
 
