@@ -5,8 +5,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import OneClassSVM
 from sklearn.metrics import balanced_accuracy_score, accuracy_score
 
-TEST_SIZE = 0.2
-IMPOSTOR_SUBJECT = 'other'
 RANDOM_STATE=42
 
 cmu: pd.DataFrame = pd.read_csv('datasets/cmu/DSL-StrongPasswordData.csv')
@@ -60,23 +58,23 @@ print(f"FAR dos modelos One-Vs-One: {average_far}")
 
 X_user_training: dict[str, pd.DataFrame] = {}
 X_user_test: dict[str, pd.DataFrame] = {}
-y_user_training: dict[str, list[str]] = {}
-y_user_test: dict[str, list[str]] = {}
+y_user_training: dict[str, list[int]] = {}
+y_user_test: dict[str, list[int]] = {}
 X_other_training: dict[str, pd.DataFrame] = {}
 X_other_test: dict[str, pd.DataFrame] = {}
-y_other_training: dict[str, list[str]] = {}
-y_other_test: dict[str, list[str]] = {}
+y_other_training: dict[str, list[int]] = {}
+y_other_test: dict[str, list[int]] = {}
 
 for uk in user_keys:
     other_keys = user_keys - {uk}
     X_user_training[uk] = cmu_training_df[cmu_training_df['subject'] == uk].drop(columns=drop_columns)
     X_other_training[uk] = cmu_training_df[(cmu_training_df['subject'] != uk)].sample(n=X_user_training[uk].shape[0], random_state=RANDOM_STATE).drop(columns=drop_columns) 
-    y_other_training[uk] = [IMPOSTOR_SUBJECT] * X_other_training[uk].shape[0]
-    y_user_training[uk] = [uk] * X_user_training[uk].shape[0]
+    y_other_training[uk] = [0] * X_other_training[uk].shape[0]
+    y_user_training[uk] = [1] * X_user_training[uk].shape[0]
     X_user_test[uk] =  cmu_test_df[cmu_test_df['subject'] == uk].drop(columns=drop_columns)
     X_other_test[uk] = cmu_test_df[cmu_test_df['subject'] != uk].drop(columns=drop_columns)
-    y_user_test[uk] = [uk] * X_user_test[uk].shape[0]
-    y_other_test[uk] = [IMPOSTOR_SUBJECT] * X_other_test[uk].shape[0]
+    y_user_test[uk] = [1] * X_user_test[uk].shape[0]
+    y_other_test[uk] = [0] * X_other_test[uk].shape[0]
 
 two_class_estimators_map: dict[str, RandomForestClassifier] = {}
 two_class_acc_map: dict[str, float] = {}
