@@ -4,8 +4,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import OneClassSVM
 from sklearn.metrics import balanced_accuracy_score, accuracy_score
-
-RANDOM_STATE=42
+from cmu import *
 
 cmu: pd.DataFrame = pd.read_csv('datasets/cmu/DSL-StrongPasswordData.csv')
 cmu_training_df = cmu[cmu['sessionIndex'] == 1]
@@ -13,16 +12,16 @@ cmu_test_df = cmu[cmu['sessionIndex'] != 1]
 drop_columns = ['subject', 'sessionIndex', 'rep']
 user_keys: set[str] = set(cmu["subject"].drop_duplicates().tolist())
 
+cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
+
 X_training: dict[str, pd.DataFrame] = {}
 X_test: dict[str, pd.DataFrame] = {}
-y_training: dict[str, list[str]] = {}
-y_test: dict[str, list[str]] = {}
+y_training: dict[str, list[int]] = {}
+y_test: dict[str, list[int]] = {}
 
 for uk in user_keys:
-    X_training[uk] = cmu_training_df[cmu_training_df['subject'] == uk].drop(columns=drop_columns)
-    y_training[uk] = [uk] * X_training[uk].shape[0]
-    X_test[uk] = cmu_test_df[cmu_test_df['subject'] == uk].drop(columns=drop_columns)
-    y_test[uk] = [uk] * X_test[uk].shape[0]
+    X_training[uk], y_training[uk] = cmu_database.user_training_rows(uk)
+    X_test[uk], y_test[uk] = cmu_database.user_test_rows(uk)
 
 one_class_estimators_map: dict[str, OneClassSVM] = {}
 
@@ -44,10 +43,9 @@ print(f"Acurácia dos modelos One-Vs-One: {average_acc}")
 user_model_far_on_attack_samples_map: dict[str, float] = {}
 
 for uk in user_keys:
-    attack_vecs = cmu_test_df[cmu_test_df['subject'] != uk].drop(columns=drop_columns)
-    y_true = [-1] * attack_vecs.shape[0]
-    predictions = one_class_estimators_map[uk].predict(attack_vecs).flatten().tolist()
-    user_model_far_on_attack_samples_map[uk] = accuracy_score(y_true, predictions)
+    X_attacks, y_attacks = cmu_database.other_test_rows(uk)
+    predictions = one_class_estimators_map[uk].predict(X_attacks).flatten().tolist()
+    user_model_far_on_attack_samples_map[uk] = accuracy_score(y_attacks, predictions)
 
 average_far = np.average(list(user_model_far_on_attack_samples_map.values()))
 print(f"FAR dos modelos One-Vs-One: {average_far}")
@@ -66,15 +64,10 @@ y_other_training: dict[str, list[int]] = {}
 y_other_test: dict[str, list[int]] = {}
 
 for uk in user_keys:
-    other_keys = user_keys - {uk}
-    X_user_training[uk] = cmu_training_df[cmu_training_df['subject'] == uk].drop(columns=drop_columns)
-    X_other_training[uk] = cmu_training_df[(cmu_training_df['subject'] != uk)].sample(n=X_user_training[uk].shape[0], random_state=RANDOM_STATE).drop(columns=drop_columns) 
-    y_other_training[uk] = [0] * X_other_training[uk].shape[0]
-    y_user_training[uk] = [1] * X_user_training[uk].shape[0]
-    X_user_test[uk] =  cmu_test_df[cmu_test_df['subject'] == uk].drop(columns=drop_columns)
-    X_other_test[uk] = cmu_test_df[cmu_test_df['subject'] != uk].drop(columns=drop_columns)
-    y_user_test[uk] = [1] * X_user_test[uk].shape[0]
-    y_other_test[uk] = [0] * X_other_test[uk].shape[0]
+    X_user_training[uk], y_user_training[uk] = cmu_database.user_training_rows(uk)
+    X_other_training[uk], y_other_training[uk] = cmu_database.other_training_rows(uk)
+    X_user_test[uk], y_user_test[uk] = cmu_database.user_test_rows(uk)
+    X_other_test[uk], y_other_test[uk] = cmu_database.other_test_rows(uk)
 
 two_class_estimators_map: dict[str, RandomForestClassifier] = {}
 two_class_acc_map: dict[str, float] = {}
