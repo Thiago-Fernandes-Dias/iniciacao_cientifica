@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.svm import OneClassSVM
-from sklearn.metrics import balanced_accuracy_score, accuracy_score
+from sklearn.metrics import balanced_accuracy_score, accuracy_score, recall_score
 from cmu import *
 
 cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
@@ -22,7 +22,28 @@ one_class_estimators_map: dict[str, OneClassSVM] = {}
 
 params_grid = [
     {
-        'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+        'kernel': ['poly'],
+        'degree': range(1, 4),
+        'gamma': ['scale', 'auto', .1, .01, .001],
+        'coef0': float_range(0, 5, .25),
+        # Causando falhas em alguns fits -> 'nu': [.1, .25, .5, .75, 1], 
+        'cache_size': [4096]
+    },
+    {
+        'kernel': ['linear'],
+        'cache_size': [4096],
+    },
+    {
+        'kernel': ['sigmoid'],
+        'gamma': ['scale', 'auto', .1, .01, .001],
+        'coef0': float_range(0, 5, .25),
+        # 'nu': [.1, .25, .5, .75, 1], 
+        'cache_size': [4096]
+    },
+    {
+        'kernel': ['rbf'],
+        'gamma': ['scale', 'auto', .1, .01, .001],
+        # 'nu': [.1, .25, .5, .75, 1], 
         'cache_size': [4096]
     }
 ]
@@ -35,14 +56,18 @@ for uk in cmu_database.user_keys():
     one_class_estimators_map[uk] = fitted_gs.best_estimator_
 
 user_model_acc_on_genuine_samples_map: dict[str, float] = {}
+user_model_recall_map: dict[str, float] = {}
 
 for uk in cmu_database.user_keys():
     predictions = one_class_estimators_map[uk].predict(X_test[uk]).flatten().tolist()
     user_model_acc_on_genuine_samples_map[uk] = accuracy_score(y_test[uk], predictions)
+    user_model_recall_map[uk] = recall_score(y_test[uk], predictions, average='micro')
 
 average_acc = np.average(list(user_model_acc_on_genuine_samples_map.values()))
+average_recall = np.average(list(user_model_recall_map.values()))
 
 print(f"Acurácia dos modelos One-Vs-One: {average_acc}")
+print(f"Recall dos modelos One-Vs-One: {average_recall}")
 
 # Ataques aos modelos One-Vs-One
 
