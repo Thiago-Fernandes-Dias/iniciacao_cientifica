@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.svm import OneClassSVM
 from sklearn.metrics import balanced_accuracy_score, accuracy_score
 from cmu import *
@@ -19,8 +20,19 @@ for uk in cmu_database.user_keys():
 
 one_class_estimators_map: dict[str, OneClassSVM] = {}
 
+params_grid = [
+    {
+        'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+        'cache_size': [4096]
+    }
+]
+
+cv = StratifiedKFold(n_splits=5, random_state=RANDOM_STATE, shuffle=True)
+gs = GridSearchCV(OneClassSVM(), params_grid, scoring='accuracy', cv=cv, n_jobs=-1)
+
 for uk in cmu_database.user_keys():
-    one_class_estimators_map[uk] = OneClassSVM().fit(X_training[uk], y_training[uk])
+    fitted_gs = gs.fit(X_training[uk], y_training[uk])
+    one_class_estimators_map[uk] = fitted_gs.best_estimator_
 
 user_model_acc_on_genuine_samples_map: dict[str, float] = {}
 
