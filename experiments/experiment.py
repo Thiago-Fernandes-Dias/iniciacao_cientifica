@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, KFold
 from sklearn.svm import OneClassSVM
 from sklearn.metrics import balanced_accuracy_score, accuracy_score, recall_score
 from cmu import *
@@ -48,11 +48,12 @@ params_grid = [
     }
 ]
 
-cv = StratifiedKFold(n_splits=5, random_state=RANDOM_STATE, shuffle=True)
-gs = GridSearchCV(OneClassSVM(), params_grid, scoring='accuracy', cv=cv, n_jobs=-1)
+one_vs_one_cv = KFold(n_splits=5)
+one_vs_one_gs = GridSearchCV(OneClassSVM(), params_grid, 
+                             scoring='accuracy', cv=one_vs_one_cv, n_jobs=-1)
 
 for uk in cmu_database.user_keys():
-    fitted_gs = gs.fit(X_training[uk], y_training[uk])
+    fitted_gs = one_vs_one_gs.fit(X_training[uk], y_training[uk])
     one_class_estimators_map[uk] = fitted_gs.best_estimator_
 
 user_model_acc_on_genuine_samples_map: dict[str, float] = {}
@@ -91,9 +92,24 @@ for uk in cmu_database.user_keys():
 
 two_class_estimators_map: dict[str, RandomForestClassifier] = {}
 two_class_acc_map: dict[str, float] = {}
+one_vs_rest_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
+rf_params_grid = [
+    {
+        'n_estimators': [100, 200, 300, 400, 500],
+        'criterion': ['gini', 'entropy', 'log_loss'],
+        'max_features': ['sqrt', 'log2', None, 10, 20, 31],
+        'bootstrap': [True, False],
+        'n_jobs': [-1],
+        'random_state': [RANDOM_STATE],
+        'warm_start': [True, False]
+    }
+]
+one_vs_rest_gs = GridSearchCV(estimator=RandomForestClassifier(), param_grid=rf_params_grid, 
+                              cv=one_vs_rest_cv, n_jobs=-1, scoring='accuracy')
 
 for uk in cmu_database.user_keys():
-    two_class_estimators_map[uk] = RandomForestClassifier().fit(X_training[uk], y_training[uk])
+    fitted_gs = one_vs_rest_gs.fit(X_training[uk], y_training[uk])
+    two_class_estimators_map[uk] = fitted_gs.best_estimator_
 
 for uk in cmu_database.user_keys():
     predictions = two_class_estimators_map[uk].predict(X_test[uk])
