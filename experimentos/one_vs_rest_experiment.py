@@ -35,8 +35,8 @@ class OneVsRestExperiment:
             two_class_acc_map[uk] = balanced_accuracy_score(y_test[uk], predictions)
             two_class_recall_map[uk] = recall_score(y_test[uk], predictions, average='micro')
 
-        average_acc = np.average(list(user_model_acc_on_genuine_samples_map.values()))
-        average_recall = np.average(list(user_model_recall_map.values()))
+        average_acc = np.average(list(two_class_acc_map.values()))
+        average_recall = np.average(list(two_class_recall_map.values()))
 
         print(f"Acurácia dos modelos One-Vs-One: {average_acc}")
         print(f"Recall dos modelos One-Vs-One: {average_recall}")
