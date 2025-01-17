@@ -2,8 +2,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, KFold
 from sklearn.svm import OneClassSVM
 from cmu import *
-from one_vs_one_experiment import *
-from one_vs_rest_experiment import *
+from one_class_experiment import *
+from two_class_experiment import *
 
 def main():
     cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
@@ -38,7 +38,7 @@ def main():
     one_vs_one_cv = KFold(n_splits=5)
     one_vs_one_gs_factory = lambda: GridSearchCV(OneClassSVM(), params_grid, 
                                 scoring='accuracy', cv=one_vs_one_cv, n_jobs=-1)
-    one_vs_one_experiment = OneVsOneExperiment(cmu_database=cmu_database, estimator_factory=one_vs_one_gs_factory)
+    one_vs_one_experiment = OneClassExperiment(cmu_database=cmu_database, estimator_factory=one_vs_one_gs_factory)
     one_vs_one_experiment.exec()
 
     one_vs_rest_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
