@@ -1,0 +1,6 @@
+# Datasets
+**/*.csv*
+
+# Python related
+.venv/
+__pycache__/
