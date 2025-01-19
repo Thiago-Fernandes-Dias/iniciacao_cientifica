@@ -1,14 +1,24 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, KFold
 from sklearn.svm import OneClassSVM
+import os
+
+
 from cmu import *
-from one_vs_one_experiment import *
-from one_vs_rest_experiment import *
+from one_class_experiment import *
+from two_class_experiment import *
 
 def main():
-    cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
 
-    params_grid = [
+    cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
+    
+    one_class_svm_experiment = OneClassExperiment(cmu_database=cmu_database, estimator_factory=lambda: OneClassSVM())
+    one_class_svm_results = one_class_svm_experiment.exec()
+    
+    one_class_svm_params_grid = [
         {
             'kernel': ['poly'],
             'degree': range(1, 4),
@@ -36,10 +46,13 @@ def main():
         }
     ]
     one_vs_one_cv = KFold(n_splits=5)
-    one_vs_one_gs_factory = lambda: GridSearchCV(OneClassSVM(), params_grid, 
+    one_vs_one_gs_factory = lambda: GridSearchCV(OneClassSVM(), one_class_svm_params_grid, 
                                 scoring='accuracy', cv=one_vs_one_cv, n_jobs=-1)
-    one_vs_one_experiment = OneVsOneExperiment(cmu_database=cmu_database, estimator_factory=one_vs_one_gs_factory)
-    one_vs_one_experiment.exec()
+    one_class_svm_with_hpo_experiment = OneClassExperiment(cmu_database=cmu_database, estimator_factory=one_vs_one_gs_factory)
+    one_class_svm_with_hpo_results = one_class_svm_with_hpo_experiment.exec()
+
+    two_class_experiment = TwoClassExperiment(cmu_database=cmu_database, estimator_factory=lambda: RandomForestClassifier())
+    two_class_rf_results = two_class_experiment.exec()
 
     one_vs_rest_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
     rf_params_grid = [
@@ -55,8 +68,18 @@ def main():
     ]
     one_vs_rest_gs_factory = lambda: GridSearchCV(estimator=RandomForestClassifier(), param_grid=rf_params_grid, 
                                 cv=one_vs_rest_cv, n_jobs=-1, scoring='accuracy')
-    one_vs_rest_experiment = OneVsRestExperiment(cmu_database=cmu_database, estimator_factory=one_vs_rest_gs_factory)
-    one_vs_rest_experiment.exec()
+    two_class_experiment = TwoClassExperiment(cmu_database=cmu_database, estimator_factory=one_vs_rest_gs_factory)
+    two_class_rf_with_hpo_results = two_class_experiment.exec()
+
+    print("\n" + "-" * 20 + " Experiment results " + "-" * 20)
+    print("** One Class SVM results **")
+    one_class_svm_results.print_results()
+    print("** One Class SVM with HPO results ** ")
+    one_class_svm_with_hpo_results.print_results()
+    print("** Two Class RF results **")
+    two_class_rf_results.print_results()
+    print("** Two Class RF with HPO results ** ")
+    two_class_rf_with_hpo_results.print_results()
 
 if __name__ == '__main__':
     main()

@@ -19,3 +19,12 @@ def float_range(start: float, end: float, step: float) -> list[float]:
         result.append(start)
         start += step
     return result
+
+def item_with_max_value(map: dict[T, float]) -> tuple[T, float]:
+    max_value = 0
+    max_item = None
+    for (item, value) in map.items():
+        if value > max_value:
+            max_value = value
+            max_item = item
+    return (max_item, max_value)
