@@ -2,9 +2,7 @@ from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, recall_score 
 from typing import Callable
 from cmu import *
-
 from one_class_results import OneClassResults
-import numpy as np
 
 class OneClassExperiment:
     cmu_database: CMUDatabase
@@ -13,7 +11,7 @@ class OneClassExperiment:
     def __init__(self, cmu_database: CMUDatabase, estimator_factory: Callable[[], BaseEstimator]) -> None:
         self.cmu_database = cmu_database
         self.estimator_factory = estimator_factory
-
+    
     def exec(self) -> OneClassResults:
         X_training: dict[str, pd.DataFrame] = {}
         X_test: dict[str, pd.DataFrame] = {}
@@ -30,22 +28,23 @@ class OneClassExperiment:
 
         user_model_acc_on_genuine_samples_map: dict[str, float] = {}
         user_model_recall_map: dict[str, float] = {}
-
+        predictions_on_genuine_samples_map: dict[str, list[int]] = {}
         for uk in self.cmu_database.user_keys():
-            predictions = one_class_estimators_map[uk].predict(X_test[uk]).flatten().tolist()
-            user_model_acc_on_genuine_samples_map[uk] = accuracy_score(y_test[uk], predictions)
-            user_model_recall_map[uk] = recall_score(y_test[uk], predictions, average='micro')
+            predictions_on_genuine_samples_map[uk] = one_class_estimators_map[uk].predict(X_test[uk]).flatten().tolist()
+            user_model_acc_on_genuine_samples_map[uk] = accuracy_score(y_test[uk], predictions_on_genuine_samples_map[uk])
+            user_model_recall_map[uk] = recall_score(y_test[uk], predictions_on_genuine_samples_map[uk], average='micro')
 
-        average_acc: float = np.average(list(user_model_acc_on_genuine_samples_map.values()))
-        average_recall: float = np.average(list(user_model_recall_map.values()))
-
-        user_model_far_on_attack_samples_map: dict[str, float] = {}
-
+        user_model_tn_rate_on_attack_samples_map: dict[str, float] = {}
+        predictions_on_attacks_samples_map: dict[str, float] = {}
         for uk in self.cmu_database.user_keys():
             X_attacks, y_attacks = self.cmu_database.one_vs_one_attacks_rows(uk)
-            predictions = one_class_estimators_map[uk].predict(X_attacks).flatten().tolist()
-            user_model_far_on_attack_samples_map[uk] = accuracy_score(y_attacks, predictions)
+            predictions_on_attacks_samples_map[uk] = one_class_estimators_map[uk].predict(X_attacks).flatten().tolist()
+            user_model_tn_rate_on_attack_samples_map[uk] = accuracy_score(y_attacks, predictions_on_attacks_samples_map[uk])
 
-        average_far: float = np.average(list(user_model_far_on_attack_samples_map.values()))
-        results = OneClassResults(average_acc, average_recall, average_far, user_model_acc_on_genuine_samples_map, user_model_recall_map, user_model_far_on_attack_samples_map)
+        results = OneClassResults(user_model_acc_on_genuine_samples_map, 
+                                  user_model_recall_map, 
+                                  user_model_tn_rate_on_attack_samples_map,
+                                  predictions_on_genuine_samples_map,
+                                  predictions_on_attacks_samples_map)
+
         return results

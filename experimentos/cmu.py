@@ -40,19 +40,17 @@ class CMUDatabase:
 
     def one_vs_rest_training_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
         user_vectors = self.training_df_query(lambda df: df[df['subject'] == user_subject])
-        user_vectors_len = data_frame_length(user_vectors)
-        others_typing_samples = self.training_df_query(lambda df: df[df['subject'] != user_subject])
-        other_vectors = others_typing_samples.sample(n=user_vectors_len, random_state=RANDOM_STATE)
-        df = pd.concat([user_vectors, other_vectors])
-        labels = create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL)
-        return (df, labels)
+        other_vectors = self\
+            .training_df_query(lambda df: df[df['subject'] != user_subject])\
+            .sample(n=data_frame_length(user_vectors), random_state=RANDOM_STATE)
+        return (pd.concat([user_vectors, other_vectors]), 
+                create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL))
 
-    def one_vs_rest_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
+    def one_vs_rest_test_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int], pd.DataFrame, list[int]]:
         user_vectors = self.test_df_query(lambda df: df[df['subject'] == user_subject])
         other_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject])
-        df = pd.concat([user_vectors, other_vectors])
-        labels = create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL)
-        return (df, labels)
+        return (user_vectors, create_labels(user_vectors, GENUINE_LABEL), 
+                other_vectors, create_labels(other_vectors, IMPOSTOR_LABEL))
 
     def one_vs_one_attacks_rows(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
         attack_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject]) 
