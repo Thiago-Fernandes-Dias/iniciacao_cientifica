@@ -8,46 +8,16 @@ from sklearn.neural_network import MLPClassifier
 
 from multi_class_experiment import *
 from experimentos.cmu import *
+
+from cmu import *
 from one_class_experiment import *
 from two_class_experiment import *
+from hp_grids import *
 
-def main():
-    abspath = os.path.abspath(__file__)
-    dname = os.path.dirname(abspath)
-    os.chdir(dname)
-
-    cmu_database = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv')
-    
+def run_experiments(cmu_database: CMUDatabase) -> None:
     one_class_svm_experiment = OneClassExperiment(cmu_database=cmu_database, estimator_factory=lambda: OneClassSVM())
     one_class_svm_results = one_class_svm_experiment.exec()
     
-    one_class_svm_params_grid = [
-        {
-            'kernel': ['poly'],
-            'degree': range(1, 4),
-            'gamma': ['scale', 'auto', .1, .01, .001],
-            'coef0': float_range(0, 5, .25),
-            # Causando falhas em alguns fits -> 'nu': [.1, .25, .5, .75, 1], 
-            'cache_size': [4096]
-        },
-        {
-            'kernel': ['linear'],
-            'cache_size': [4096],
-        },
-        {
-            'kernel': ['sigmoid'],
-            'gamma': ['scale', 'auto', .1, .01, .001],
-            'coef0': float_range(0, 5, .25),
-            # 'nu': [.1, .25, .5, .75, 1], 
-            'cache_size': [4096]
-        },
-        {
-            'kernel': ['rbf'],
-            'gamma': ['scale', 'auto', .1, .01, .001],
-            # 'nu': [.1, .25, .5, .75, 1], 
-            'cache_size': [4096]
-        }
-    ]
     one_vs_one_cv = KFold(n_splits=5)
     one_vs_one_gs_factory = lambda: GridSearchCV(OneClassSVM(), one_class_svm_params_grid, 
                                 scoring='accuracy', cv=one_vs_one_cv, n_jobs=-1)
@@ -58,17 +28,7 @@ def main():
     two_class_rf_results = two_class_experiment.exec()
 
     one_vs_rest_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
-    rf_params_grid = [
-        {
-            'n_estimators': [50, 100, 150],
-            'criterion': ['gini', 'entropy', 'log_loss'],
-            'max_features': ['sqrt', 'log2', None, 10, 20, 31],
-            'bootstrap': [True, False],
-            'n_jobs': [-1],
-            'random_state': [RANDOM_STATE],
-            'warm_start': [True, False]
-        }
-    ]
+    
     one_vs_rest_gs_factory = lambda: GridSearchCV(estimator=RandomForestClassifier(), param_grid=rf_params_grid, 
                                 cv=one_vs_rest_cv, n_jobs=-1, scoring='accuracy')
     two_class_experiment = TwoClassExperiment(cmu_database=cmu_database, estimator_factory=one_vs_rest_gs_factory)
@@ -77,26 +37,7 @@ def main():
     mlp_experiment = MultiClassExperiment(cmu_database=cmu_database, estimator=MLPClassifier(max_iter=1000000000))
     mlp_results = mlp_experiment.exec()
 
-    mlp_params_grid = [
-        {
-            'hidden_layer_sizes': [(100,), (100, 100), (100, 100, 100), (100, 100, 100, 100)],
-            'activation': ['identity', 'logistic', 'tanh', 'relu'],
-            'solver': ['adam', 'sgd', 'lbfgs'],
-            'alpha': np.logspace(-5, 3, 5),
-            'batch_size': ['auto', 32, 64, 128, 256],
-            'learning_rate': ['constant', 'adaptive', 'invscaling'],
-            'learning_rate_init': np.logspace(-5, 3, 5),
-            'power_t': [0.5, 0.33, 0.25],
-            'max_iter': [250, 500],
-            'shuffle': [True, False],
-            'random_state': [RANDOM_STATE],
-            'warm_start': [True, False],
-            'momentum': np.linspace(0, 1, 10),
-            'nesterovs_momentum': [True, False],
-            'beta_1': np.linspace(0, 1, 10, endpoint=False),
-            'beta_1': np.linspace(0, 1, 10, endpoint=False),
-        }
-    ]
+    
     multiclass_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
     mlp_gs = GridSearchCV(estimator=MLPClassifier(), param_grid=mlp_params_grid, 
                           cv=multiclass_cv, n_jobs=-1, scoring='accuracy')
@@ -104,6 +45,7 @@ def main():
     mlp_with_hpo_results = mlp_with_hpo_experiment.exec()
 
     print("\n" + "-" * 20 + " Experiment results " + "-" * 20)
+    print("\n" + "-" * 20 + " Experiment results with First data split" + "-" * 20)
     print("** One Class SVM results **")
     one_class_svm_results.print_results()
     print("** One Class SVM with HPO results ** ")
@@ -116,6 +58,25 @@ def main():
     mlp_results.print_results()
     print("** Multi Class MLP with HPO results ** ")
     mlp_with_hpo_results.print_results()
+
+def main():
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+
+    print("\n" + "-" * 20 + " CMU: First data split " + "-" * 20)
+    print("The first session of each user is used for training and the other sessions are used for testing.")
+    
+    first_session_split = lambda df: (df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1])
+    cmu_database_1 = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv', first_session_split)
+    run_experiments(cmu_database_1)
+
+    print("\n" + "-" * 20 + " CMU: Second data split " + "-" * 20)
+    print("The last session of each user is used for testing and the other sessions are used for training.")
+
+    second_session_split = lambda df: (df[df['sessionIndex'] != 8], df[df['sessionIndex'] == 8])
+    cmu_database_2 = CMUDatabase('datasets/cmu/DSL-StrongPasswordData.csv', second_session_split)
+    run_experiments(cmu_database_2)
 
 if __name__ == '__main__':
     main()

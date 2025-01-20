@@ -4,10 +4,10 @@ from sklearn.metrics import balanced_accuracy_score, recall_score
 from two_class_results import TwoClassResults
 
 class TwoClassExperiment:
-    cmu_database: CMUDataset
+    cmu_database: CMUDatabase
     estimator_factory: Callable[[], BaseEstimator]
 
-    def __init__(self, cmu_database: CMUDataset, estimator_factory: Callable[[], BaseEstimator]) -> None:
+    def __init__(self, cmu_database: CMUDatabase, estimator_factory: Callable[[], BaseEstimator]) -> None:
         self.cmu_database = cmu_database
         self.estimator_factory = estimator_factory
     
