@@ -56,5 +56,17 @@ class CMUDatabase:
         attack_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject]) 
         labels = create_labels(attack_vectors, IMPOSTOR_LABEL)
         return (attack_vectors, labels)
+    
+    def user_training_samples(self, user_subject: str) -> pd.DataFrame:
+        return self.training_df_query(lambda df: df[df['subject'] == user_subject])
+    
+    def user_test_samples(self, user_subject: str) -> pd.DataFrame:
+        return self.test_df_query(lambda df: df[df['subject'] == user_subject])
+    
+    def multi_class_training_samples(self) -> tuple[pd.DataFrame, pd.Series]:
+        return (self.training_df.drop(columns=self._drop_columns), self.training_df['subject'])
+    
+    def multi_class_test_samples(self) -> tuple[pd.DataFrame, pd.Series]:
+        return (self.test_df.drop(columns=self._drop_columns), self.test_df['subject'])
 
     

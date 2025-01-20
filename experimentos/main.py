@@ -1,10 +1,13 @@
+import os
+import numpy as np
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, KFold
 from sklearn.svm import OneClassSVM
-import os
+from sklearn.neural_network import MLPClassifier
 
-
-from cmu import *
+from multi_class_experiment import *
+from experimentos.cmu import *
 from one_class_experiment import *
 from two_class_experiment import *
 
@@ -71,6 +74,35 @@ def main():
     two_class_experiment = TwoClassExperiment(cmu_database=cmu_database, estimator_factory=one_vs_rest_gs_factory)
     two_class_rf_with_hpo_results = two_class_experiment.exec()
 
+    mlp_experiment = MultiClassExperiment(cmu_database=cmu_database, estimator=MLPClassifier(max_iter=1000000000))
+    mlp_results = mlp_experiment.exec()
+
+    mlp_params_grid = [
+        {
+            'hidden_layer_sizes': [(100,), (100, 100), (100, 100, 100), (100, 100, 100, 100)],
+            'activation': ['identity', 'logistic', 'tanh', 'relu'],
+            'solver': ['adam', 'sgd', 'lbfgs'],
+            'alpha': np.logspace(-5, 3, 5),
+            'batch_size': ['auto', 32, 64, 128, 256],
+            'learning_rate': ['constant', 'adaptive', 'invscaling'],
+            'learning_rate_init': np.logspace(-5, 3, 5),
+            'power_t': [0.5, 0.33, 0.25],
+            'max_iter': [250, 500],
+            'shuffle': [True, False],
+            'random_state': [RANDOM_STATE],
+            'warm_start': [True, False],
+            'momentum': np.linspace(0, 1, 10),
+            'nesterovs_momentum': [True, False],
+            'beta_1': np.linspace(0, 1, 10, endpoint=False),
+            'beta_1': np.linspace(0, 1, 10, endpoint=False),
+        }
+    ]
+    multiclass_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
+    mlp_gs = GridSearchCV(estimator=MLPClassifier(), param_grid=mlp_params_grid, 
+                          cv=multiclass_cv, n_jobs=-1, scoring='accuracy')
+    mlp_with_hpo_experiment = MultiClassExperiment(cmu_database=cmu_database, estimator=mlp_gs)
+    mlp_with_hpo_results = mlp_with_hpo_experiment.exec()
+
     print("\n" + "-" * 20 + " Experiment results " + "-" * 20)
     print("** One Class SVM results **")
     one_class_svm_results.print_results()
@@ -80,6 +112,10 @@ def main():
     two_class_rf_results.print_results()
     print("** Two Class RF with HPO results ** ")
     two_class_rf_with_hpo_results.print_results()
+    print("** Multi Class MLP results **")
+    mlp_results.print_results()
+    print("** Multi Class MLP with HPO results ** ")
+    mlp_with_hpo_results.print_results()
 
 if __name__ == '__main__':
     main()
