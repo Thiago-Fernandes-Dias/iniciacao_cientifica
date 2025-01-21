@@ -1,15 +1,15 @@
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, recall_score 
 from typing import Callable
-from experimentos.cmu import *
+from cmu_dataset import *
 from one_class_results import OneClassResults
 
 class OneClassExperiment:
     cmu_database: CMUDataset
     estimator_factory: Callable[[], BaseEstimator]
 
-    def __init__(self, cmu_database: CMUDataset, estimator_factory: Callable[[], BaseEstimator]) -> None:
-        self.cmu_database = cmu_database
+    def __init__(self, dataset: CMUDataset, estimator_factory: Callable[[], BaseEstimator]) -> None:
+        self.cmu_database = dataset
         self.estimator_factory = estimator_factory
     
     def exec(self) -> OneClassResults:

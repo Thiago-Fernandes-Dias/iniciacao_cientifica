@@ -1,3 +1,5 @@
+import numpy as np
+
 from utils import float_range
 from constants import *
 
