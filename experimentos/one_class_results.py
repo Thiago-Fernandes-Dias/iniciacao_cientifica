@@ -6,7 +6,7 @@ class OneClassResults:
     user_model_tn_rate_on_attack_samples_map: dict[str, float]
     predictions_on_user_samples_map: dict[str, list[int]]
     predictions_on_impostor_samples_map: dict[str, list[int]]
-    hp: dict[str, dict[str, object]]
+    hp: dict[str, dict[str, object]] | None
 
     def __init__(self, *,
                  user_model_acc_on_genuine_samples_map: dict[str, float], 
@@ -14,7 +14,7 @@ class OneClassResults:
                  user_model_tn_rate_on_attack_samples_map: dict[str, float], 
                  predictions_on_user_samples_map: dict[str, list[int]],
                  predictions_on_impostor_samples_map: dict[str, list[int]],
-                 hp: dict[str, dict[str, object]]) -> None:
+                 hp: dict[str, dict[str, object]] | None) -> None:
         self.user_model_acc_on_genuine_samples_map = user_model_acc_on_genuine_samples_map
         self.user_model_recall_map = user_model_recall_map
         self.user_model_tn_rate_on_attack_samples_map = user_model_tn_rate_on_attack_samples_map

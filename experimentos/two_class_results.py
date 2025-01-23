@@ -5,13 +5,13 @@ class TwoClassResults:
     two_class_recall_map: dict[str, float]
     predictions_on_user_samples_map: dict[str, list[int]]
     predictions_on_impostor_samples_map: dict[str, list[int]]
-    hp: dict[str, dict[str,object]]
+    hp: dict[str, dict[str,object]] | None
     
     def __init__(self, *, two_class_bacc_map: dict[str, float], 
                  two_class_recall_map: dict[str, float], 
                  predictions_on_user_samples_map: dict[str, list[int]],
                  predictions_on_impostor_samples_map: dict[str, list[int]], 
-                 hp: dict[str, dict[ str,object ]]) -> None:
+                 hp: dict[str, dict[ str,object ]] | None) -> None:
         self.two_class_bacc_map = two_class_bacc_map
         self.two_class_recall_map = two_class_recall_map
         self.predictions_on_user_samples_map = predictions_on_user_samples_map
