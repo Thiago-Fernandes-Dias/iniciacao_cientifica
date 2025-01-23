@@ -18,6 +18,7 @@ class OneClassExperiment:
         y_training: dict[str, list[int]] = {}
         y_test: dict[str, list[int]] = {}
         one_class_estimators_map: dict[str, BaseEstimator] = {}
+        one_class_estimators_hp_map: dict[str, dict[str, object]] = {}
 
         for uk in self.cmu_database.user_keys():
             X_training[uk], y_training[uk] = self.cmu_database.one_vs_one_training_rows(uk)
@@ -25,6 +26,7 @@ class OneClassExperiment:
     
         for uk in self.cmu_database.user_keys():
             one_class_estimators_map[uk] = self.estimator_factory().fit(X_training[uk], y_training[uk])
+            one_class_estimators_hp_map[uk] = one_class_estimators_map[uk].get_params(deep=False)
 
         user_model_acc_on_genuine_samples_map: dict[str, float] = {}
         user_model_recall_map: dict[str, float] = {}
@@ -35,16 +37,18 @@ class OneClassExperiment:
             user_model_recall_map[uk] = recall_score(y_test[uk], predictions_on_genuine_samples_map[uk], average='micro')
 
         user_model_tn_rate_on_attack_samples_map: dict[str, float] = {}
-        predictions_on_attacks_samples_map: dict[str, float] = {}
+        predictions_on_attacks_samples_map: dict[str, list[ int ]] = {}
         for uk in self.cmu_database.user_keys():
             X_attacks, y_attacks = self.cmu_database.one_vs_one_attacks_rows(uk)
             predictions_on_attacks_samples_map[uk] = one_class_estimators_map[uk].predict(X_attacks).flatten().tolist()
             user_model_tn_rate_on_attack_samples_map[uk] = accuracy_score(y_attacks, predictions_on_attacks_samples_map[uk])
-
-        results = OneClassResults(user_model_acc_on_genuine_samples_map, 
-                                  user_model_recall_map, 
-                                  user_model_tn_rate_on_attack_samples_map,
-                                  predictions_on_genuine_samples_map,
-                                  predictions_on_attacks_samples_map)
+        
+        results = OneClassResults( 
+                user_model_acc_on_genuine_samples_map=user_model_acc_on_genuine_samples_map,
+                user_model_recall_map=user_model_recall_map,
+                user_model_tn_rate_on_attack_samples_map = user_model_tn_rate_on_attack_samples_map,
+                predictions_on_user_samples_map = predictions_on_genuine_samples_map,
+                predictions_on_impostor_samples_map = predictions_on_attacks_samples_map,
+                hp = one_class_estimators_hp_map)
 
         return results

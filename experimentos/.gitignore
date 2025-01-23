@@ -4,3 +4,5 @@
 # Python related
 .venv/
 __pycache__/
+exec_logs/
+results/

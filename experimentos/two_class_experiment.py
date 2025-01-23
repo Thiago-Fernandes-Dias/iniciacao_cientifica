@@ -19,6 +19,7 @@ class TwoClassExperiment:
         X_other_test: dict[str, pd.DataFrame] = {}
         y_other_test: dict[str, list[int]] = {}
         estimators_map: dict[str, BaseEstimator] = {}
+        estimators_hp_map: dict[str, dict[str, object]] = {}
 
         for uk in self.cmu_database.user_keys():
             X_training[uk], y_training[uk] = \
@@ -28,6 +29,7 @@ class TwoClassExperiment:
         
         for uk in self.cmu_database.user_keys():
             estimators_map[uk] = self.estimator_factory().fit(X_training[uk], y_training[uk])
+            estimators_hp_map[uk] = estimators_map[uk].get_params(deep=False)
         
         two_class_bacc_map: dict[str, float] = {}
         two_class_recall_map: dict[str, float] = {}
@@ -43,6 +45,7 @@ class TwoClassExperiment:
             two_class_recall_map[uk] = recall_score(y_test, predictions, average='micro')
         
         results = TwoClassResults(two_class_bacc_map, two_class_recall_map, 
-                                  predictions_on_genuine_samples, predictions_on_impostor_samples)
+                                  predictions_on_genuine_samples, predictions_on_impostor_samples,
+                                  estimators_hp_map)
 
         return results

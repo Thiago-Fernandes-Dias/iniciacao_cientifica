@@ -1,5 +1,3 @@
-import numpy as np
-
 from utils import *
 
 class TwoClassResults:
@@ -7,21 +5,24 @@ class TwoClassResults:
     two_class_recall_map: dict[str, float]
     predictions_on_user_samples_map: dict[str, list[int]]
     predictions_on_impostor_samples_map: dict[str, list[int]]
+    hp: dict[str, object]
     
     def __init__(self, two_class_bacc_map: dict[str, float], 
                  two_class_recall_map: dict[str, float], 
                  predictions_on_user_samples_map: dict[str, list[int]],
-                 predictions_on_impostor_samples_map: dict[str, list[int]]) -> None:
+                 predictions_on_impostor_samples_map: dict[str, list[int]], 
+                 hp: dict[str, object]) -> None:
         self.two_class_bacc_map = two_class_bacc_map
         self.two_class_recall_map = two_class_recall_map
         self.predictions_on_user_samples_map = predictions_on_user_samples_map
         self.predictions_on_impostor_samples_map = predictions_on_impostor_samples_map
+        self.hp = hp
     
     def get_average_bacc(self) -> float:
-        return np.average(list(self.two_class_bacc_map.values()))
+        return dict_values_average(self.two_class_bacc_map)
 
     def get_average_recall(self) -> float:
-        return np.average(list(self.two_class_recall_map.values()))
+        return dict_values_average(self.two_class_recall_map)
     
     def get_bacc(self, user_key: str) -> float:
         return self.two_class_bacc_map[user_key]
@@ -54,3 +55,14 @@ class TwoClassResults:
         print(f"Model with highest balanced accuracy: user {user_sub} with accuracy {best_bacc}")
         user_sub, best_recall = self.get_best_recall()
         print(f"Model with highest recall: user {user_sub} with recall {best_recall}")
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "hp": self.hp,
+            "average_bacc": self.get_average_bacc(),
+            "average_recall": self.get_average_recall(),
+            "user_model_bacc": self.two_class_bacc_map,
+            "user_model_recall": self.two_class_recall_map,
+            "predictions_on_user_samples": self.predictions_on_user_samples_map,
+            "predictions_on_impostor_samples": self.predictions_on_impostor_samples_map
+        }

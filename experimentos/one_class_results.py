@@ -1,33 +1,35 @@
-import numpy as np
-
 from utils import *
 
 class OneClassResults:
     user_model_acc_on_genuine_samples_map: dict[str, float]
     user_model_recall_map: dict[str, float]
     user_model_tn_rate_on_attack_samples_map: dict[str, float]
-    prediction_on_user_samples_map: dict[str, list[int]]
-    prediction_on_impostor_samples_map: dict[str, list[int]]
+    predictions_on_user_samples_map: dict[str, list[int]]
+    predictions_on_impostor_samples_map: dict[str, list[int]]
+    hp: dict[str, dict[str, object]]
 
-    def __init__(self, user_model_acc_on_genuine_samples_map: dict[str, float], 
+    def __init__(self, 
+                 user_model_acc_on_genuine_samples_map: dict[str, float], 
                  user_model_recall_map: dict[str, float], 
                  user_model_tn_rate_on_attack_samples_map: dict[str, float], 
                  predictions_on_user_samples_map: dict[str, list[int]],
-                 prediction_on_impostor_samples_map: dict[str, list[int]]) -> None:
+                 predictions_on_impostor_samples_map: dict[str, list[int]],
+                 hp: dict[str, dict[str, object]]) -> None:
         self.user_model_acc_on_genuine_samples_map = user_model_acc_on_genuine_samples_map
         self.user_model_recall_map = user_model_recall_map
         self.user_model_tn_rate_on_attack_samples_map = user_model_tn_rate_on_attack_samples_map
-        self.prediction_on_user_samples_map = predictions_on_user_samples_map
-        self.prediction_on_impostor_samples_map = prediction_on_impostor_samples_map
+        self.predictions_on_user_samples_map = predictions_on_user_samples_map
+        self.predictions_on_impostor_samples_map = predictions_on_impostor_samples_map
+        self.hp = hp
 
     def get_average_acc_on_genuine_samples(self) -> float:
-        return np.average(list(self.user_model_acc_on_genuine_samples_map.values()))
+        return dict_values_average(self.user_model_acc_on_genuine_samples_map)
 
     def get_average_recall(self) -> float:
-        return np.average(list(self.user_model_recall_map.values()))
+        return dict_values_average(self.user_model_recall_map)
     
     def get_average_tn_rate_on_attack_samples(self) -> float:
-        return np.average(list(self.user_model_tn_rate_on_attack_samples_map.values()))
+        return dict_values_average(self.user_model_tn_rate_on_attack_samples_map)
     
     def get_acc_on_genuine_samples(self, user_key: str) -> float:
         return self.user_model_acc_on_genuine_samples_map[user_key]
@@ -39,10 +41,10 @@ class OneClassResults:
         return self.user_model_tn_rate_on_attack_samples_map[user_key]
     
     def get_prediction_on_user_samples(self, user_key: str) -> list[int]:
-        return self.prediction_on_user_samples_map[user_key]
+        return self.predictions_on_user_samples_map[user_key]
 
     def get_prediction_on_impostor_samples(self, user_key: str) -> list[int]:
-        return self.prediction_on_impostor_samples_map[user_key]
+        return self.predictions_on_impostor_samples_map[user_key]
     
     def get_best_accuracy(self) -> tuple[str, float]:
         return item_with_max_value(self.user_model_acc_on_genuine_samples_map)
@@ -72,3 +74,19 @@ class OneClassResults:
         print(f"Model with highest recall: user {user_sub} with recall {best_recall}")
         user_sub, best_tn_rate = self.get_best_tn_rate_on_attack_samples()
         print(f"Model with highest TN rate: user {user_sub} with TN rate {best_tn_rate}")
+    
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "hp": self.hp,
+            "average_acc_on_genuine_samples": self.get_average_acc_on_genuine_samples(),
+            "average_recall": self.get_average_recall(),
+            "average_tn_rate_on_attack_samples": self.get_average_tn_rate_on_attack_samples(),
+            "user_model_acc_on_genuine_samples": self.user_model_acc_on_genuine_samples_map,
+            "user_model_recall": self.user_model_recall_map,
+            "user_model_tn_rate_on_attack_samples": self.user_model_tn_rate_on_attack_samples_map,
+            "predictions_on_user_samples": self.predictions_on_user_samples_map,
+            "predictions_on_impostor_samples": self.predictions_on_impostor_samples_map,
+            "best_acc": self.get_best_accuracy(),
+            "best_recall": self.get_best_recall(),
+            "best_tn_rate": self.get_best_tn_rate_on_attack_samples()
+        }
