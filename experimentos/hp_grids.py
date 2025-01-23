@@ -45,21 +45,21 @@ rf_params_grid = [
 
 mlp_params_grid = [
     {
-        'hidden_layer_sizes': [(100,), (100, 100), (100, 100, 100), (100, 100, 100, 100)],
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'solver': ['adam', 'sgd', 'lbfgs'],
-        'alpha': np.logspace(-5, 3, 5),
-        'batch_size': ['auto', 32, 64, 128, 256],
+        # 'alpha': np.logspace(-5, 3, 5),
+        # 'batch_size': ['auto', 32, 64, 128, 256],
         'learning_rate': ['constant', 'adaptive', 'invscaling'],
-        'learning_rate_init': np.logspace(-5, 3, 5),
-        'power_t': [0.5, 0.33, 0.25],
-        'max_iter': [250, 500],
+        # 'learning_rate_init': np.logspace(-5, 3, 5),
+        # 'power_t': [0.5, 0.33, 0.25],
+        'max_iter': [200, 500, 800],
         'shuffle': [True, False],
         'random_state': [RANDOM_STATE],
         'warm_start': [True, False],
         'momentum': np.linspace(0, 1, 10),
-        'nesterovs_momentum': [True, False],
-        'beta_1': np.linspace(0, 1, 10, endpoint=False),
-        'beta_1': np.linspace(0, 1, 10, endpoint=False),
+        # 'nesterovs_momentum': [True, False],
+        # 'beta_1': np.linspace(0, 1, 10, endpoint=False),
+        # 'beta_1': np.linspace(0, 1, 10, endpoint=False),
     }
 ]
