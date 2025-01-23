@@ -58,11 +58,13 @@ def main():
     dname = os.path.dirname(abspath)
     os.chdir(dname)
 
-    first_session_split = lambda df: (df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1])
+    first_session_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]] = \
+        lambda df: (df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1])
     cmu_database_1 = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', first_session_split)
     run_experiments(cmu_database_1, "first_session_split", False)
 
-    second_session_split = lambda df: (df[df['sessionIndex'] != 8], df[df['sessionIndex'] == 8])
+    second_session_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]] = \
+        lambda df: (df[df['sessionIndex'] != 8], df[df['sessionIndex'] == 8])
     cmu_database_2 = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', second_session_split)
     run_experiments(cmu_database_2, "last_session_split", False)
 
