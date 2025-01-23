@@ -8,7 +8,7 @@ class OneClassResults:
     predictions_on_impostor_samples_map: dict[str, list[int]]
     hp: dict[str, dict[str, object]]
 
-    def __init__(self, 
+    def __init__(self, *,
                  user_model_acc_on_genuine_samples_map: dict[str, float], 
                  user_model_recall_map: dict[str, float], 
                  user_model_tn_rate_on_attack_samples_map: dict[str, float], 

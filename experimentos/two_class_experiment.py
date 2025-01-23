@@ -33,19 +33,21 @@ class TwoClassExperiment:
         
         two_class_bacc_map: dict[str, float] = {}
         two_class_recall_map: dict[str, float] = {}
-        predictions_on_genuine_samples: dict[str, list[int]] = {}
-        predictions_on_impostor_samples: dict[str, list[int]] = {}
+        predictions_on_genuine_samples_map: dict[str, list[int]] = {}
+        predictions_on_impostor_samples_map: dict[str, list[int]] = {}
         
         for uk in self.cmu_database.user_keys():
-            predictions_on_genuine_samples[uk] = estimators_map[uk].predict(X_user_test[uk]).flatten().tolist()
-            predictions_on_impostor_samples[uk] = estimators_map[uk].predict(X_other_test[uk]).flatten().tolist()
-            predictions = predictions_on_genuine_samples[uk] + predictions_on_impostor_samples[uk]
+            predictions_on_genuine_samples_map[uk] = estimators_map[uk].predict(X_user_test[uk]).flatten().tolist()
+            predictions_on_impostor_samples_map[uk] = estimators_map[uk].predict(X_other_test[uk]).flatten().tolist()
+            predictions = predictions_on_genuine_samples_map[uk] + predictions_on_impostor_samples_map[uk]
             y_test = y_user_test[uk] + y_other_test[uk]
             two_class_bacc_map[uk] = balanced_accuracy_score(y_test, predictions)
             two_class_recall_map[uk] = recall_score(y_test, predictions, average='micro')
         
-        results = TwoClassResults(two_class_bacc_map, two_class_recall_map, 
-                                  predictions_on_genuine_samples, predictions_on_impostor_samples,
-                                  estimators_hp_map)
+        results = TwoClassResults(two_class_bacc_map=two_class_bacc_map, 
+                                  two_class_recall_map=two_class_recall_map, 
+                                  predictions_on_user_samples_map=predictions_on_genuine_samples_map,
+                                  predictions_on_impostor_samples_map=predictions_on_impostor_samples_map,
+                                  hp=estimators_hp_map)
 
         return results
