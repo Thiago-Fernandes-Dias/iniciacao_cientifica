@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import json
 
 from datetime import datetime
 from typing import TypeVar
@@ -44,3 +45,12 @@ def get_datetime() -> str:
 def create_dir_if_not_exists(name: str):
     if not os.path.exists('results'):
         os.makedirs('results')
+
+def save_results(name: str, experiment_results: dict[str, object]) -> None:
+    json_string = json.dumps(experiment_results, indent=4)
+    create_dir_if_not_exists("results")
+    with open(f"results/{name}_{get_datetime()}.json", 'w+') as file:
+        file.write(json_string)
+
+def first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return (df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1])

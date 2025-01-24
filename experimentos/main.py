@@ -11,14 +11,9 @@ from cmu_dataset import *
 
 from cmu_dataset import *
 from experiments.single_class_experiment import *
-from two_class_experiment import *
+from experimentos.runners.two_class_experiment_runner import *
 from hp_grids import *
 
-def save_results(name: str, experiment_results: dict[str, object]) -> None:
-    json_string = json.dumps(experiment_results, indent=4)
-    create_dir_if_not_exists("results")
-    with open(f"results/exp_{name}_{get_datetime()}.json", 'w+') as file:
-        file.write(json_string)
 
 def run_experiments(dataset: CMUDataset, name: str, include_hpo: bool) -> None:
     experiment_results: dict[str, object] = {}
