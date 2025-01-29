@@ -1,13 +1,10 @@
-from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score
+from sklearn.model_selection._search import BaseSearchCV
 from cmu_dataset import *
 from multiclass_results import *
 
-class MultiClassExperiment:
-    cmu_database: CMUDataset
-    estimator: BaseEstimator
+class MultiClassExperimentWithSearchCVRunner:
 
-    def __init__(self, dataset: CMUDataset, estimator: BaseEstimator):
+    def __init__(self, dataset: CMUDataset, estimator: BaseSearchCV):
         self.cmu_database = dataset
         self.estimator = estimator
     
@@ -16,4 +13,4 @@ class MultiClassExperiment:
         X_test, y_test = self.cmu_database.multi_class_test_samples()
         self.estimator.fit(X_training, y_training)
         predictions = self.estimator.predict(X_test)
-        return MultiClassResults(y_test, predictions, self.estimator.get_params(deep=False))
+        return MultiClassResults(y_test, predictions, self.estimator.best_params_)
