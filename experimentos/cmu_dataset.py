@@ -9,17 +9,20 @@ class CMUDataset:
     _test_df: pd.DataFrame
     _user_keys: set[str]
     _drop_columns = ['subject', 'sessionIndex', 'rep']
+    _columns_filter_rg: str
     
-    def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]]) -> None:
+    def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]], columns_filer_rg: str = '.*') -> None:
         cmu: pd.DataFrame = pd.read_csv(file_path)
-        self._training_df, self._test_df = test_train_split(cmu)
         self._user_keys: set[str] = set(cmu["subject"].drop_duplicates().tolist())
+        self._training_df, self._test_df = test_train_split(cmu)
+        self._columns_filter_rg = columns_filer_rg
+        
 
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
-        return query(self._training_df).drop(columns=self._drop_columns)
+        return query(self._training_df).drop(columns=self._drop_columns).filter(regex=self._columns_filter_rg)
     
     def test_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
-        return query(self._test_df).drop(columns=self._drop_columns)
+        return query(self._test_df).drop(columns=self._drop_columns).filter(regex=self._columns_filter_rg)
     
     def user_keys(self) -> set[str]:
         return self._user_keys
@@ -64,5 +67,6 @@ class CMUDataset:
     
     def multi_class_test_samples(self) -> tuple[pd.DataFrame, pd.Series]:
         return (self._test_df.drop(columns=self._drop_columns), self._test_df['subject'])
+    
 
     

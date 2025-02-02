@@ -1,5 +1,4 @@
 from sklearn.svm import OneClassSVM
-
 from cmu_dataset import CMUDataset
 from runners.single_class_experiment_runner import SingleClassExperimentRunner
 from utils import first_session_split, save_results

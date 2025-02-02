@@ -43,6 +43,12 @@ rf_params_grid = [
     }
 ]
 
+lw_params_grid = {
+    'a': [0.7, 0.8, 0.95, 1, 1.05],
+    'b': [0.9, 0.95, 1, 1.05, 1.1, 1.15],
+    'threshold': [0.7]
+}
+
 mlp_params_grid = [
     {
         'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
