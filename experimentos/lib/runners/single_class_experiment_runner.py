@@ -1,6 +1,6 @@
 from sklearn.base import BaseEstimator
-from cmu_dataset import *
-from runners.one_class_experiment_runner import OneClassExperimentRunner
+from lib.cmu_dataset import *
+from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 
 class SingleClassExperimentRunner(OneClassExperimentRunner):
     _estimator: BaseEstimator

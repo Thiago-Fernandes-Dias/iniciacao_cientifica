@@ -1,8 +1,8 @@
 from abc import abstractmethod
-from cmu_dataset import *
+from lib.cmu_dataset import *
+from lib.two_class_results import TwoClassResults
 from sklearn.base import BaseEstimator
 from sklearn.metrics import balanced_accuracy_score, recall_score
-from two_class_results import TwoClassResults
 
 class TwoClassExperimentRunner:
     _cmu_database: CMUDataset

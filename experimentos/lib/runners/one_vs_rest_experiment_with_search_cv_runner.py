@@ -1,6 +1,6 @@
-from cmu_dataset import CMUDataset
+from lib.cmu_dataset import CMUDataset
+from lib.runners.two_class_experiment_runner import TwoClassExperimentRunner
 from sklearn.model_selection._search import BaseSearchCV
-from runners.two_class_experiment_runner import TwoClassExperimentRunner
 
 class OneVsRestExperimentWithSearchCVRunner(TwoClassExperimentRunner):
     _cmu_database: CMUDataset

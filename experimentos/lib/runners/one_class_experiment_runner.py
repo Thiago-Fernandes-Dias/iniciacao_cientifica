@@ -1,6 +1,6 @@
 from abc import abstractmethod
-from cmu_dataset import CMUDataset
-from one_class_results import *
+from lib.cmu_dataset import CMUDataset
+from lib.one_class_results import *
 from sklearn.metrics import accuracy_score, recall_score
 
 class OneClassExperimentRunner:
@@ -20,7 +20,7 @@ class OneClassExperimentRunner:
     _predictions_on_attacks_samples_map: dict[str, list[ int ]] = {}
     _user_model_acc_on_genuine_samples_map: dict[str, float] = {}
     _user_model_recall_map: dict[str, float] = {}
-    _user_model_tn_rate_on_attack_samples_map: dict[str, float] = {}
+    _user_model_far_map: dict[str, float] = {}
 
     @abstractmethod 
     def _calculate_predictions(self) -> None:
@@ -34,7 +34,7 @@ class OneClassExperimentRunner:
         results = OneClassResults( 
                 user_model_acc_on_genuine_samples_map = self._user_model_acc_on_genuine_samples_map,
                 user_model_recall_map = self._user_model_recall_map,
-                user_model_tn_rate_on_attack_samples_map = self._user_model_tn_rate_on_attack_samples_map,
+                user_model_far_map = self._user_model_far_map,
                 predictions_on_user_samples_map = self._predictions_on_genuine_samples_map,
                 predictions_on_impostor_samples_map = self._predictions_on_attacks_samples_map,
                 hp = self._one_class_estimators_hp_map)
@@ -53,7 +53,7 @@ class OneClassExperimentRunner:
                 accuracy_score(self._y_test[uk], self._predictions_on_genuine_samples_map[uk])
             self._user_model_recall_map[uk] = \
                 recall_score(self._y_test[uk], self._predictions_on_genuine_samples_map[uk], average='micro')
-            self._user_model_tn_rate_on_attack_samples_map[uk] = \
-                accuracy_score(self._y_attacks[uk], self._predictions_on_attacks_samples_map[uk])
+            self._user_model_far_map[uk] = \
+                1 - accuracy_score(self._y_attacks[uk], self._predictions_on_attacks_samples_map[uk])
 
 

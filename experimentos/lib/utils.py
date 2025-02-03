@@ -3,7 +3,8 @@ import os
 import json
 
 from datetime import datetime
-from typing import TypeVar
+from typing import Callable, TypeVar
+from sklearn.metrics import make_scorer, accuracy_score
 
 T = TypeVar('T')
 
@@ -23,13 +24,23 @@ def float_range(start: float, end: float, step: float) -> list[float]:
         start += step
     return result
 
-def item_with_max_value(map: dict[T, float]) -> tuple[T, float]:
+def item_with_max_value(map: dict[T, float], comp: Callable[[float, float], int]) -> tuple[T, float]:
     max_item, max_value = map.popitem()
     for (item, value) in map.items():
-        if value > max_value:
+        if comp(value, max_value) == 1:
             max_value = value
             max_item = item
     return (max_item, max_value)
+
+def bigger_comp(a: float, b: float) -> int:
+    if a > b: return 1
+    elif a == b: return 0
+    return -1
+
+def lower_comp(a: float, b: float) -> int:
+    if a > b: return -1
+    elif a == b: return 0
+    return 1
 
 def dict_values_average(map: dict[T, float]) -> float:
     sum = 0.0
@@ -57,3 +68,5 @@ def first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def lw_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return (df[(df['sessionIndex'] == 1) & (df['rep'] <= 12)], df[df['sessionIndex'] != 1])
+
+far_score = make_scorer(lambda y_true, y_pred: 1 - accuracy_score(y_true, y_pred), greater_is_better=False)

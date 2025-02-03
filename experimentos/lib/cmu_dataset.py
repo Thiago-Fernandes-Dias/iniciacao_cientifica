@@ -1,8 +1,8 @@
 import pandas as pd
 
 from typing import Callable
-from utils import *
-from constants import *
+from lib.utils import *
+from lib.constants import *
 
 class CMUDataset:
     _training_df: pd.DataFrame

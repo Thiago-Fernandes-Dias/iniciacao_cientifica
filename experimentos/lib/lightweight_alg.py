@@ -13,7 +13,6 @@ class DigraphsMetrics:
     std_dev: float
     median: float
 
-
 class LightWeightAlg(BaseEstimator):
     a: float
     b: float

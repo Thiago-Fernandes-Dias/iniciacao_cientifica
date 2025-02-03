@@ -1,6 +1,7 @@
 from sklearn.model_selection._search import BaseSearchCV
-from cmu_dataset import *
-from multiclass_results import *
+
+from lib.cmu_dataset import *
+from lib.multiclass_results import *
 
 class MultiClassExperimentWithSearchCVRunner:
 

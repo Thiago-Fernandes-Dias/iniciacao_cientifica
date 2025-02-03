@@ -1,4 +1,4 @@
-from utils import *
+from lib.utils import *
 
 class TwoClassResults:
     two_class_bacc_map: dict[str, float]

@@ -1,5 +1,5 @@
-from cmu_dataset import CMUDataset
-from runners.one_class_experiment_runner import OneClassExperimentRunner
+from lib.cmu_dataset import CMUDataset
+from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 from sklearn.model_selection._search import BaseSearchCV
 
 class SingleClassExperimentWithSearchCVRunner(OneClassExperimentRunner):

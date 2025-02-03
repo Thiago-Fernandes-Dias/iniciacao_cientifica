@@ -1,7 +1,7 @@
 import numpy as np
 
-from utils import float_range
-from constants import *
+from lib.utils import float_range
+from lib.constants import *
 
 one_class_svm_params_grid = [
     {
@@ -49,23 +49,39 @@ lw_params_grid = {
     'threshold': [0.7]
 }
 
+lw_params_grid_var_t = {
+    'a': [0.95],
+    'b': [1.05],
+    'threshold': [0.7, 0.6, 0.8, 0.9]
+}
+
+
 mlp_params_grid = [
     {
         'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
-        'solver': ['adam', 'sgd', 'lbfgs'],
-        # 'alpha': np.logspace(-5, 3, 5),
-        # 'batch_size': ['auto', 32, 64, 128, 256],
+        'solver': ['sgd'],
         'learning_rate': ['constant', 'adaptive', 'invscaling'],
-        # 'learning_rate_init': np.logspace(-5, 3, 5),
-        # 'power_t': [0.5, 0.33, 0.25],
         'max_iter': [200, 500, 800],
         'shuffle': [True, False],
         'random_state': [RANDOM_STATE],
+        'momentum': float_range(0, 1, 0.25) + [0.9],
+    },
+    {
+
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
+        'activation': ['identity', 'logistic', 'tanh', 'relu'],
+        'solver': ['adam'],
+        'max_iter': [200, 500, 800],
+        'shuffle': [True, False],
+        'random_state': [RANDOM_STATE],
+    },
+    {
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
+        'activation': ['identity', 'logistic', 'tanh', 'relu'],
+        'solver': ['lbfgs'],
+        'max_iter': [200, 500, 800],
+        'random_state': [RANDOM_STATE],
         'warm_start': [True, False],
-        'momentum': np.linspace(0, 1, 10),
-        # 'nesterovs_momentum': [True, False],
-        # 'beta_1': np.linspace(0, 1, 10, endpoint=False),
-        # 'beta_1': np.linspace(0, 1, 10, endpoint=False),
     }
 ]
