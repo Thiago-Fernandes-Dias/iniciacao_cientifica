@@ -35,22 +35,22 @@ class LightWeightAlg(BaseEstimator):
     def set_params(self, **params) -> Self:
         return LightWeightAlg(params['a'], params['b'], params['threshold'])
 
-    def fit(self, X: pd.DataFrame, y: list[int] | None = None):
-        for digraph_name, values in X.items():
+    def fit(self, x: pd.DataFrame, y: list[int] | None = None):
+        for digraph_name, values in x.items():
             average = values.mean() 
             std_dev = values.std()
             median = values.median()
             self._digraphs_metrics[digraph_name] = DigraphsMetrics(average, std_dev, median)
         time_spend_per_sample = []
-        for row in X.iterrows():
+        for row in x.iterrows():
             time_spend_per_sample.append(row[1].sum())
         self.is_fitted = True
 
-    def predict(self, X: pd.DataFrame):
+    def predict(self, x: pd.DataFrame):
         digraphs_hits_matrix: list[list[bool]] = []
         results: list[int] = []
         
-        for _, vec in X.iterrows():
+        for _, vec in x.iterrows():
             digraphs_hits_vec = []
             for digraph_name, value in vec.items():
                 digraph_metrics = self._digraphs_metrics[digraph_name]
@@ -58,16 +58,16 @@ class LightWeightAlg(BaseEstimator):
                 std = digraph_metrics.std_dev
                 md = digraph_metrics.median
                 res = min(av, md) * (self.a - std / av) <= value 
-                res = res and value <= max(av, md) * (self.b + std / av)
+                res = res and (value <= max(av, md) * (self.b + std / av))
                 digraphs_hits_vec.append(res)
             digraphs_hits_matrix.append(digraphs_hits_vec)
 
+        l = len(digraphs_hits_matrix[0])
         for pred in digraphs_hits_matrix:
-            s: float = 1
-            l = len(pred)
-            for i in range(2, l):
+            s: float = 1 if pred[0] else 0
+            for i in range(1, l):
                 s += 1.5 if pred[i - 1] else 1
-            results.append(1 if s / (9 * 1.5 + 1) >= 0.7 else -1) 
+            results.append(1 if s / ((l - 1) * 1.5 + 1) >= 0.7 else -1)
         
         return np.array(results)
 
