@@ -21,7 +21,7 @@ class LightWeightAlg(BaseEstimator):
 
     _digraphs_metrics: dict[str, DigraphsMetrics] = {}
 
-    def __init__(self, threshold: float = .7):
+    def __init__(self, threshold: float = .6):
         self.threshold = threshold
 
     def get_params(self, deep: bool = True) -> dict[str, float]:
