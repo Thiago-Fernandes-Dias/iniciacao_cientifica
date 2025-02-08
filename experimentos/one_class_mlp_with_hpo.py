@@ -1,7 +1,6 @@
 import os
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.neural_network import MLPClassifier
-from sklearn.svm import OneClassSVM
 
 from lib.cmu_dataset import CMUDataset
 from lib.runners.one_class_experiment_with_search_cv_runner_impl import OneClassExperimentWithSearchCVRunnerImpl

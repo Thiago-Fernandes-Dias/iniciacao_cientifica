@@ -1,11 +1,11 @@
 import os
+
 from sklearn.ensemble import RandomForestClassifier
 
 from lib.cmu_dataset import CMUDataset
-from lib.runners.one_vs_rest_experiment_runner import OneVsRestExperimentRunner
-
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
 from lib.utils import first_session_split, save_results
+
 
 def main() -> None:
     cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', first_session_split)
