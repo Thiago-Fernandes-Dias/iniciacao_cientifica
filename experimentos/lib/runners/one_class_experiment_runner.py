@@ -20,9 +20,9 @@ class OneClassExperimentRunner:
     _predictions_on_genuine_samples_map: dict[str, list[int]] = {}
     _one_class_estimators_hp_map: dict[str, dict[str, object]] = {}
     _predictions_on_attacks_samples_map: dict[str, list[ int ]] = {}
-    _tp_rate_map: dict[str, float] = {}
+    _frr_map: dict[str, float] = {}
     _user_model_recall_map: dict[str, float] = {}
-    _tn_rate_map: dict[str, float] = {}
+    far_map: dict[str, float] = {}
 
     @abstractmethod 
     def _calculate_predictions(self) -> None:
@@ -34,10 +34,8 @@ class OneClassExperimentRunner:
         self._calculate_metrics()
 
         results = OneClassResults( 
-                tp_rate_map = self._tp_rate_map,
-                tn_rate_map= self._tn_rate_map,
-                predictions_on_user_samples_map = self._predictions_on_genuine_samples_map,
-                predictions_on_impostor_samples_map = self._predictions_on_attacks_samples_map,
+                frr_map= self._frr_map,
+                far_map= self.far_map,
                 hp = self._one_class_estimators_hp_map)
         
         return results
@@ -53,7 +51,7 @@ class OneClassExperimentRunner:
     
     def _calculate_metrics(self):
         for uk in self._dataset.user_keys():
-            self._tp_rate_map[uk] = \
-                accuracy_score(self._y_genuine_test[uk], self._predictions_on_genuine_samples_map[uk])
-            self._tn_rate_map[uk] = \
-                accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])
+            self._frr_map[uk] = \
+                1 - accuracy_score(self._y_genuine_test[uk], self._predictions_on_genuine_samples_map[uk])
+            self.far_map[uk] = \
+                1 - accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])

@@ -18,12 +18,7 @@ class MultiClassResults:
     
     def precision(self):
         return precision_score(self.y_true, self.y_pred, average='micro')
-    
-    def print_results(self):
-        print(f"- Accuracy: {self.accuracy()}")
-        print(f"- Recall: {self.recall()}")
-        print(f"- Precision: {self.precision()}")
-    
+
     def to_dict(self)  -> dict[str, object]:
         return {
             "hp": self.hp,
