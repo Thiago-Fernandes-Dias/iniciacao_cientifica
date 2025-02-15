@@ -1,5 +1,5 @@
 from lib.utils import *
-
+from typing import Self
 
 class OneClassResults:
     frr_map: dict[str, float]
@@ -35,10 +35,16 @@ class OneClassResults:
     def to_dict(self) -> dict[str, object]:
         return {
             "hp": self.hp,
-            "averate_frr": self.get_average_frr(),
+            "average_frr": self.get_average_frr(),
             "average_far": self.get_average_far(),
             "user_model_frr": self.frr_map,
             "user_model_far": self.far_map,
             "best_frr": self.get_best_frr(),
             "best_far": self.get_best_far()
         }
+
+    @staticmethod
+    def from_json(file_path: str) -> "OneClassResults":
+        with open(file_path) as json_file:
+            data = json.load(json_file)
+            return OneClassResults(**data)
