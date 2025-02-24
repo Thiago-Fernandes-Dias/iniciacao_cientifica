@@ -1,6 +1,7 @@
 from lib.constants import *
 from lib.utils import *
 
+import pandas as pd
 
 class CMUDataset:
     _training_df: pd.DataFrame
