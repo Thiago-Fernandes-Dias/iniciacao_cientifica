@@ -4,7 +4,7 @@ import re
 directory = './'
 
 for filename in os.listdir(directory):
-    pattern = re.compile(r'(one|two|multi)(_([a-z])+)+.py')
+    pattern = re.compile(r'(one|two|multi)(_([a-z])+)+\.py')
     if not pattern.match(filename):
         continue
     file_path = os.path.join(directory, filename)
