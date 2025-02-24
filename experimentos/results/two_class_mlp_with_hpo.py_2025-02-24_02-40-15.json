@@ -1,0 +1,678 @@
+{
+    "hp": {
+        "s004": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s016": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s033": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "learning_rate": "constant",
+            "max_iter": 800,
+            "momentum": 0.9,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s010": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s029": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s011": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s025": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 1.0,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s031": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s056": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s024": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s037": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s038": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s054": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s035": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s039": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s015": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s021": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s005": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s032": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s041": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s022": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "learning_rate": "constant",
+            "max_iter": 800,
+            "momentum": 0.9,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s048": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s026": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s040": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s018": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s050": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s028": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s051": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s007": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s053": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s057": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s043": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 0.9,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s047": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s052": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "learning_rate": "invscaling",
+            "max_iter": 800,
+            "momentum": 1.0,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s002": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s027": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s020": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s042": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s013": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s034": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s046": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s003": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 1.0,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s008": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s036": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 1.0,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s019": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                50
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s049": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 0.9,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        },
+        "s017": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s012": {
+            "activation": "relu",
+            "hidden_layer_sizes": [
+                50,
+                50
+            ],
+            "max_iter": 500,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s030": {
+            "activation": "logistic",
+            "hidden_layer_sizes": [
+                100,
+                100
+            ],
+            "max_iter": 800,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "adam"
+        },
+        "s044": {
+            "activation": "identity",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "max_iter": 200,
+            "random_state": 42,
+            "solver": "lbfgs",
+            "warm_start": true
+        },
+        "s055": {
+            "activation": "tanh",
+            "hidden_layer_sizes": [
+                100
+            ],
+            "learning_rate": "constant",
+            "max_iter": 500,
+            "momentum": 0.9,
+            "random_state": 42,
+            "shuffle": true,
+            "solver": "sgd"
+        }
+    },
+    "average_frr": 0.32778711484593837,
+    "average_far": 0.11507338935574235,
+    "user_model_frr": {
+        "s004": 0.1914285714285714,
+        "s016": 0.3771428571428571,
+        "s033": 0.3857142857142857,
+        "s010": 0.18285714285714283,
+        "s029": 0.08285714285714285,
+        "s011": 0.3514285714285714,
+        "s025": 0.08571428571428574,
+        "s031": 0.7085714285714286,
+        "s056": 0.17714285714285716,
+        "s024": 0.5114285714285715,
+        "s037": 0.3857142857142857,
+        "s038": 0.1628571428571428,
+        "s054": 0.6171428571428572,
+        "s035": 0.4514285714285714,
+        "s039": 0.0714285714285714,
+        "s015": 0.3085714285714286,
+        "s021": 0.4828571428571429,
+        "s005": 0.1428571428571429,
+        "s032": 0.56,
+        "s041": 0.02285714285714291,
+        "s022": 0.5742857142857143,
+        "s048": 0.1914285714285714,
+        "s026": 0.14857142857142858,
+        "s040": 0.0971428571428572,
+        "s018": 0.11142857142857143,
+        "s050": 0.1171428571428571,
+        "s028": 0.20571428571428574,
+        "s051": 0.6799999999999999,
+        "s007": 0.8057142857142857,
+        "s053": 0.040000000000000036,
+        "s057": 0.4485714285714286,
+        "s043": 0.7628571428571429,
+        "s047": 0.4114285714285715,
+        "s052": 0.3028571428571428,
+        "s002": 0.7828571428571429,
+        "s027": 0.4314285714285714,
+        "s020": 0.23428571428571432,
+        "s042": 0.017142857142857126,
+        "s013": 0.11428571428571432,
+        "s034": 0.49142857142857144,
+        "s046": 0.4742857142857143,
+        "s003": 0.0485714285714286,
+        "s008": 0.9085714285714286,
+        "s036": 0.3371428571428572,
+        "s019": 0.12285714285714289,
+        "s049": 0.8514285714285714,
+        "s017": 0.18285714285714283,
+        "s012": 0.040000000000000036,
+        "s030": 0.10857142857142854,
+        "s044": 0.3857142857142857
+    },
+    "user_model_far": {
+        "s004": 0.12931428571428571,
+        "s016": 0.044914285714285684,
+        "s033": 0.07891428571428571,
+        "s010": 0.10822857142857145,
+        "s029": 0.15942857142857148,
+        "s011": 0.1365142857142857,
+        "s025": 0.038971428571428546,
+        "s031": 0.17800000000000005,
+        "s056": 0.17091428571428569,
+        "s024": 0.04600000000000004,
+        "s037": 0.1470285714285714,
+        "s038": 0.07017142857142855,
+        "s054": 0.13742857142857146,
+        "s035": 0.06834285714285715,
+        "s039": 0.11154285714285717,
+        "s015": 0.14274285714285717,
+        "s021": 0.1557142857142857,
+        "s005": 0.07765714285714287,
+        "s032": 0.22902857142857147,
+        "s041": 0.1321714285714286,
+        "s022": 0.036457142857142855,
+        "s048": 0.2329714285714286,
+        "s026": 0.21531428571428568,
+        "s040": 0.08102857142857145,
+        "s018": 0.2433142857142857,
+        "s050": 0.19279999999999997,
+        "s028": 0.053714285714285714,
+        "s051": 0.09725714285714282,
+        "s007": 0.17359999999999998,
+        "s053": 0.14462857142857144,
+        "s057": 0.11028571428571432,
+        "s043": 0.04617142857142853,
+        "s047": 0.030399999999999983,
+        "s052": 0.023771428571428554,
+        "s002": 0.05045714285714287,
+        "s027": 0.021542857142857197,
+        "s020": 0.21057142857142852,
+        "s042": 0.09382857142857148,
+        "s013": 0.07411428571428569,
+        "s034": 0.06914285714285717,
+        "s046": 0.09217142857142857,
+        "s003": 0.26457142857142857,
+        "s008": 0.1074857142857143,
+        "s036": 0.013142857142857123,
+        "s019": 0.0842857142857143,
+        "s049": 0.010800000000000032,
+        "s017": 0.07697142857142858,
+        "s012": 0.12451428571428569,
+        "s030": 0.07508571428571431,
+        "s044": 0.03874285714285719
+    },
+    "best_frr": [
+        "s042",
+        0.017142857142857126
+    ],
+    "best_far": [
+        "s049",
+        0.010800000000000032
+    ]
+}

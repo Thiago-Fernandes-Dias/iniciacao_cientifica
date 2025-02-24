@@ -1,0 +1,577 @@
+{
+    "hp": {
+        "s019": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s037": {
+            "bootstrap": false,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s052": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s025": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s031": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": 10,
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s043": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s051": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s008": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s024": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s005": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s033": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s038": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s049": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s050": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s044": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s036": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s017": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s027": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s041": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": null,
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s021": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s003": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s026": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s002": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s015": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s007": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s029": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s030": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s034": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s054": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s039": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s028": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s004": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s011": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s018": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s022": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": 10,
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s053": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s046": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s042": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s035": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s010": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s040": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s055": {
+            "bootstrap": false,
+            "criterion": "entropy",
+            "max_features": 10,
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s047": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s012": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": "log2",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s048": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s020": {
+            "bootstrap": true,
+            "criterion": "entropy",
+            "max_features": 10,
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s032": {
+            "bootstrap": false,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s057": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 150,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s013": {
+            "bootstrap": false,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s016": {
+            "bootstrap": true,
+            "criterion": "gini",
+            "max_features": "sqrt",
+            "n_estimators": 100,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        },
+        "s056": {
+            "bootstrap": false,
+            "criterion": "entropy",
+            "max_features": "sqrt",
+            "n_estimators": 50,
+            "n_jobs": -1,
+            "random_state": 42,
+            "warm_start": true
+        }
+    },
+    "average_frr": 0.3457142857142857,
+    "average_far": 0.04246946778711485,
+    "user_model_frr": {
+        "s019": 0.5685714285714285,
+        "s037": 0.4742857142857143,
+        "s052": 0.1428571428571429,
+        "s025": 0.1657142857142857,
+        "s031": 0.8857142857142857,
+        "s043": 0.84,
+        "s051": 0.8857142857142857,
+        "s008": 0.6971428571428571,
+        "s024": 0.12857142857142856,
+        "s005": 0.5685714285714285,
+        "s033": 0.12857142857142856,
+        "s038": 0.27714285714285714,
+        "s049": 0.8657142857142857,
+        "s050": 0.19714285714285718,
+        "s044": 0.4542857142857143,
+        "s036": 0.0,
+        "s017": 0.05714285714285716,
+        "s027": 0.5057142857142858,
+        "s041": 0.0028571428571428914,
+        "s021": 0.8228571428571428,
+        "s003": 0.04571428571428571,
+        "s026": 0.07428571428571429,
+        "s002": 0.8942857142857142,
+        "s015": 0.2114285714285714,
+        "s007": 0.8828571428571429,
+        "s029": 0.05142857142857138,
+        "s030": 0.02285714285714291,
+        "s034": 0.8085714285714286,
+        "s054": 0.72,
+        "s039": 0.13714285714285712,
+        "s028": 0.33999999999999997,
+        "s004": 0.15714285714285714,
+        "s011": 0.46285714285714286,
+        "s018": 0.08857142857142852,
+        "s022": 0.07999999999999996,
+        "s053": 0.03428571428571425,
+        "s046": 0.5714285714285714,
+        "s042": 0.15428571428571425,
+        "s035": 0.41714285714285715,
+        "s010": 0.04571428571428571,
+        "s040": 0.06571428571428573,
+        "s055": 0.008571428571428563,
+        "s047": 0.6,
+        "s012": 0.03142857142857147,
+        "s048": 0.07999999999999996,
+        "s020": 0.17428571428571427,
+        "s032": 0.7371428571428571,
+        "s057": 0.3057142857142857,
+        "s013": 0.07428571428571429,
+        "s016": 0.38
+    },
+    "user_model_far": {
+        "s019": 0.03920000000000001,
+        "s037": 0.08960000000000001,
+        "s052": 0.002114285714285735,
+        "s025": 0.0030857142857142472,
+        "s031": 0.035257142857142876,
+        "s043": 0.00039999999999995595,
+        "s051": 0.01908571428571426,
+        "s008": 0.08240000000000003,
+        "s024": 0.03234285714285712,
+        "s005": 0.021085714285714263,
+        "s033": 0.010800000000000032,
+        "s038": 0.011942857142857144,
+        "s049": 0.0026285714285714246,
+        "s050": 0.04834285714285713,
+        "s044": 0.02805714285714289,
+        "s036": 0.0024571428571428244,
+        "s017": 0.03600000000000003,
+        "s027": 0.005085714285714249,
+        "s041": 0.09165714285714288,
+        "s021": 0.03691428571428568,
+        "s003": 0.11691428571428575,
+        "s026": 0.05948571428571425,
+        "s002": 0.02182857142857142,
+        "s015": 0.03925714285714288,
+        "s007": 0.03759999999999997,
+        "s029": 0.061828571428571455,
+        "s030": 0.020914285714285663,
+        "s034": 0.023942857142857155,
+        "s054": 0.019885714285714284,
+        "s039": 0.030228571428571382,
+        "s028": 0.014971428571428524,
+        "s004": 0.09371428571428575,
+        "s011": 0.11845714285714282,
+        "s018": 0.07354285714285713,
+        "s022": 0.019371428571428595,
+        "s053": 0.058457142857142874,
+        "s046": 0.05491428571428569,
+        "s042": 0.002571428571428558,
+        "s035": 0.00422857142857147,
+        "s010": 0.00845714285714283,
+        "s040": 0.03177142857142856,
+        "s055": 0.09971428571428576,
+        "s047": 0.009600000000000053,
+        "s012": 0.0612571428571429,
+        "s048": 0.04891428571428569,
+        "s020": 0.13725714285714286,
+        "s032": 0.05411428571428567,
+        "s057": 0.03908571428571428,
+        "s013": 0.06222857142857141,
+        "s016": 0.01925714285714286
+    },
+    "best_frr": [
+        "s036",
+        0.0
+    ],
+    "best_far": [
+        "s043",
+        0.00039999999999995595
+    ]
+}

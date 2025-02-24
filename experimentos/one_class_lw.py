@@ -7,8 +7,7 @@ from lib.utils import lw_split, save_results
 
 
 def main() -> None:
-    cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv',
-                              lw_split, "(DD|UD)(\\.[A-Za-z]+)+")
+    cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', lw_split)
     one_class_lw_experiment = OneClassExperimentRunnerImpl(dataset=cmu_database, estimator=LightWeightAlg())
     results = one_class_lw_experiment.exec()
     save_results(os.path.basename(__file__), results.to_dict())

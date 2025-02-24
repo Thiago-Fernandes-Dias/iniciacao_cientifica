@@ -37,7 +37,7 @@ rf_params_grid = [
         'criterion': ['gini', 'entropy', 'log_loss'],
         'max_features': ['sqrt', 'log2', None, 10, 20, 31],
         'bootstrap': [True, False],
-        'n_jobs': [-1],
+        'n_jobs': [N_JOBS],
         'random_state': [RANDOM_STATE],
         'warm_start': [True, False]
     }
