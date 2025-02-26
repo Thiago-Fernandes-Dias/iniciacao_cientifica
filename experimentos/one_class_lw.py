@@ -3,11 +3,11 @@ import os
 from lib.cmu_dataset import CMUDataset
 from lib.lightweight_alg import LightWeightAlg
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
-from lib.utils import lw_split, save_results
+from lib.utils import save_results, first_session_split
 
 
 def main() -> None:
-    cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', lw_split)
+    cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', first_session_split)
     one_class_lw_experiment = OneClassExperimentRunnerImpl(dataset=cmu_database, estimator=LightWeightAlg())
     results = one_class_lw_experiment.exec()
     save_results(os.path.basename(__file__), results.to_dict())

@@ -22,15 +22,16 @@ def generate_graph(title: str, label: str, file: str, index: str):
         ax.set_xticks(x_pos)
         ax.set_xlabel(label)
         ax.set_title(title)
-        plt.savefig(f"results/{file.replace('.py', '')}_{label}.png")
+        pic_name = re.sub(r'\.(py|json)', '', file)
+        plt.savefig(f"results/{pic_name}_{label}.png")
 
 
-for file in os.listdir(directory):
-    filename = os.fsdecode(file)
-    if re.compile(r"(one|two)_class").search(filename) and filename.endswith(".json"):
-        generate_graph(
-            "False Acceptance Rate per user model", "FAR", filename, "user_model_far"
-        )
-        generate_graph(
-            "False Rejection Rate per user model", "FRR", filename, "user_model_frr"
-        )
+def main():
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if re.compile(r"(one|two)_class").search(filename) and filename.endswith(".json"):
+            generate_graph("False Match Rate per user model", "FAR", filename, "user_model_far")
+            generate_graph("False Non-Match Rate per user model", "FRR", filename, "user_model_frr")
+
+if __name__ == "__main__":
+    main()
