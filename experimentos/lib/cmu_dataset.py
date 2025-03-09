@@ -31,13 +31,13 @@ class CMUDataset:
         labels = create_labels(vectors, GENUINE_LABEL)
         return vectors, labels
 
-    def two_class_training_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
-        user_vectors = self.user_training_samples(user_subject)
-        other_vectors = self \
+    def two_class_training_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int], pd.DataFrame, list[int]]:
+        genuine_vectors = self.user_training_samples(user_subject)
+        impostor_vectors = self \
             .training_df_query(lambda df: df[df['subject'] != user_subject]) \
-            .sample(n=data_frame_length(user_vectors), random_state=RANDOM_STATE)
-        return (pd.concat([user_vectors, other_vectors]),
-                create_labels(user_vectors, GENUINE_LABEL) + create_labels(other_vectors, IMPOSTOR_LABEL))
+            .sample(n=data_frame_length(genuine_vectors), random_state=RANDOM_STATE)
+        return (genuine_vectors, create_labels(genuine_vectors, GENUINE_LABEL),
+                impostor_vectors, create_labels(impostor_vectors, IMPOSTOR_LABEL))
 
     def impostors_test_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
         attack_vectors = self.test_df_query(lambda df: df[df['subject'] != user_subject])

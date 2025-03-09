@@ -12,7 +12,7 @@ class OneClassExperimentWithSearchCVRunnerImpl(OneClassExperimentRunner):
 
     def _calculate_predictions(self) -> None:
         for uk in self._dataset.user_keys():
-            self._estimator.fit(self._X_training[uk], self._y_training[uk])
+            self._estimator.fit(self._X_genuine_training[uk], self._y_genuine_training[uk])
             self._one_class_estimators_hp_map[uk] = self._estimator.best_params_
             self._predictions_on_genuine_samples_map[uk] = \
                 self._estimator.predict(self._X_genuine_test[uk]).flatten().tolist()

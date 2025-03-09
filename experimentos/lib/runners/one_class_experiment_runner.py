@@ -11,9 +11,11 @@ class OneClassExperimentRunner:
         self._dataset = dataset
         self._use_impostor_samples = use_impostor_samples
 
-    _X_training: dict[str, pd.DataFrame] = {}
+    _X_genuine_training: dict[str, pd.DataFrame] = {}
+    _y_genuine_training: dict[str, list[int]] = {}
+    _X_impostor_training: dict[str, pd.DataFrame] = {}
+    _y_impostor_training: dict[str, list[int]] = {}
     _X_genuine_test: dict[str, pd.DataFrame] = {}
-    _y_training: dict[str, list[int]] = {}
     _y_genuine_test: dict[str, list[int]] = {}
     _X_impostors_test: dict[str, pd.DataFrame] = {}
     _y_impostors_test: dict[str, list[int]] = {}
@@ -22,7 +24,7 @@ class OneClassExperimentRunner:
     _predictions_on_attacks_samples_map: dict[str, list[ int ]] = {}
     _frr_map: dict[str, float] = {}
     _user_model_recall_map: dict[str, float] = {}
-    far_map: dict[str, float] = {}
+    _far_map: dict[str, float] = {}
 
     @abstractmethod 
     def _calculate_predictions(self) -> None:
@@ -35,17 +37,15 @@ class OneClassExperimentRunner:
 
         results = OneClassResults( 
                 frr_map= self._frr_map,
-                far_map= self.far_map,
+                far_map= self._far_map,
                 hp = self._one_class_estimators_hp_map)
         
         return results
 
     def _set_vectors_and_true_labels(self) -> None:
         for uk in self._dataset.user_keys():
-            if self._use_impostor_samples:
-                self._X_training[uk], self._y_training[uk] = self._dataset.two_class_training_set(uk)
-            else:
-                self._X_training[uk], self._y_training[uk] = self._dataset.one_class_training_set(uk)
+            self._X_genuine_training[uk], self._y_genuine_training[uk], \
+                self._X_impostor_training[uk], self._y_impostor_training[uk] = self._dataset.two_class_training_set(uk)
             self._X_genuine_test[uk], self._y_genuine_test[uk] = self._dataset.user_test_set(uk)
             self._X_impostors_test[uk], self._y_impostors_test[uk] = self._dataset.impostors_test_set(uk)
     
@@ -53,5 +53,5 @@ class OneClassExperimentRunner:
         for uk in self._dataset.user_keys():
             self._frr_map[uk] = \
                 1 - accuracy_score(self._y_genuine_test[uk], self._predictions_on_genuine_samples_map[uk])
-            self.far_map[uk] = \
+            self._far_map[uk] = \
                 1 - accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])

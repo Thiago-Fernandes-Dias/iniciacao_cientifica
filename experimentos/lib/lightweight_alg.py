@@ -22,6 +22,7 @@ class LightWeightAlg(BaseEstimator):
     threshold: float
 
     _digraphs_metrics: dict[str, DigraphsMetrics] = {}
+    _training_data: pd.DataFrame = None
 
     def __init__(self, threshold: float = .7):
         self.threshold = threshold
@@ -40,6 +41,7 @@ class LightWeightAlg(BaseEstimator):
             std_dev = values.std()
             median = values.median()
             self._digraphs_metrics[str(digraph_name)] = DigraphsMetrics(average, std_dev, median)
+        self._training_data = x
 
     def predict(self, x: pd.DataFrame):
         results: list[int] = []
@@ -63,3 +65,4 @@ class LightWeightAlg(BaseEstimator):
                 s += 1.5 if hits[i - 1] else 1
         result = GENUINE_LABEL if s / ((length - 1) * 1.5 + 1) >= self.threshold else IMPOSTOR_LABEL
         return result
+
