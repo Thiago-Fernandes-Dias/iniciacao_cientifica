@@ -39,12 +39,14 @@ class OneClassThresholdSearchCV:
             cv_bacc: list[float] = []
             for gss, iss in zip(self._cv.split(x_genuine, y_genuine),
                                 self._cv.split(x_impostor, y_impostor)):
-                x_g_train, x_g_test = x_genuine.iloc[gss[0]], x_genuine.iloc[gss[1]]
+                x_g_train = x_genuine.iloc[gss[0]]
+                x_g_test = x_genuine.iloc[gss[1]]
                 x_i_test = x_impostor.iloc[iss[1]]
                 self._estimator = self._estimator.set_params(**{'threshold': threshold})
                 y_g_train = create_labels(x_g_train, GENUINE_LABEL)
                 self._estimator.fit(x_g_train, y_g_train)
-                g_pred, i_pred = self._estimator.predict(x_g_test), self._estimator.predict(x_i_test)
+                g_pred = self._estimator.predict(x_g_test)
+                i_pred =  self._estimator.predict(x_i_test)
                 g_recall = accuracy_score(create_labels(x_g_test, GENUINE_LABEL), g_pred)
                 i_recall = accuracy_score(create_labels(x_i_test, IMPOSTOR_LABEL), i_pred)
                 cv_bacc.append((g_recall + i_recall) / 2)
