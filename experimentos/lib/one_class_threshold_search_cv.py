@@ -54,6 +54,8 @@ class OneClassThresholdSearchCV:
             if average_bacc > self._best_bacc:
                 self._best_bacc = average_bacc
                 self._best_threshold = threshold
+        self._estimator = self._estimator.set_params(**{'threshold': self._best_threshold})
+        self._estimator.fit(x_genuine)
 
     def predict(self, x: pd.DataFrame):
         return self._estimator.predict(x)

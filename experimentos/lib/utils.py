@@ -91,6 +91,8 @@ def save_results(name: str, experiment_results: dict[str, object]) -> None:
 def first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1]
 
+def two_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return df[df['sessionIndex'] == 1], df[df['sessionIndex'] == 2]
 
 def lw_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['sessionIndex'] == 1) & (df['rep'] <= 12)], df[df['sessionIndex'] != 1]
