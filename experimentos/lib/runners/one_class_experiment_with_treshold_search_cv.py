@@ -16,7 +16,6 @@ class OneClassExperimentWithTresholdSearchCV(OneClassExperimentRunner):
 
     def _calculate_predictions(self) -> None:
         for uk in self._dataset.user_keys():
-            self._estimator.set_genuine_label(uk)
             self._estimator.fit(self._X_genuine_training[uk], self._X_impostor_training[uk])
             self._one_class_estimators_hp_map[uk] = self._estimator.get_params()
             self._predictions_on_genuine_samples_map[uk] = \

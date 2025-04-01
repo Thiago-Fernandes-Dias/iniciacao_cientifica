@@ -52,6 +52,6 @@ class OneClassExperimentRunner:
     def _calculate_metrics(self):
         for uk in self._dataset.user_keys():
             self._frr_map[uk] = \
-                1 - accuracy_score(self._y_genuine_test[uk], self._predictions_on_genuine_samples_map[uk])
+                1.0 - accuracy_score(self._y_genuine_test[uk], self._predictions_on_genuine_samples_map[uk])
             self._far_map[uk] = \
-                1 - accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])
+                1.0 - accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])

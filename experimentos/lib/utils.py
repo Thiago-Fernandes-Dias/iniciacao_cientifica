@@ -82,7 +82,7 @@ def create_dir_if_not_exists(name: str):
 
 
 def save_results(name: str, experiment_results: dict[str, object]) -> None:
-    json_string = json.dumps(experiment_results, indent=4)
+    json_string = json.dumps(experiment_results, ensure_ascii=True, sort_keys=True, indent=2, allow_nan=False)
     create_dir_if_not_exists("results")
     with open(f"results/{name}_{get_datetime()}.json", 'w+') as file:
         file.write(json_string)

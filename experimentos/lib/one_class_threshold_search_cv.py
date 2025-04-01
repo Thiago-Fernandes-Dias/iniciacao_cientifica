@@ -15,7 +15,6 @@ class OneClassThresholdSearchCV:
     _cv: KFold
     _thresholds: list[float]
 
-    _genuine_label: str
     _best_threshold: float
     _best_bacc: float
 
@@ -50,7 +49,7 @@ class OneClassThresholdSearchCV:
                 g_recall = accuracy_score(create_labels(x_g_test, GENUINE_LABEL), g_pred)
                 i_recall = accuracy_score(create_labels(x_i_test, IMPOSTOR_LABEL), i_pred)
                 cv_bacc.append((g_recall + i_recall) / 2)
-            average_bacc = np.average(cv_bacc)
+            average_bacc = np.average(cv_bacc).item()
             if average_bacc > self._best_bacc:
                 self._best_bacc = average_bacc
                 self._best_threshold = threshold
@@ -59,6 +58,3 @@ class OneClassThresholdSearchCV:
 
     def predict(self, x: pd.DataFrame):
         return self._estimator.predict(x)
-
-    def set_genuine_label(self, genuine_label: str):
-        self._genuine_label = genuine_label
