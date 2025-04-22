@@ -1,17 +1,19 @@
 ﻿import os
 
-from lib.cmu_dataset import CMUDataset
+from lib.dataset import Dataset
+from lib.repositories.results_repository import results_repository_factory
 from lib.runners.mlp_dropout import MLPDropout
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
-from lib.utils import first_session_split, save_results, exclude_hold_times_pt
+from lib.utils import cmu_first_session_split,  save_results, exclude_hold_times_pt
 
 
 def main() -> None:
-    cmu_database = CMUDataset('datasets/cmu/DSL-StrongPasswordData.csv', first_session_split)
+    cmu_database = Dataset('datasets/cmu/DSL-StrongPasswordData.csv', cmu_first_session_split)
     one_class_svm_experiment = OneClassExperimentRunnerImpl(dataset=cmu_database, estimator=MLPDropout(),
                                                             use_impostor_samples=True)
     results = one_class_svm_experiment.exec()
-    save_results(os.path.basename(__file__), results.to_dict())
+    repo = results_repository_factory()
+    repo.add_one_class_result(results, os.path.basename(__file__).replace(".py", ""))
 
 
 if __name__ == "__main__":

@@ -1,15 +1,15 @@
 ﻿from sklearn.model_selection._search import BaseSearchCV
 
-from lib.cmu_dataset import CMUDataset
+from lib.dataset import Dataset
 from lib.one_class_threshold_search_cv import OneClassThresholdSearchCV
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 
 
-class OneClassExperimentWithTresholdSearchCV(OneClassExperimentRunner):
+class OneClassExperimentWithThresholdSearchCV(OneClassExperimentRunner):
     _estimator: OneClassThresholdSearchCV
-    _dataset: CMUDataset
+    _dataset: Dataset
 
-    def __init__(self, dataset: CMUDataset, estimator: OneClassThresholdSearchCV):
+    def __init__(self, dataset: Dataset, estimator: OneClassThresholdSearchCV):
         # Second parameter is ignored. MB
         super().__init__(dataset, True)
         self._estimator = estimator

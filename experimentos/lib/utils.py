@@ -1,13 +1,12 @@
-import json
 import os
 import re
-from datetime import datetime
 from typing import Callable, TypeVar
 
 import pandas as pd
 from sklearn.metrics import make_scorer, accuracy_score
 
 T = TypeVar('T')
+S = TypeVar('S')
 
 exclude_hold_times_pt: str = "((D|U)D)(.[a-zA-Z]+)+"
 
@@ -37,6 +36,8 @@ def float_range(start: float, end: float, step: float) -> list[float]:
         start += step
     return result
 
+def select(iterable: list[T], f: Callable[[T], S]) -> list[S]:
+    return [f(x) for x in iterable]
 
 def item_with_max_value(map: dict[T, float], comp: Callable[[float, float], int]) -> tuple[T, float]:
     max_item, max_value = map.popitem()
@@ -71,31 +72,17 @@ def dict_values_average(map: dict[T, float]) -> float:
         sum += value
     return sum / length
 
-
-def get_datetime() -> str:
-    return datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-
-
 def create_dir_if_not_exists(name: str):
-    if not os.path.exists('results'):
-        os.makedirs('results')
+    if not os.path.exists(name):
+        os.makedirs(name)
 
-
-def save_results(name: str, experiment_results: dict[str, object]) -> None:
-    json_string = json.dumps(experiment_results, ensure_ascii=True, sort_keys=True, indent=2, allow_nan=False)
-    create_dir_if_not_exists("results")
-    with open(f"results/{name}_{get_datetime()}.json", 'w+') as file:
-        file.write(json_string)
-
-
-def first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def cmu_first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1]
 
 def two_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[df['sessionIndex'] == 1], df[df['sessionIndex'] == 2]
 
-def lw_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    return df[(df['sessionIndex'] == 1) & (df['rep'] <= 12)], df[df['sessionIndex'] != 1]
-
+def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
 
 far_score = make_scorer(lambda y_true, y_pred: 1 - accuracy_score(y_true, y_pred), greater_is_better=False)

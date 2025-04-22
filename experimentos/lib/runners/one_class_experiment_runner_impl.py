@@ -1,12 +1,12 @@
 from sklearn.base import BaseEstimator
-from lib.cmu_dataset import *
+from lib.dataset import *
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 
 class OneClassExperimentRunnerImpl(OneClassExperimentRunner):
     _estimator: BaseEstimator
-    _dataset: CMUDataset
+    _dataset: Dataset
 
-    def __init__(self, dataset: CMUDataset, estimator: BaseEstimator, use_impostor_samples: bool = False):
+    def __init__(self, dataset: Dataset, estimator: BaseEstimator, use_impostor_samples: bool = False):
         super().__init__(dataset, use_impostor_samples)
         self._estimator = estimator
 

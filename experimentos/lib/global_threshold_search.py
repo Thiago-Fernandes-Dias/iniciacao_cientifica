@@ -5,18 +5,18 @@ from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold
 
-from lib.cmu_dataset import CMUDataset
+from lib.dataset import Dataset
 from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.utils import create_labels, dict_values_average
 
 
 class GlobalThresholdTuning:
-    _dataset: CMUDataset
+    _dataset: Dataset
     _thresholds: list[float]
     _estimator_factory: Callable[[], BaseEstimator]
     _cv: KFold
 
-    def __init__(self, dataset: CMUDataset, estimator_factory: Callable[[], BaseEstimator], thresholds: list[float], cv: KFold):
+    def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator], thresholds: list[float], cv: KFold):
         self._dataset = dataset
         self._estimator_factory = estimator_factory
         self._thresholds = thresholds

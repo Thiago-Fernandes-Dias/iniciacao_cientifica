@@ -1,12 +1,12 @@
-from lib.cmu_dataset import CMUDataset
+from lib.dataset import Dataset
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 from sklearn.model_selection._search import BaseSearchCV
 
 class OneClassExperimentWithSearchCVRunnerImpl(OneClassExperimentRunner):
     _estimator: BaseSearchCV
-    _dataset: CMUDataset
+    _dataset: Dataset
 
-    def __init__(self, dataset: CMUDataset, estimator: BaseSearchCV, use_impostor_samples: bool = False):
+    def __init__(self, dataset: Dataset, estimator: BaseSearchCV, use_impostor_samples: bool = False):
         super().__init__(dataset, use_impostor_samples)
         self._estimator = estimator
 

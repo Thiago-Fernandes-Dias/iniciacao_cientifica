@@ -1,13 +1,13 @@
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 
-from lib.cmu_dataset import *
+from lib.dataset import *
 from lib.multiclass_results import *
 
 class MultiClassExperimentRunner:
-    cmu_database: CMUDataset
+    cmu_database: Dataset
 
-    def __init__(self, dataset: CMUDataset, estimator: BaseEstimator):
+    def __init__(self, dataset: Dataset, estimator: BaseEstimator):
         self.cmu_database = dataset
         self.estimator = estimator
     

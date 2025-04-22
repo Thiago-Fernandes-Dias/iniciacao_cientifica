@@ -1,11 +1,11 @@
 from sklearn.model_selection._search import BaseSearchCV
 
-from lib.cmu_dataset import *
+from lib.dataset import *
 from lib.multiclass_results import *
 
 class MultiClassExperimentWithSearchCVRunner:
 
-    def __init__(self, dataset: CMUDataset, estimator: BaseSearchCV):
+    def __init__(self, dataset: Dataset, estimator: BaseSearchCV):
         self.cmu_database = dataset
         self.estimator = estimator
     
