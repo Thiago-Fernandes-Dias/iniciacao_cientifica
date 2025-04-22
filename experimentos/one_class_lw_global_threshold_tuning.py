@@ -30,8 +30,8 @@ def exec(dataset: Dataset, file_suffix: str):
     repo.add_one_class_result(results, os.path.basename(__file__).replace(".py", "") + "_" + file_suffix)
 
 def main() -> None:
-    # cmu = CMUDataset("datasets/cmu/DSL-StrongPasswordData.csv", cmu_first_session_split)
-    # exec(cmu, "cmu")
+    cmu = CMUDataset("datasets/cmu/DSL-StrongPasswordData.csv", cmu_first_session_split)
+    exec(cmu, "cmu")
     keyrecs = KeyrecsDataset("datasets/keyrecs/fixed-text.csv", keyrecs_split)
     exec(keyrecs, "keyrecs")
 
