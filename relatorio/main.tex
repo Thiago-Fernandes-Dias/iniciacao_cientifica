@@ -63,34 +63,19 @@
     pagebackref=false, % Coloca páginas citadas na bibliografia
     hyperfootnotes=false
 }
-
-
 \hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
 
-% para incluir figuras
-\usepackage{graphicx}
-
-
-%% The amssymb package provides various useful mathematical symbols
-
+\usepackage{graphicx} % Inclusão de figuras
 
 \makeindex
 
 \begin{document}
-\selectlanguage{brazil}
-
-	% Capas
+	\selectlanguage{brazil}
 	\pagestyle{empty}
-	%\include{capa}
 	\includepdf[pages={1}]{capa_projeto.pdf}
-	
 	\include{resumo}
-
-	% Índice	
 	\tableofcontents*
-
-\textual
-	% Conteúdo
+	\textual
 	\clearpage
 	\input{texto}
 	\bibliography{references}
