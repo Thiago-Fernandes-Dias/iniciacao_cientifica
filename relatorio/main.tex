@@ -1,0 +1,95 @@
+\documentclass[
+	article,
+	12pt,
+	openright,
+	twoside,
+	a4paper,
+	english,
+	brazil % Idioma principal
+	]{abntex2}
+
+
+\usepackage[brazil]{babel}
+
+\usepackage[utf8]{inputenc} % Caracteres acentuados. utf8 é comum no linux
+
+\usepackage[T1]{fontenc}
+
+\usepackage{ae,aecompl} % Melhora a qualidade do PDF gerado
+
+\usepackage{multirow}
+
+\usepackage{float}
+
+\usepackage{mathtools}
+
+\usepackage{amsmath}
+
+\usepackage[top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+
+\usepackage{appendix}
+
+\usepackage{todonotes}
+
+%\usepackage[pagebackref]{hyperref}
+\usepackage{hyperref}
+\urlstyle{same}
+\hypersetup{
+	pdfauthor={-},
+	pdftitle={Projeto IC},
+	colorlinks,
+	bookmarks=true,
+	bookmarksopen=true,
+	pdfstartview={FitH},
+	plainpages=false, % coloca links no pdf
+    pdfpagelabels, % corrige problemas c/ numeração em romanos
+    pagebackref=false, %coloca páginas citadas na bibliografia
+    hyperfootnotes=false
+}
+
+
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+
+% para incluir figuras
+\usepackage{graphicx}
+
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+
+\usepackage{subfig}
+
+\usepackage{upgreek}
+
+\usepackage[alf, abnt-etal-list=0]{abntex2cite}	% Citações padrão ABNT
+
+\DoubleSpacing
+
+\usepackage{color}
+
+\newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
+
+\usepackage{pdfpages}
+
+\makeindex
+
+\begin{document}
+\selectlanguage{brazil}
+
+	% Capas
+	\pagestyle{empty}
+	%\include{capa}
+	\includepdf[pages={1}]{capa_projeto.pdf}
+	
+	\include{resumo}
+
+	% Índice	
+	\tableofcontents*
+
+\textual
+	% Conteúdo
+	\clearpage
+	\input{texto}
+	\bibliography{references}
+ 
+\end{document}
