@@ -3,7 +3,7 @@ import os
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
 from sklearn.neural_network import MLPClassifier
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import RANDOM_STATE, N_JOBS
 from lib.hp_grids import mlp_params_grid
 from lib.repositories.results_repository import results_repository_factory

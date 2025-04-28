@@ -2,7 +2,7 @@ from typing import Callable
 
 import pandas as pd
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 
 
 class CMUDataset(Dataset):

@@ -2,11 +2,12 @@
 
 from sklearn.model_selection import KFold
 
-from lib.cmu_dataset import CMUDataset
+from lib.datasets.cmu_dataset import CMUDataset
+from lib.datasets.dataset import Dataset
 from lib.constants import RANDOM_STATE
 from lib.dataset import Dataset
 from lib.global_threshold_search import GlobalThresholdTuning
-from lib.keyrecs_dataset import KeyrecsDataset
+from lib.datasets.keyrecs_dataset import KeyrecsDataset
 from lib.lightweight_alg import LightWeightAlg
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl

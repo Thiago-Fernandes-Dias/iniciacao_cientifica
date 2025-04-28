@@ -1,6 +1,6 @@
 ﻿import os
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.runners.mlp_dropout import MLPDropout
 from lib.runners.multi_class_experiment_runner import MultiClassExperimentRunner
 from lib.utils import cmu_first_session_split, save_results, exclude_hold_times_pt

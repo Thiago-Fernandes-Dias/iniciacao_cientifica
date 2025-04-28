@@ -1,4 +1,4 @@
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 from sklearn.model_selection._search import BaseSearchCV
 

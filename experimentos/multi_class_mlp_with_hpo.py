@@ -2,7 +2,7 @@ import os
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.neural_network import MLPClassifier
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import RANDOM_STATE, N_JOBS
 from lib.runners.multi_class_experiment_with_search_cv_runner import (
     MultiClassExperimentWithSearchCVRunner,

@@ -1,0 +1,57 @@
+\documentclass[
+	article,
+	12pt,
+	openright,
+	twoside,
+	a4paper,
+	english,
+	brazil % Idioma principal
+]{abntex2}
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc} % Caracteres acentuados. utf8 é comum no linux
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Usa fontes modernas e evita substituições de fontes
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage[top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\usepackage{appendix}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{upgreek}
+\usepackage[alf, abnt-etal-list=0]{abntex2cite}	% Citações padrão ABNT
+\usepackage{graphicx} % Inclusão de figuras
+\usepackage{color}
+\newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
+\usepackage{pdfpages}
+
+\urlstyle{same}
+
+\hypersetup{
+	pdfauthor={-},
+	pdftitle={Projeto IC},
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=black,
+	urlcolor=black,
+	bookmarksopen=true,
+	pdfstartview={FitH},
+	plainpages=false, % Coloca links no pdf
+}
+
+\DoubleSpacing\makeindex
+
+\begin{document}
+	\selectlanguage{brazil}
+	\pagestyle{empty}
+	\includepdf[pages={1}]{capa_projeto.pdf}
+	\include{resumo}
+	\tableofcontents*
+    \clearpage
+    \input{sessoes/sessoes.tex}
+    \clearpage
+	\bibliography{references}
+\end{document}

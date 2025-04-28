@@ -3,7 +3,7 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import RANDOM_STATE, N_JOBS
 from lib.hp_grids import rf_params_grid
 from lib.repositories.results_repository import results_repository_factory

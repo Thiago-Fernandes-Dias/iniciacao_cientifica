@@ -1,6 +1,6 @@
 ﻿from sklearn.model_selection._search import BaseSearchCV
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.one_class_threshold_search_cv import OneClassThresholdSearchCV
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 

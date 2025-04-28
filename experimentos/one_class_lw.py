@@ -1,6 +1,6 @@
 import os
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.lightweight_alg import LightWeightAlg
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
