@@ -20,9 +20,9 @@ class Dataset:
 
     def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]],
                  columns_filer_rg: str = '.*') -> None:
-        cmu: pd.DataFrame = pd.read_csv(file_path)
-        self._user_keys: set[str] = set(cmu[self._user_key_name()].drop_duplicates().tolist())
-        self._training_df, self._test_df = test_train_split(cmu)
+        dataset: pd.DataFrame = pd.read_csv(file_path)
+        self._user_keys: set[str] = set(dataset[self._user_key_name()].drop_duplicates().tolist())
+        self._training_df, self._test_df = test_train_split(dataset)
         self._columns_filter_rg = columns_filer_rg
 
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:

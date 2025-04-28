@@ -8,7 +8,7 @@ from lib.constants import RANDOM_STATE
 from lib.keyrecs_dataset import KeyrecsDataset
 from lib.lightweight_alg import LightWeightAlg
 from lib.one_class_threshold_search_cv import OneClassThresholdSearchCV
-from lib.repositories.mongo_results_repository import results_repository_factory
+from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_with_threshold_search_cv import OneClassExperimentWithThresholdSearchCV
 from lib.utils import  cmu_first_session_split, float_range, keyrecs_split
 

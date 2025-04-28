@@ -30,6 +30,7 @@ class OneClassExperimentRunner:
         pass
 
     def exec(self) -> OneClassResults:
+        self._reset_from_previous_execution()
         self._set_vectors_and_true_labels()
         self._calculate_predictions()
         self._calculate_metrics()
@@ -55,4 +56,19 @@ class OneClassExperimentRunner:
             self._frr.append(UserModelMetric(uk, frr_value))
             far_value = 1.0 - accuracy_score(self._y_impostors_test[uk], self._predictions_on_attacks_samples_map[uk])
             self._far.append(UserModelMetric(uk, far_value))
+    
+    def _reset_from_previous_execution(self):
+        self._X_genuine_training.clear()
+        self._y_genuine_training.clear()
+        self._X_impostor_training.clear()
+        self._y_impostor_training.clear()
+        self._X_genuine_test.clear()
+        self._y_genuine_test.clear()
+        self._X_impostors_test.clear()
+        self._y_impostors_test.clear()
+        self._predictions_on_genuine_samples_map.clear()
+        self._one_class_estimators_hp_map.clear()
+        self._predictions_on_attacks_samples_map.clear()
+        self._far.clear()
+        self._frr.clear()
                 

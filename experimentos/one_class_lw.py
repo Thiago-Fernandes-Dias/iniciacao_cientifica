@@ -2,7 +2,7 @@ import os
 
 from lib.dataset import Dataset
 from lib.lightweight_alg import LightWeightAlg
-from lib.repositories.mongo_results_repository import results_repository_factory
+from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
 from lib.utils import  save_results, cmu_first_session_split
 

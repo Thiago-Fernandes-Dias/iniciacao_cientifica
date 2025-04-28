@@ -4,7 +4,7 @@ from sklearn.neural_network import MLPClassifier
 
 from lib.dataset import Dataset
 from lib.constants import N_JOBS
-from lib.repositories.results_repository import results_repository_factory
+from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_with_search_cv_runner_impl import (
     OneClassExperimentWithSearchCVRunnerImpl,
 )

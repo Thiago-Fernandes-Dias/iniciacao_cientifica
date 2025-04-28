@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from matplotlib import pyplot as plt
 
 from lib.constants import MONGO_CONN_STRING
-from lib.repositories.results_repository import results_repository_factory
+from lib.repositories.results_repository_factory import results_repository_factory
 from lib.utils import create_dir_if_not_exists, float_range
 
 directory = os.fsencode("./")

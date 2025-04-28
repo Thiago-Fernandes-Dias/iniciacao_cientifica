@@ -15,6 +15,3 @@ class MongoResultsRepository(ResultsRepository):
         results = list(self._db[exp_name].find(sort=[("date", -1)])) 
         return list(map(lambda x: OneClassResults.from_dict(x), results))
 
-def results_repository_factory():
-    mongo_client = MongoClient(MONGO_CONN_STRING)
-    return MongoResultsRepository(mongo_client)
