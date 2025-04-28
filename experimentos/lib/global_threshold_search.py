@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.utils import create_labels, dict_values_average
 

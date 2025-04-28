@@ -2,7 +2,7 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.runners.multi_class_experiment_with_search_cv_runner import (
     MultiClassExperimentWithSearchCVRunner,
 )

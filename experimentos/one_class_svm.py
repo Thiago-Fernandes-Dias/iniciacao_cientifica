@@ -1,6 +1,6 @@
 import os
 from sklearn.svm import OneClassSVM
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.repositories.mongo_results_repository import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
 from lib.utils import cmu_first_session_split

@@ -2,10 +2,10 @@
 
 from sklearn.model_selection import KFold
 
-from lib.cmu_dataset import CMUDataset
-from lib.dataset import Dataset
+from lib.datasets.cmu_dataset import CMUDataset
+from lib.datasets.dataset import Dataset
 from lib.constants import RANDOM_STATE
-from lib.keyrecs_dataset import KeyrecsDataset
+from lib.datasets.keyrecs_dataset import KeyrecsDataset
 from lib.lightweight_alg import LightWeightAlg
 from lib.one_class_threshold_search_cv import OneClassThresholdSearchCV
 from lib.repositories.mongo_results_repository import results_repository_factory

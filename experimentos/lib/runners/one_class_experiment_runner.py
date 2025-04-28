@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.one_class_results import *
 from sklearn.metrics import accuracy_score, recall_score
 

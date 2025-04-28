@@ -2,7 +2,7 @@ import os
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.neural_network import MLPClassifier
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import N_JOBS
 from lib.repositories.results_repository import results_repository_factory
 from lib.runners.one_class_experiment_with_search_cv_runner_impl import (

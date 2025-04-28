@@ -3,7 +3,7 @@ import os
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.svm import OneClassSVM
 
-from lib.dataset import Dataset
+from lib.datasets.dataset import Dataset
 from lib.constants import N_JOBS
 from lib.hp_grids import one_class_svm_params_grid
 from lib.repositories.results_repository import results_repository_factory
