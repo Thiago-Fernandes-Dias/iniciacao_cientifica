@@ -9,7 +9,7 @@ import os
 class JsonResultsRepository(ResultsRepository):
     def add_one_class_result(self, result: OneClassResults, exp_name: str) -> None:
         create_dir_if_not_exists(f"results/{exp_name}")
-        json_string = json.dumps(result.to_dict(), indent=4, ensure_ascii=True, sort_keys=True)
+        json_string = json.dumps(result.to_dict_with_stats(), indent=4, ensure_ascii=True, sort_keys=True)
         with open(f"results/{exp_name}/{uuid.uuid4()}.json", "w+") as f:
             f.write(json_string)
     

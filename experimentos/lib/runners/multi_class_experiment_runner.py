@@ -1,7 +1,7 @@
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 
-from lib.dataset import *
+from lib.datasets.dataset import *
 from lib.multiclass_results import *
 
 class MultiClassExperimentRunner:

@@ -1,10 +1,9 @@
 from sklearn.base import BaseEstimator
-from lib.dataset import *
+from lib.datasets.dataset import *
 from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
 
 class OneClassExperimentRunnerImpl(OneClassExperimentRunner):
     _estimator: BaseEstimator
-    _dataset: Dataset
 
     def __init__(self, dataset: Dataset, estimator: BaseEstimator, use_impostor_samples: bool = False):
         super().__init__(dataset, use_impostor_samples)

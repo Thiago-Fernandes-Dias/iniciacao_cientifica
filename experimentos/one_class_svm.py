@@ -1,16 +1,20 @@
 import os
 from sklearn.svm import OneClassSVM
-from lib.datasets.dataset import Dataset
+from lib.experiment_executor import ExperimentExecutor
 from lib.repositories.mongo_results_repository import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
-from lib.utils import cmu_first_session_split
 
 def main() -> None:
-    cmu_database = Dataset('datasets/cmu/DSL-StrongPasswordData.csv', cmu_first_session_split)
-    one_class_svm_experiment = OneClassExperimentRunnerImpl(dataset=cmu_database, estimator=OneClassSVM())
-    results = one_class_svm_experiment.exec()
-    repo = results_repository_factory()
-    repo.add_one_class_result(results, os.path.basename(__file__).replace(".py", ""))
+    executor = ExperimentExecutor(
+        name=os.path.basename(__file__).replace(".py", ""),
+        results_repo=results_repository_factory(),
+        runner_factory=lambda ds: OneClassExperimentRunnerImpl(
+            dataset=ds,
+            estimator=OneClassSVM(),
+            use_impostor_samples=False
+        ),
+    )
+    executor.execute()
 
 if __name__ == "__main__":
     main()

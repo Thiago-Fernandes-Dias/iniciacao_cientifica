@@ -1,18 +1,20 @@
 import os
 
-from lib.datasets.dataset import Dataset
+from lib.experiment_executor import ExperimentExecutor
 from lib.lightweight_alg import LightWeightAlg
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
-from lib.utils import  save_results, cmu_first_session_split
 
 
 def main() -> None:
-    cmu_database = Dataset('datasets/cmu/DSL-StrongPasswordData.csv', cmu_first_session_split)
-    one_class_lw_experiment = OneClassExperimentRunnerImpl(dataset=cmu_database, estimator=LightWeightAlg())
-    results = one_class_lw_experiment.exec()
-    repo = results_repository_factory()
-    repo.add_one_class_result(results, os.path.basename(__file__).replace(".py", ""))
+    executor = ExperimentExecutor(
+        name=os.path.basename(__file__).replace(".py", ""),
+        results_repo=results_repository_factory(),
+        runner_factory=lambda ds: OneClassExperimentRunnerImpl(
+            dataset=ds, estimator=LightWeightAlg()
+        ),
+    )
+    executor.execute()
 
 
 if __name__ == "__main__":
