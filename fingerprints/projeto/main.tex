@@ -1,0 +1,65 @@
+\documentclass[
+	article,
+	12pt,
+	openright,
+	twoside,
+	a4paper,
+	english,
+	brazil
+]{abntex2}
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage[top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\usepackage{appendix}
+\usepackage{todonotes}
+
+\usepackage{hyperref}
+\urlstyle{same}
+\hypersetup{
+	pdfauthor={-},
+	pdftitle={Projeto IC},
+	colorlinks,
+	bookmarks=true,
+	bookmarksopen=true,
+	pdfstartview={FitH},
+	plainpages=false,
+    linkcolor=black,
+    pdfpagelabels,
+    citecolor=black,
+    urlcolor=black,
+    pagebackref=false,
+    hyperfootnotes=false
+}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{upgreek}
+\usepackage[alf, abnt-etal-list=0]{abntex2cite}
+\usepackage{pdfpages}
+
+\usepackage{color}
+\newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
+
+\DoubleSpacing
+
+\makeindex
+
+\begin{document}
+\selectlanguage{brazil}
+	\pagestyle{empty}
+	\includepdf{capa_projeto.pdf}
+	\include{resumo.tex}
+	\tableofcontents*
+    \textual
+	\clearpage
+	\input{sessoes/sessoes.tex}
+	\bibliography{references}
+\end{document}

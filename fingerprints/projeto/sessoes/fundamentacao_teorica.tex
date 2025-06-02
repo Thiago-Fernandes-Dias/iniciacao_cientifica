@@ -1,0 +1,64 @@
+\section{Fundamentação teórica}\label{sec:fundamentacao_teorica}
+
+Esta seção apresenta alguns conceitos importantes para este projeto de pesquisa envolvendo biometria através de impressões digitais.
+
+\subsection{Biometria por Impressão Digital}\label{subsec:impressoes_digitais}
+
+O termo "Impressão Digital" no contexto de biometria por digitais se refere ao padrão de pequenos cumes e vales que podem ser observados na ponta dos dedos das pessoas~\cite{HandbookOfBiometrics}. Ao longo da evolução da raça humana o desenvolvimento de digitais está relacionado à capacidade de segurar objetos com as mãos, e o padrão específico de cumes e vales, assim como outras características do corpo, é definido por fatores genéticos e ambientais.
+
+O reconhecimento de que as impressões impressões digitais são únicas para cada dedo de cada pessoa ocorreu em 1880 com base em observações experimentais de Henry Fauld~\cite{FingerPrintTechniques}. Em 1993 a unicidade de impressões digitais foi reconhecida por entidades governamentais do Reino Unido, e foi determinado que as digitais de criminosos seriam coletadas no momento da prisão. Dessa forma, os especialistas em investigação forense poderiam identificar criminosos com base em manchas de impressões digitais deixadas na cena de crime, chamadas de impressões digitais latentes. A partir disso, órgãos de segurança pública investiram intensamente em pesquisas sobre impressões digitais e no treinamento de especialistas em reconhecimento de digitais~\cite{FingerPrintMechanics}.
+
+Conforme explica~\citeonline{Maltoni20221}, apesar dos esforços para tornar mais eficiente o processo manual de identificação por impressões digitais, o aumento da demanda tornou esse método inviável. O sistema de classificação manual era ineficiente, o treinamento de novos profissionais capazes de empregá-lo era demorado e a comparação visual de impressões digitais era cansativa e lenta. Por isso, os órgãos de segurança pública começaram a investir em soluções eletrônicas e automatizadas, o que levou ao desenvolvimento dos \textit{Automated Fingerprint
+Identification Systems} (AFIS) ou Sistemas Automatizados de Identificação de Impressões Digitais. 
+
+Inicialmente usados por forças de segurança, esses sistemas hoje também são aplicados em diversas áreas não forenses devido ao aumento das preocupações com segurança e fraudes de identidade. Nesse contexto, as digitais são coletadas com sensores especializados que geram imagens das digitais, que são processadas a fim de se obter uma forma de representação que pode ser usada para verificação. \textit{Internet Banking} e autenticação de usuários em dispositivos móveis são exemplos~\cite{HandbookOfBiometrics}.
+
+\subsection{Formas de representação de impressões digitais}\label{subsec:representacao_de_digitais}
+
+~\citeonline{Maltoni20221} enfatiza que uma boa representação de uma impressão digital deve conter informações que possibilitem a distinção entre duas amostras, deve ser extraída de forma rápida e fácil e ser compacta para poder armazenada em sistemas biométricos com pouca capacidade. Representações baseadas em imagens, apesar normalmente em escalas de cinza, normalmente não são adequadas dadas variações de iluminação, resolução, qualidade e ruídos provocados pela presença de cicatrizes e outras injurias nos dedos das pessoas, principalmente as que realizam algum tipo de trabalho manual com frequência.
+
+O autor supracitado divide os atributos que podem ser extraídos de uma impressão digital em três níveis diferentes:
+\begin{itemize}
+    \item{Nível 1}: também chamado de nível global, há atributos como o padrão das curvaturas das linhas nas imagens, delimitadas pelos cumes e vales da impressão digital. A partir dela podem ser determinados os ``pontos singulares'', que são os centros das curvaturas dessas linhas~\cite{LEVI1972327}. As imagens de orientação e frequência e o formato da digital (que serão definidos posteriormente) também são considerados atributos de escopo global;
+    \item{Nível 2}: são as características de escopo local, que exigem uma análise em uma escala menor da impressão digital. Dentre elas as que são mais facilmente observadas em sensores convencionais são as~\textit{bifurcações de cume}, onde um cume se divide em dois, e~\textit{terminações de cume}, onde um cume termina em um vale. Tais características são chamadas de~\textit{minúcias}, e são normalmente definidas pela sua posição na impressão digital e orientação (ângulo);
+    \item{Nível 3}: são atributos dos próprios cumes em si, como o seu formato, largura, contorno e poros excretores de suor. Tais características são altamente distintivas, mas só podem ser extraídas de impressões digitais de alta resolução (acima de 1000 dpi).
+\end{itemize}
+
+\subsection{Extração de características de ditais}\label{subsec:extracao_de_caracteristicas}
+
+Para a verificação de usuários através de suas impressões digitais é necessário um processamento das imagens para a extração de características, sendo que em cada faze é gerada uma nova imagem que contém apenas as informações relevantes para o estágio seguinte, até que finalmente é possível determinar as posições e outras informações distintivas das minúcias~\cite{Maltoni20221}. A seguir serão descritos brevemente os estágios de processamento e algumas técnicas que podem ser utilizadas em cada um deles.
+
+\subsubsection{Segmentação}\label{subsubsec:segmentacao}
+
+A segmentação normalmente é o estágio inicial do processamento de impressões digitais. Nele, a porção da imagem que corresponde à impressão digital em si é separada no restante, que não possui informações relevantes para a distinção de digitais. 
+
+Diversos métodos baseados em aprendizado de máquina foram elaborados e avaliados para segmentação, principalmente técnicas de Aprendizado Profundo, muito comum no processamento de imagens. Vale mencionar~\citeonline{ZhuSeg}, que treinaram quatro redes neurais convolucionais (CNNs) utilizando blocos de imagem em múltiplas escalas e combinaram as pontuações de saída correspondentes com o objetivo de aprimorar a precisão da segmentação.
+
+Em~\cite{Ezeobiejesi2017} foi usada uma pilha de máquinas de Boltzmann restritas (RBMs) para construir um modelo generativo de aprendizado de características. Para cada bloco da impressão digital, as características extraídas são repassadas a um classificador binário simples, que realiza a classificação.
+
+Diferente dos métodos anteriores,~\citeonline{NguyenSeg} integram redes neurais totalmente convolucionais com técnicas baseadas em detecção para analisar toda a imagem de entrada de uma só vez, ao invés de realizar um processamento por janelas (porções retangulares da imagem). Além disso, um mecanismo de atenção visual foi desenvolvido especificamente para concentrar o processamento apenas nas regiões onde há impressões digitais latentes.
+
+\subsubsection{Orientação local dos cumes}\label{subsubsec:orientacao}
+
+A orientação local dos cumes é definida como o ângulo de uma linha da impressão digital em um pixel da imagem. Normalmente é associado um mesmo ângulo para uma pequena janela da imagem já segmentada.
+
+Dentre as técnicas utilizadas para estimar a orientação dos cumes podem ser citadas as propostas por~\citeonline{ZhuOr} e~\citeonline{SchuchOr}, que utilizaram redes neurais artificiais para estimar as orientações e compararam com métodos tradicionais baseados em gradientes.
+
+\subsubsection{Detecção de minúcias}\label{subsubsec:minucias}
+
+A detecção de minúcias é um dos estágios mais importantes do processamento de impressões digitais, visto que diversos algoritmos de verificação de impressões digitais com boa acurácia são baseados na comparação das minúcias.
+
+Dada a importância desse estágio para a verificação de digitais há uma pesquisa por métodos de extração de minúcias das imagens.~\citeonline{TangMi1} trataram a extração de minúcias como um problema de detecção de objetos. Nesse método, uma CNN é utilizada para converter impressões digitais brutas em um mapa de pontuação de minúcias, com uma posição analisada a cada bloco de $16x16$ pixels. As posições com pontuação acima de um determinado limiar são consideradas candidatas a minúcias. Em seguida, as regiões vizinhas são refinadas por uma segunda CNN que compartilha os mesmos níveis convolucionais, a qual também estima a orientação da minúcia.
+
+~\citeonline{TangMi2} propuseram uma Rede Neural Profunda, o FingerNet, que combina conhecimento especializado do domínio de impressões digitais com treinamento de ponta a ponta para aumentar a precisão da extração de características. Especificamente, o modelo é inicialmente construído convertendo etapas tradicionais de extração de características — extração de orientação e detecção de minúcias — em camadas convolucionais com pesos fixos. Em seguida, essas camadas básicas são estendidas com novas camadas, e todos os pesos da rede são ajustados. Para treinar o modelo, é utilizada uma função de perda composta que aproveita rótulos fracos, fortes e verdadeiros relacionados à orientação, segmentação e minúcias.
+
+\subsection{Verificação de impressões digitais}\label{subsubsec:verificacao_digitais}
+
+Conforme explica~\citeonline{Maltoni20221} um algoritmo de verificação de impressões digitais compara duas imagens de digitais e retorna um pontuação entre 0 e 1, em que 1 indica a maior similaridade possível, ou uma resposta binária. Poucas técnicas de verificação operam diretamente nas imagens em escala de cinza. A maioria deles opera em representações intermediárias, discutidas na Sessão~\ref{subsec:representacao_de_digitais}.
+
+O autor afirma que as principais dificuldades na verificação de digitais estão relacionadas com a coleta das imagens, que estão sujeitas a ruídos causados por condições adversas na pele, rotação dos dedos ao encostar no sensor, parte do dedo pode ficar fora da área do sensor, etc. Dos diversos algoritmos de verificação de digitais propostos na literatura, a grande maioria tem um bom desempenho quando utilizados em imagens de boa qualidade.
+
+
+
+
+
