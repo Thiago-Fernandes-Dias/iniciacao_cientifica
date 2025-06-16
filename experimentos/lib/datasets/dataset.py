@@ -34,10 +34,10 @@ class Dataset:
         self._columns_filter_rg = columns_filer_rg
 
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
-        return query(self._training_df).drop(columns=self._drop_columns()).filter(regex=self._columns_filter_rg)
+        return query(self._training_df).filter(regex=self._columns_filter_rg)
 
     def test_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
-        return query(self._test_df).drop(columns=self._drop_columns()).filter(regex=self._columns_filter_rg)
+        return query(self._test_df).filter(regex=self._columns_filter_rg)
 
     def user_keys(self) -> set[str]:
         return self._user_keys
@@ -69,7 +69,7 @@ class Dataset:
         return self.training_df_query(lambda df: df[df[self._user_key_name()] == user_subject])
 
     def multi_class_training_samples(self) -> tuple[pd.DataFrame, pd.Series]:
-        return self._training_df.drop(columns=self._drop_columns()), self._training_df[self._user_key_name()]
+        return self._training_df, self._training_df[self._user_key_name()]
 
     def multi_class_test_samples(self) -> tuple[pd.DataFrame, pd.Series]:
-        return self._test_df.drop(columns=self._drop_columns()), self._test_df[self._user_key_name()]
+        return self._test_df, self._test_df[self._user_key_name()]
