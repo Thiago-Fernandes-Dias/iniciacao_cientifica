@@ -14,15 +14,19 @@ class OneClassExperimentWithThresholdSearchCV(OneClassExperimentRunner):
 
     def _calculate_predictions(self) -> None:
         for uk in self._dataset.user_keys():
-            self._estimator.fit(self._X_genuine_training[uk], self._X_impostor_training[uk])
+            X_g_training = self._X_genuine_training[uk].drop(columns=self._dataset._drop_columns())
+            X_i_training = self._X_impostor_training[uk].drop(columns=self._dataset._drop_columns())
+            self._estimator.fit(X_g_training, X_i_training)
             self._one_class_estimators_hp_map[uk] = self._estimator.get_params()
-            for x_test, y_test in zip(self._X_genuine_test[uk], self._y_genuine_test[uk]):
-                pred = self._estimator.predict([x_test])[0]
+            X_g_test = self._X_genuine_test[uk]
+            y_g_test = self._y_genuine_test[uk]
+            for (_, X), y in zip(X_g_test.iterrows(), y_g_test):
+                X_filtered = X.drop(columns=self._dataset._drop_columns())
                 user_model_prediction = UserModelPrediction(
                     user_key=uk,
-                    expected=y_test,
-                    predicted=pred,
-                    session=x_test[self._dataset._session_key_name(uk)],
-                    repetition=x_test[self._dataset._repetition_key_name(uk)],
+                    expected=y,
+                    predicted=self._estimator.predict([X_filtered])[0],
+                    session=X[self._dataset._session_key_name(uk)],
+                    repetition=X[self._dataset._repetition_key_name(uk)],
                 )
                 self._user_model_predictions.append(user_model_prediction)

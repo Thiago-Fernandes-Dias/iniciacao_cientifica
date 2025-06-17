@@ -15,20 +15,21 @@ class OneClassExperimentRunnerImpl(OneClassExperimentRunner):
     def _calculate_predictions(self) -> None:
         self._one_class_estimators_hp_map['default'] = self._estimator.get_params()
         for uk in self._dataset.user_keys():
-            x_training, y_training = self._X_genuine_training[uk], self._y_genuine_training[uk]
+            X_training, y_training = self._X_genuine_training[uk], self._y_genuine_training[uk]
             if self._use_impostor_samples:
-                x_training = pd.concat([x_training, self._X_impostor_training[uk]])
+                X_training = pd.concat([X_training, self._X_impostor_training[uk]])
                 y_training = y_training + self._y_impostor_training[uk]
-            x_training = x_training.drop(columns=self._dataset._drop_columns())
-            self._estimator.fit(x_training, y_training)
-            test_vectors = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
-            test_labels = self._y_genuine_test[uk] + self._y_impostors_test[uk]
-            for x_test, y_test in zip(test_vectors.iterrows(), test_labels):
+            X_training_filtered = X_training.drop(columns=self._dataset._drop_columns())
+            self._estimator.fit(X_training_filtered, y_training)
+            X_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
+            y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
+            for (_, X), y in zip(X_test.iterrows(), y_test):
+                X_filtered = X.drop(columns=self._dataset._drop_columns())
                 pred = UserModelPrediction(
                     user_key=uk,
-                    expected=y_test,
-                    predicted=self._estimator.predict(pd.DataFrame([x_test[1]]))[0],
-                    session=x_test[1][self._dataset._session_key_name()],
-                    repetition=x_test[1][self._dataset._repetition_key_name()],
+                    expected=y,
+                    predicted=self._estimator.predict(pd.DataFrame([X_filtered]))[0],
+                    session=X[self._dataset._session_key_name()],
+                    repetition=X[self._dataset._repetition_key_name()],
                 )
                 self._user_model_predictions.append(pred)
