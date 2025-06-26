@@ -1,4 +1,4 @@
-from lib.repositories.json_results_repository import JsonResultsRepository
+from lib.repositories.parquet_results_repository import ParquetResultsRepository
 
 def results_repository_factory():
-    return JsonResultsRepository()
+    return ParquetResultsRepository()

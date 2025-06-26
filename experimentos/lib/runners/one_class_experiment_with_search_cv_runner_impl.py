@@ -24,13 +24,16 @@ class OneClassExperimentWithSearchCVRunnerImpl(OneClassExperimentRunner):
             self._one_class_estimators_hp_map[uk] = self._estimator.best_params_
             X_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
             y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
+            pred_frames = list[pd.Series]()
             for (_, X), y in zip(X_test.iterrows(), y_test):
-                X_filtered = X.drop(columns=self._dataset._drop_columns())
+                X_filtered = X.drop(labels=self._dataset._drop_columns())
                 pred = UserModelPrediction(
-                    user_key=uk,
+                    user_id=uk,
                     expected=y,
-                    predicted=self._estimator.predict([X_filtered])[0],
+                    predicted=self._estimator.predict([X_filtered])[0].item(),
                     session=X[self._dataset._session_key_name(uk)],
                     repetition=X[self._dataset._repetition_key_name(uk)],
                 )
-                self._user_model_predictions.append(pred)
+                pred_frame = pd.Series(pred.to_dict())
+                pred_frames.append(pred_frame)
+            self._user_model_predictions = pd.DataFrame(pred_frames)

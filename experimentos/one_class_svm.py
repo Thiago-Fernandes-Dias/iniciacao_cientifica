@@ -1,7 +1,7 @@
 import os
 from sklearn.svm import OneClassSVM
 from lib.experiment_executor import ExperimentExecutor
-from lib.repositories.mongo_results_repository import results_repository_factory
+from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
 
 def main() -> None:
