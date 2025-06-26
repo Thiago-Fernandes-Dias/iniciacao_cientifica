@@ -33,6 +33,6 @@ class OneClassExperimentRunnerImpl(OneClassExperimentRunner):
                     session=X[self._dataset._session_key_name()],
                     repetition=X[self._dataset._repetition_key_name()],
                 )
-                pred_frame = pd.Series( pred.to_dict() )
+                pred_frame = pd.Series(pred.to_dict())
                 pred_frames.append(pred_frame)
             self._user_model_predictions = pd.DataFrame(pred_frames)

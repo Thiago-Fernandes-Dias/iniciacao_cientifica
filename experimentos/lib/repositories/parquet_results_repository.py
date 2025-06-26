@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 
@@ -10,7 +11,8 @@ class ParquetResultsRepository(ResultsRepository):
         path = f"results/{exp_name}/{result.date.strftime('%Y-%m-%d_%H-%M-%S')}"
         create_dir_if_not_exists(path)
         result.user_model_predictions.to_parquet(f"{path}/predictions.parquet", index=True, engine='fastparquet')
-        result.hp.to_parquet(f"{path}/hp.parquet", index=True, engine='fastparquet')
+        with open(f"{path}/hp.json", "+w") as json_file:
+            json.dump(result.hp, json_file)
     
     def get_one_class_results(self, exp_name: str) -> list[OneClassResults]:
         results = []
@@ -20,7 +22,9 @@ class ParquetResultsRepository(ResultsRepository):
             if os.path.isdir(file_path):
                 try:
                     user_model_predictions = pd.read_parquet(f"{file_path}/predictions.parquet")
-                    hp = pd.read_parquet(f"{file_path}/hp.parquet")
+                    hp = {}
+                    with open(f"{file_path}/hp.json", "r") as hp_json:
+                        hp = json.loads(hp_json)
                     date = pd.to_datetime(exp_dir, format='%Y-%m-%d_%H-%M-%S')
                     results.append(OneClassResults(user_model_predictions=user_model_predictions, hp=hp, date=date))
                 except Exception as e:

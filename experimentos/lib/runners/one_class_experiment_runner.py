@@ -43,7 +43,7 @@ class OneClassExperimentRunner:
         self._calculate_predictions()
         results = OneClassResults( 
                 user_model_predictions=self._user_model_predictions,
-                hp = pd.DataFrame.from_dict(self._one_class_estimators_hp_map, orient='index'),
+                hp = self._one_class_estimators_hp_map,
                 date=datetime.now())
         return results
 
@@ -63,5 +63,5 @@ class OneClassExperimentRunner:
         self._y_genuine_test.clear()
         self._X_impostors_test.clear()
         self._y_impostors_test.clear()
-        self._user_model_predictions.drop(self._user_model_predictions.index, inplace=True)
+        self._user_model_predictions = pd.DataFrame()
         self._one_class_estimators_hp_map.clear()

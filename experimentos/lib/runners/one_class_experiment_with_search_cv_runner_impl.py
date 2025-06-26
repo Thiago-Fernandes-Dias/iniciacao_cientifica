@@ -20,8 +20,7 @@ class OneClassExperimentWithSearchCVRunnerImpl(OneClassExperimentRunner):
                 x_training = pd.concat([x_training, self._X_impostor_training[uk]])
                 y_training = y_training + self._y_impostor_training[uk]
             x_training = x_training.drop(columns=self._dataset._drop_columns())
-            self._estimator.fit(x_training, y_training)
-            self._one_class_estimators_hp_map[uk] = self._estimator.best_params_
+            self.fit_model(uk, x_training, y_training)
             X_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
             y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
             pred_frames = list[pd.Series]()
@@ -31,9 +30,13 @@ class OneClassExperimentWithSearchCVRunnerImpl(OneClassExperimentRunner):
                     user_id=uk,
                     expected=y,
                     predicted=self._estimator.predict([X_filtered])[0].item(),
-                    session=X[self._dataset._session_key_name(uk)],
-                    repetition=X[self._dataset._repetition_key_name(uk)],
+                    session=X[self._dataset._session_key_name()],
+                    repetition=X[self._dataset._repetition_key_name()],
                 )
                 pred_frame = pd.Series(pred.to_dict())
                 pred_frames.append(pred_frame)
             self._user_model_predictions = pd.DataFrame(pred_frames)
+
+    def fit_model(self, uk, x_training, y_training):
+        self._estimator.fit(x_training, y_training)
+        self._one_class_estimators_hp_map[uk] = self._estimator.best_params_
