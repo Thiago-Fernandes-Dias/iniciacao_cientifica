@@ -15,15 +15,15 @@ class OneClassExperimentWithThresholdSearchCV(OneClassExperimentRunner):
 
     def _calculate_predictions(self) -> None:
         for uk in self._dataset.user_keys():
-            X_g_training = self._X_genuine_training[uk].drop(columns=self._dataset._drop_columns())
-            X_i_training = self._X_impostor_training[uk].drop(columns=self._dataset._drop_columns())
+            X_g_training = self._X_genuine_training[uk].drop(columns=self._dataset.get_columns_to_drop())
+            X_i_training = self._X_impostor_training[uk].drop(columns=self._dataset.get_columns_to_drop())
             self._estimator.fit(X_g_training, X_i_training)
             self._one_class_estimators_hp_map[uk] = self._estimator.get_params()
             X_g_test = self._X_genuine_test[uk]
             y_g_test = self._y_genuine_test[uk]
             pred_frames = list[pd.Series]()
             for (_, X), y in zip(X_g_test.iterrows(), y_g_test):
-                X_filtered = X.drop(labels=self._dataset._drop_columns())
+                X_filtered = X.drop(labels=self._dataset.get_columns_to_drop())
                 pred = UserModelPrediction(
                     user_id=uk,
                     expected=y,

@@ -10,7 +10,7 @@ class KeyrecsDataset(Dataset):
                  columns_filer_rg: str = '.*') -> None:
         super().__init__(file_path, test_train_split, columns_filer_rg)
     
-    def _drop_columns(self) -> list[str]:
+    def get_columns_to_drop(self) -> list[str]:
         return ["participant","session","repetition"]
     
     def _user_key_name(self) -> str:

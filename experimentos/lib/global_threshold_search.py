@@ -33,9 +33,9 @@ class GlobalThresholdTuning:
                     self._dataset.two_class_training_set(uk)
                 for gss, iss in zip(self._cv.split(x_genuine, y_genuine),
                                     self._cv.split(x_impostor, y_impostor)):
-                    x_g_train = x_genuine.drop(columns=self._dataset._drop_columns()).iloc[gss[0]]
-                    x_g_test = x_genuine.drop(columns=self._dataset._drop_columns()).iloc[gss[1]]
-                    x_i_test = x_impostor.drop(columns=self._dataset._drop_columns()).iloc[iss[1]]
+                    x_g_train = x_genuine.drop(columns=self._dataset.get_columns_to_drop()).iloc[gss[0]]
+                    x_g_test = x_genuine.drop(columns=self._dataset.get_columns_to_drop()).iloc[gss[1]]
+                    x_i_test = x_impostor.drop(columns=self._dataset.get_columns_to_drop()).iloc[iss[1]]
                     estimator = self._estimator_factory().set_params(**{'threshold': threshold})
                     y_g_train = create_labels(x_g_train, GENUINE_LABEL)
                     estimator.fit(x_g_train, y_g_train)

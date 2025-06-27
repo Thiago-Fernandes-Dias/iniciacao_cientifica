@@ -19,13 +19,13 @@ class OneClassExperimentRunnerImpl(OneClassExperimentRunner):
             if self._use_impostor_samples:
                 X_training = pd.concat([X_training, self._X_impostor_training[uk]])
                 y_training = y_training + self._y_impostor_training[uk]
-            X_training_filtered = X_training.drop(columns=self._dataset._drop_columns())
+            X_training_filtered = X_training.drop(columns=self._dataset.get_columns_to_drop())
             self._estimator.fit(X_training_filtered, y_training)
             X_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
             y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
             pred_frames = list[pd.Series]()
             for (_, X), y in zip(X_test.iterrows(), y_test):
-                X_filtered = X.drop(labels=self._dataset._drop_columns())
+                X_filtered = X.drop(labels=self._dataset.get_columns_to_drop())
                 pred = UserModelPrediction(
                     user_id=uk,
                     expected=y,

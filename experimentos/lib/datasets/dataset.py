@@ -11,7 +11,7 @@ class Dataset:
     _columns_filter_rg: str
 
     @abstractmethod
-    def _drop_columns(self) -> list[str]:
+    def get_columns_to_drop(self) -> list[str]:
         pass
     
     @abstractmethod
