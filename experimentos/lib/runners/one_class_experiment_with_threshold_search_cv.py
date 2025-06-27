@@ -28,8 +28,8 @@ class OneClassExperimentWithThresholdSearchCV(OneClassExperimentRunner):
                     user_id=uk,
                     expected=y,
                     predicted=self._estimator.predict([X_filtered])[0].item(),
-                    session=X[self._dataset._session_key_name(uk)],
-                    repetition=X[self._dataset._repetition_key_name(uk)],
+                    session=X[self._dataset.session_key_name(uk)],
+                    repetition=X[self._dataset.repetition_key_name(uk)],
                 )
                 pred_frame = pd.Series(pred.to_dict())
                 pred_frames.append(pred_frame)

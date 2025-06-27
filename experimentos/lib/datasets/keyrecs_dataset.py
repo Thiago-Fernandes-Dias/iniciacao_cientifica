@@ -16,8 +16,8 @@ class KeyrecsDataset(Dataset):
     def _user_key_name(self) -> str:
         return "participant"
 
-    def _session_key_name(self) -> str:
+    def session_key_name(self) -> str:
         return "session"
 
-    def _repetition_key_name(self) -> str:
+    def repetition_key_name(self) -> str:
         return "repetition"

@@ -1,6 +1,7 @@
 import os
 
 from sklearn.model_selection import GridSearchCV, KFold
+from sklearn.model_selection._search import BaseSearchCV
 from sklearn.svm import OneClassSVM
 
 from lib.constants import N_JOBS
@@ -11,19 +12,21 @@ from lib.runners.one_class_experiment_with_search_cv_runner_impl import OneClass
 
 
 def main() -> None:
-    one_class_svm_grid_cv = KFold(n_splits=5)
-    one_class_svm_gs = GridSearchCV(
-        OneClassSVM(),
-        one_class_svm_params_grid,
-        scoring="accuracy",
-        cv=one_class_svm_grid_cv,
-        n_jobs=N_JOBS,
-    )
+    def est_fac(seed: int) -> BaseSearchCV:
+        one_class_svm_grid_cv = KFold(n_splits=5, shuffle=True, random_state=seed)
+        one_class_svm_gs = GridSearchCV(
+            OneClassSVM(),
+            one_class_svm_params_grid,
+            scoring="accuracy",
+            cv=one_class_svm_grid_cv,
+            n_jobs=N_JOBS,
+        )
+        return one_class_svm_gs
     executor = ExperimentExecutor(
         name=str(os.path.basename(__file__).replace(".py", "")),
         results_repo=results_repository_factory(),
         runner_factory=lambda ds: OneClassExperimentWithSearchCVRunnerImpl(
-            dataset=ds, estimator=one_class_svm_gs
+            dataset=ds, estimator_factory=est_fac,
         )
     )
     executor.execute()

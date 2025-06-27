@@ -16,7 +16,7 @@ class OneClassExperimentRunner:
     _X_impostors_test: dict[str, pd.DataFrame]
     _y_impostors_test: dict[str, list[int]]
     _predictions_on_genuine_samples_map: dict[str, list[int]]
-    _one_class_estimators_hp_map: dict[str, dict[str, object]]
+    _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
     _user_model_predictions: pd.DataFrame
 
     def __init__(self, dataset: Dataset, use_impostor_samples: bool = False):

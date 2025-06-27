@@ -81,11 +81,11 @@ def create_dir_if_not_exists(name: str):
 
 
 def cmu_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    return df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1]
+    return df[(df['sessionIndex'] == 1) & (df['rep'] <= 5)], df[(df['sessionIndex'] != 1) & (df['rep'] <= 5)]
 
 
 def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
+    return df[(df['session'] == 1) & (df['repetition'] <= 5)], df[(df['session'] == 2) & (df['repetition'] <= 5)]
 
 
 far_score = make_scorer(lambda y_true, y_pred: 1 - accuracy_score(y_true, y_pred), greater_is_better=False)

@@ -56,7 +56,7 @@ class ImprovedStatisticalAlg(BaseEstimator):
             av = digraph_metrics.average
             std = digraph_metrics.std_dev
             md = digraph_metrics.median
-            res = (min(av, md) * (0.95 - std / av) <= value) and (value <= max(av, md) * (1.05 + std / av))
+            res = (min(av, md) * (0.95 - std / av)) <= value <= (max(av, md) * (1.05 + std / av))
             hits.append(res)
         length: int = len(hits)
         s: float = 1 if hits[0] else 0

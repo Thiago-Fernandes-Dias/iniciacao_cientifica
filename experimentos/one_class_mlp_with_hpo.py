@@ -23,7 +23,7 @@ def main() -> None:
         name=os.path.basename(__file__).replace(".py", ""),
         results_repo=results_repository_factory(),
         runner_factory=lambda ds: OneClassExperimentWithSearchCVRunnerImpl(
-            dataset=ds, estimator=one_class_mlp_gs
+            dataset=ds, estimator_factory=one_class_mlp_gs
         )
     )
     executor.execute()

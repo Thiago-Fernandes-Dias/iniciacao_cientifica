@@ -16,8 +16,8 @@ class CMUDataset(Dataset):
     def _user_key_name(self) -> str:
         return 'subject'
 
-    def _session_key_name(self) -> str:
+    def session_key_name(self) -> str:
         return 'sessionIndex'
     
-    def _repetition_key_name(self) -> str:
+    def repetition_key_name(self) -> str:
         return 'rep'

@@ -41,7 +41,7 @@ rf_params_grid = [
     }
 ]
 
-st_params_grid_var_t = {
+st_params_grid = {
     'threshold': [0.7, 0.6, 0.8, 0.9]
 }
 

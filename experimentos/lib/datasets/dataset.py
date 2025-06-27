@@ -19,11 +19,11 @@ class Dataset:
         pass
 
     @abstractmethod
-    def _session_key_name(self) -> str:
+    def session_key_name(self) -> str:
         pass
 
     @abstractmethod
-    def _repetition_key_name(self) -> str:
+    def repetition_key_name(self) -> str:
         pass
 
     def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]],
