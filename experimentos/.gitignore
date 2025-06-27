@@ -5,3 +5,7 @@
 .venv/
 __pycache__/
 exec_logs/
+
+# IDEs and editors
+.vscode/
+.idea/

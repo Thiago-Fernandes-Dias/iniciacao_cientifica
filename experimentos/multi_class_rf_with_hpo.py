@@ -8,12 +8,12 @@ from lib.runners.multi_class_experiment_with_search_cv_runner import (
 )
 from lib.constants import RANDOM_STATE, N_JOBS
 from lib.hp_grids import rf_params_grid
-from lib.utils import cmu_first_session_split, save_results
+from lib.utils import cmu_split, save_results
 
 
 def main() -> None:
     cmu_database = Dataset(
-        "datasets/cmu/DSL-StrongPasswordData.csv", cmu_first_session_split
+        "datasets/cmu/DSL-StrongPasswordData.csv", cmu_split
     )
     multi_class_rf_grid_cv = StratifiedKFold(
         n_splits=5, shuffle=True, random_state=RANDOM_STATE

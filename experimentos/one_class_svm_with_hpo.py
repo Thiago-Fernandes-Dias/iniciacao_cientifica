@@ -20,7 +20,7 @@ def main() -> None:
         n_jobs=N_JOBS,
     )
     executor = ExperimentExecutor(
-        name=os.path.basename(__file__).replace(".py", ""),
+        name=str(os.path.basename(__file__).replace(".py", "")),
         results_repo=results_repository_factory(),
         runner_factory=lambda ds: OneClassExperimentWithSearchCVRunnerImpl(
             dataset=ds, estimator=one_class_svm_gs
