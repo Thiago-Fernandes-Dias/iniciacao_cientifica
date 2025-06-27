@@ -18,7 +18,7 @@ class DigraphsMetrics:
     median: float
 
 
-class LightWeightAlg(BaseEstimator):
+class ImprovedStatisticalAlg(BaseEstimator):
     threshold: float
 
     _digraphs_metrics: dict[str, DigraphsMetrics] = {}
@@ -33,7 +33,7 @@ class LightWeightAlg(BaseEstimator):
         }
 
     def set_params(self, **params) -> Self:
-        return LightWeightAlg(params['threshold'])
+        return ImprovedStatisticalAlg(params['threshold'])
 
     def fit(self, x: pd.DataFrame, y: list[int] | None = None):
         for digraph_name, values in x.items():
@@ -65,4 +65,3 @@ class LightWeightAlg(BaseEstimator):
                 s += 1.5 if hits[i - 1] else 1
         result = GENUINE_LABEL if s / ((length - 1) * 1.5 + 1) >= self.threshold else IMPOSTOR_LABEL
         return result
-

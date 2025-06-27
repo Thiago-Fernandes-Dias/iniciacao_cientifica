@@ -1,9 +1,8 @@
 ﻿import os
 
-from lib.datasets.dataset import Dataset
 from lib.experiment_executor import ExperimentExecutor
 from lib.repositories.results_repository import results_repository_factory
-from lib.runners.mlp_dropout import MLPDropout
+from lib.estimators.mlp_dropout import MLPDropout
 from lib.runners.one_class_experiment_runner_impl import OneClassExperimentRunnerImpl
 
 
