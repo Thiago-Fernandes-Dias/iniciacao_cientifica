@@ -84,6 +84,14 @@ def cmu_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['sessionIndex'] == 1)], df[(df['sessionIndex'] != 1)]
 
 
+def cmu_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return df[(df['sessionIndex'] == 1) & (df['rep'] <= 5)], df[(df['sessionIndex'] != 1) & (df['rep'] <= 5)]
+
+
+def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
+
+
 def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 5)], df[(df['session'] == 2) & (df['repetition'] <= 5)]
 
