@@ -5,17 +5,17 @@ from lib.datasets.cmu_dataset import CMUDataset
 from lib.datasets.dataset import Dataset
 from lib.datasets.keyrecs_dataset import KeyrecsDataset
 from lib.repositories.results_repository import ResultsRepository
-from lib.runners.one_class_experiment_runner import OneClassExperimentRunner
+from lib.runners.experiment_runner import ExperimentRunner
 from lib.utils import cmu_split, keyrecs_split
 
 
 class ExperimentExecutor:
     _name: str
     _results_repo: ResultsRepository
-    _runner_factory: Callable[[Dataset], OneClassExperimentRunner]
+    _runner_factory: Callable[[Dataset], ExperimentRunner]
 
     def __init__(self, name: str, results_repo: ResultsRepository,
-                 runner_factory: Callable[[Dataset], OneClassExperimentRunner]):
+                 runner_factory: Callable[[Dataset], ExperimentRunner]):
         self._name = name
         self._results_repo = results_repo
         self._runner_factory = runner_factory

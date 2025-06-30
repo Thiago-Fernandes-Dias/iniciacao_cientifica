@@ -1,4 +1,4 @@
-import json
+import pickle
 import os
 import pandas as pd
 
@@ -11,8 +11,8 @@ class ParquetResultsRepository(ResultsRepository):
         path = f"results/{exp_name}/{result.date.strftime('%Y-%m-%d_%H-%M-%S')}"
         create_dir_if_not_exists(path)
         result.user_model_predictions.to_parquet(f"{path}/predictions.parquet", index=True, engine='fastparquet')
-        with open(f"{path}/hp.json", "+w") as json_file:
-            json.dump(result.hp, json_file)
+        with open(f"{path}/hp.pickle", "wb") as f:
+            pickle.dump(result.hp, f, protocol=pickle.HIGHEST_PROTOCOL)
     
     def get_one_class_results(self, exp_name: str) -> list[OneClassResults]:
         results = []
@@ -23,8 +23,8 @@ class ParquetResultsRepository(ResultsRepository):
                 try:
                     user_model_predictions = pd.read_parquet(f"{file_path}/predictions.parquet")
                     hp = {}
-                    with open(f"{file_path}/hp.json", "r") as hp_json:
-                        hp = json.loads(hp_json)
+                    with open(f"{file_path}/hp.pickle", "rb") as f:
+                        hp = pickle.load(f)
                     date = pd.to_datetime(exp_dir, format='%Y-%m-%d_%H-%M-%S')
                     results.append(OneClassResults(user_model_predictions=user_model_predictions, hp=hp, date=date))
                 except Exception as e:

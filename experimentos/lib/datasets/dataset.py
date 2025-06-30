@@ -11,7 +11,7 @@ class Dataset:
     _columns_filter_rg: str
 
     @abstractmethod
-    def get_columns_to_drop(self) -> list[str]:
+    def get_drop_columns(self) -> list[str]:
         pass
     
     @abstractmethod
@@ -19,11 +19,11 @@ class Dataset:
         pass
 
     @abstractmethod
-    def session_key_name(self) -> str:
+    def get_session_key_name(self) -> str:
         pass
 
     @abstractmethod
-    def repetition_key_name(self) -> str:
+    def get_repetition_key_name(self) -> str:
         pass
 
     def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]],

@@ -41,9 +41,11 @@ rf_params_grid = [
     }
 ]
 
-st_params_grid = {
-    'threshold': [0.7, 0.6, 0.8, 0.9]
-}
+st_params_grid = [
+    {
+        'threshold': [0.7, 0.6, 0.8, 0.9]
+    }
+]
 
 mlp_params_grid = [
     {
