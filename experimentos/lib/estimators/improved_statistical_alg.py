@@ -63,7 +63,6 @@ class ImprovedStatisticalAlg(BaseEstimator):
         for i in range(1, length):
             if hits[i]:
                 s += 1.5 if hits[i - 1] else 1
-        print(self.threshold)
         result = GENUINE_LABEL if (s / ((length - 1) * 1.5 + 1)) >= self.threshold else IMPOSTOR_LABEL
         return result
 
