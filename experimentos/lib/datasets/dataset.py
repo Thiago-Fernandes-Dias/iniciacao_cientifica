@@ -36,7 +36,7 @@ class Dataset:
         self._columns_filter_rg = columns_filer_rg
 
     def add_seed_change_cb(self, cb: Callable[[], None]):
-        self._seed_change_cb.append(cb)
+        self._seed_change_cbs.append(cb)
 
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
         return query(self._training_df).filter(regex=self._columns_filter_rg)
