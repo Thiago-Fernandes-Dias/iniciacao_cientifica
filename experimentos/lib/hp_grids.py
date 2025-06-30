@@ -1,7 +1,5 @@
-import numpy as np
-
-from lib.utils import float_range
 from lib.constants import *
+from lib.utils import float_range
 
 one_class_svm_params_grid = [
     {
@@ -43,14 +41,15 @@ rf_params_grid = [
     }
 ]
 
-lw_params_grid_var_t = {
-    'threshold': [0.7, 0.6, 0.8, 0.9]
-}
-
+st_params_grid = [
+    {
+        'threshold': [0.7, 0.6, 0.8, 0.9]
+    }
+]
 
 mlp_params_grid = [
     {
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'solver': ['sgd'],
         'learning_rate': ['constant', 'adaptive', 'invscaling'],
@@ -61,7 +60,7 @@ mlp_params_grid = [
     },
     {
 
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'solver': ['adam'],
         'max_iter': [200, 500, 800],
@@ -69,7 +68,7 @@ mlp_params_grid = [
         'random_state': [RANDOM_STATE],
     },
     {
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50,50,)],
+        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
         'activation': ['identity', 'logistic', 'tanh', 'relu'],
         'solver': ['lbfgs'],
         'max_iter': [200, 500, 800],

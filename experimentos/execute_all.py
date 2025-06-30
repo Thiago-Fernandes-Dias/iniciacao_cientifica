@@ -4,8 +4,6 @@ import re
 directory = './'
 
 for filename in os.listdir(directory):
-    # pattern = re.compile(r'(one|two|multi)(_([a-z])+)+\.py')
-    # TODO: adicionar métodos no results_repository para salvar MultiClassResults
     pattern = re.compile(r'(one|two)(_([a-z])+)+\.py')
     if not pattern.match(filename):
         continue

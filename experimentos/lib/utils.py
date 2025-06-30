@@ -3,7 +3,6 @@ import re
 from typing import Callable, TypeVar
 
 import pandas as pd
-from sklearn.metrics import make_scorer, accuracy_score
 
 T = TypeVar('T')
 S = TypeVar('S')
@@ -36,16 +35,18 @@ def float_range(start: float, end: float, step: float) -> list[float]:
         start += step
     return result
 
+
 def select(iterable: list[T], f: Callable[[T], S]) -> list[S]:
     return [f(x) for x in iterable]
 
-def item_with_max_value(map: dict[T, float], comp: Callable[[float, float], int]) -> tuple[T, float]:
-    max_item, max_value = map.popitem()
-    for (item, value) in map.items():
+
+def item_with_max_value(d: dict[T, float], comp: Callable[[float, float], int]) -> tuple[T, float]:
+    max_item, max_value = d.popitem()
+    for (item, value) in d.items():
         if comp(value, max_value) == 1:
             max_value = value
             max_item = item
-    return (max_item, max_value)
+    return max_item, max_value
 
 
 def bigger_comp(a: float, b: float) -> int:
@@ -64,25 +65,26 @@ def lower_comp(a: float, b: float) -> int:
     return 1
 
 
-def dict_values_average(map: dict[T, float]) -> float:
-    sum = 0.0
+def dict_values_average(d: dict[T, float]) -> float:
+    summation = 0.0
     length = 0
-    for _, value in map.items():
+    for _, value in d.items():
         length += 1
-        sum += value
-    return sum / length
+        summation += value
+    return summation / length
+
 
 def create_dir_if_not_exists(name: str):
     if not os.path.exists(name):
         os.makedirs(name)
 
-def cmu_first_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    return df[df['sessionIndex'] == 1], df[df['sessionIndex'] != 1]
 
-def two_session_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    return df[df['sessionIndex'] == 1], df[df['sessionIndex'] == 2]
+def cmu_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    return df[(df['sessionIndex'] == 1)], df[(df['sessionIndex'] != 1)]
+
 
 def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
 
-far_score = make_scorer(lambda y_true, y_pred: 1 - accuracy_score(y_true, y_pred), greater_is_better=False)
+
+seeds_range = range(0, 30)

@@ -3,17 +3,18 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 
 from lib.experiment_executor import ExperimentExecutor
+from lib.hp_grids import rf_params_grid
 from lib.repositories.results_repository_factory import results_repository_factory
-from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
+from lib.runners.experiment_with_two_classes_hpo_runner import ExperimentWithTwoClassesRunner
 
 
 def main() -> None:
     executor = ExperimentExecutor(
         name=str(os.path.basename(__file__).replace(".py", "")),
-        runner_factory=lambda ds: ExperimentWithoutHPORunner(
+        runner_factory=lambda ds: ExperimentWithTwoClassesRunner(
+            params_grid=rf_params_grid,
             dataset=ds,
-            estimator=RandomForestClassifier(),
-            use_impostor_samples=True
+            estimator_factory=lambda: RandomForestClassifier(),
         ),
         results_repo=results_repository_factory()
     )

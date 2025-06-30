@@ -10,14 +10,14 @@ class CMUDataset(Dataset):
                  columns_filer_rg: str = '.*') -> None:
         super().__init__(file_path, test_train_split, columns_filer_rg)
     
-    def _drop_columns(self) -> list[str]:
+    def get_drop_columns(self) -> list[str]:
         return ['sessionIndex', 'rep', 'subject']
     
     def _user_key_name(self) -> str:
         return 'subject'
 
-    def _session_key_name(self) -> str:
+    def get_session_key_name(self) -> str:
         return 'sessionIndex'
     
-    def _repetition_key_name(self) -> str:
+    def get_repetition_key_name(self) -> str:
         return 'rep'
