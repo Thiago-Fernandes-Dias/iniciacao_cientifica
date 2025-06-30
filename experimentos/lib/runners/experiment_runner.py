@@ -35,13 +35,14 @@ class ExperimentRunner(ABC):
         self._one_class_estimators_hp_map = {}
         self._user_model_predictions = pd.DataFrame()
 
+        self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
+
     @abstractmethod
     def _calculate_predictions(self) -> None:
         pass
 
     def exec(self) -> OneClassResults:
         self._reset_from_previous_execution()
-        self._set_vectors_and_true_labels()
         self._calculate_predictions()
         results = OneClassResults(
             user_model_predictions=self._user_model_predictions,

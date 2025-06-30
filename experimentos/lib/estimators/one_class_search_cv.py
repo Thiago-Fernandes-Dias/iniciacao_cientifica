@@ -14,9 +14,7 @@ class OneClassSearchCV:
     _estimator: BaseEstimator
     _params_grid: list[dict[str, Any]]
     _cv: BaseCrossValidator
-
     _best_params_config: dict[str, Any]
-    _best_bacc: float
 
     def __init__(self, estimator: BaseEstimator, params_grid: list[dict[str, Any]], cv: BaseCrossValidator):
         self._estimator = estimator
@@ -31,7 +29,7 @@ class OneClassSearchCV:
 
     def fit(self, x_genuine: pd.DataFrame, x_impostor: pd.DataFrame):
         self._best_params_config = {}
-        self._best_bacc = 0.0
+        best_bacc = 0.0
         y_genuine = create_labels(x_genuine, GENUINE_LABEL)
         y_impostor = create_labels(x_impostor, IMPOSTOR_LABEL)
         for params_config in ParameterGrid(self._params_grid):
@@ -50,8 +48,8 @@ class OneClassSearchCV:
                 i_recall = accuracy_score(create_labels(x_i_test, IMPOSTOR_LABEL), i_pred)
                 cv_bacc.append((g_recall + i_recall) / 2)
             average_bacc = np.average(cv_bacc).item()
-            if average_bacc > self._best_bacc:
-                self._best_bacc = average_bacc
+            if average_bacc > best_bacc:
+                best_bacc = average_bacc
                 self._best_params_config = params_config
         self._estimator = self._estimator.set_params(**self._best_params_config)
         self._estimator.fit(x_genuine)

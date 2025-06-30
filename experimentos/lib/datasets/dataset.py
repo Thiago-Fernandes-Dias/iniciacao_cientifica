@@ -9,6 +9,8 @@ class Dataset:
     _test_df: pd.DataFrame
     _user_keys: set[str]
     _columns_filter_rg: str
+    _seed: int = 0
+    _seed_change_cbs: list[Callable[[], None]] = []
 
     @abstractmethod
     def get_drop_columns(self) -> list[str]:
@@ -33,6 +35,9 @@ class Dataset:
         self._training_df, self._test_df = test_train_split(dataset)
         self._columns_filter_rg = columns_filer_rg
 
+    def add_seed_change_cb(self, cb: Callable[[], None]):
+        self._seed_change_cb.append(cb)
+
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
         return query(self._training_df).filter(regex=self._columns_filter_rg)
 
@@ -51,7 +56,7 @@ class Dataset:
         genuine_vectors = self.user_training_samples(user_subject)
         impostor_vectors = self \
             .training_df_query(lambda df: df[df[self._user_key_name()] != user_subject]) \
-            .sample(n=data_frame_length(genuine_vectors), random_state=RANDOM_STATE)
+            .sample(n=data_frame_length(genuine_vectors), random_state=self._seed)
         return (genuine_vectors, create_labels(genuine_vectors, GENUINE_LABEL),
                 impostor_vectors, create_labels(impostor_vectors, IMPOSTOR_LABEL))
 
@@ -73,3 +78,8 @@ class Dataset:
 
     def multi_class_test_samples(self) -> tuple[pd.DataFrame, pd.Series]:
         return self._test_df, self._test_df[self._user_key_name()]
+    
+    def set_seed(self, seed: int):
+        self._seed = seed
+        for cb in self._seed_change_cbs:
+            cb()

@@ -15,8 +15,10 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
     def _calculate_predictions(self) -> None:
         self._one_class_estimators_hp_map['default'] = [self._estimator.get_params()]
         pred_frames = list[pd.Series]()
-        for uk in self._dataset.user_keys():
-            x_training, y_training = self._get_user_training_vectors(uk)
-            self._estimator.fit(x_training, y_training)
-            pred_frames += self._calculate_user_model_predictions(estimator=self._estimator, uk=uk, seed=None)
+        for seed in list(seeds_range):
+            self._dataset.set_seed(seed)
+            for uk in self._dataset.user_keys():
+                x_training, y_training = self._get_user_training_vectors(uk)
+                self._estimator.fit(x_training, y_training)
+                pred_frames += self._calculate_user_model_predictions(estimator=self._estimator, uk=uk, seed=seed)
         self._user_model_predictions = pd.DataFrame(pred_frames)

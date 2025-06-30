@@ -24,6 +24,7 @@ class ExperimentWithOneClassHPORunner(ExperimentRunner):
     def _calculate_predictions(self) -> None:
         pred_frames = list[pd.Series]()
         for seed in list(seeds_range):
+            self._dataset.set_seed(seed)
             cv = KFold(n_splits=5, shuffle=True, random_state=seed)
             one_class_search_cv = OneClassSearchCV(estimator=self._estimator_factory(), cv=cv,
                                                    params_grid=self._params_grid)

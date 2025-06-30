@@ -23,6 +23,7 @@ class ExperimentWithTwoClassesRunner(ExperimentRunner):
     def _calculate_predictions(self) -> None:
         pred_frames = list[pd.Series]()
         for seed in list(seeds_range):
+            self._dataset.set_seed(seed)
             cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
             estimator = GridSearchCV(estimator=self._estimator_factory(), cv=cv, n_jobs=-1, param_grid=self._param_grid,
                                      scoring="accuracy")
