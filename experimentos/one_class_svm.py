@@ -14,7 +14,6 @@ def main() -> None:
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             dataset=ds,
             estimator=OneClassSVM(),
-            use_impostor_samples=False
         ),
     )
     executor.execute()
