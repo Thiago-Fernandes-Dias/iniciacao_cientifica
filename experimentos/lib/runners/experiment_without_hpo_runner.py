@@ -18,14 +18,15 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
         if self._use_impostor_samples:
             for seed in list(seeds_range):
                 self._dataset.set_seed(seed)
-                pred_frames += self.train_and_predict(seed)
+                pred_frames += self._train_and_predict(seed)
         else:
-            pred_frames += self.train_and_predict()   
+            pred_frames += self._train_and_predict()   
         self._user_model_predictions = pd.DataFrame(pred_frames)
 
-    def train_and_predict(self, seed: int | None):
+    def _train_and_predict(self, seed: int | None = None):
+        pred_frames = list[pd.Series]()
         for uk in self._dataset.user_keys():
             x_training, y_training = self._get_user_training_vectors(uk)
             self._estimator.fit(x_training, y_training)
-            pred_frames += self._calculate_user_model_predictions(estimator=self._estimator, uk=uk, seed=seed)
+            pred_frames += self._test_user_model(estimator=self._estimator, uk=uk, seed=seed)
         return pred_frames

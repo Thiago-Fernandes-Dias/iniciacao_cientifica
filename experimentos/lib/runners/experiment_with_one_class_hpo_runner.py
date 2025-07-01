@@ -35,5 +35,5 @@ class ExperimentWithOneClassHPORunner(ExperimentRunner):
                 if not uk in self._one_class_estimators_hp_map:
                     self._one_class_estimators_hp_map[uk] = []
                 self._one_class_estimators_hp_map[uk].append(one_class_search_cv.get_params())
-                pred_frames += self._calculate_user_model_predictions(estimator=one_class_search_cv, uk=uk, seed=seed)
+                pred_frames += self._test_user_model(estimator=one_class_search_cv, uk=uk, seed=seed)
         self._user_model_predictions = pd.DataFrame(pred_frames)

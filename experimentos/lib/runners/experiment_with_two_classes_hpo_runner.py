@@ -33,5 +33,5 @@ class ExperimentWithTwoClassesRunner(ExperimentRunner):
                 if not uk in self._one_class_estimators_hp_map:
                     self._one_class_estimators_hp_map[uk] = []
                 self._one_class_estimators_hp_map[uk].append(estimator.best_params_)
-                pred_frames += self._calculate_user_model_predictions(estimator, uk, seed)
+                pred_frames += self._test_user_model(estimator, uk, seed)
         self._user_model_predictions = pd.DataFrame(pred_frames)

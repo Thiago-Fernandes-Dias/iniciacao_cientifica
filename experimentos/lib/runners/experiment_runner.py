@@ -42,7 +42,6 @@ class ExperimentRunner(ABC):
         pass
 
     def exec(self) -> OneClassResults:
-        self._reset_from_previous_execution()
         self._calculate_predictions()
         results = OneClassResults(
             user_model_predictions=self._user_model_predictions,
@@ -65,7 +64,7 @@ class ExperimentRunner(ABC):
         x_training = x_training.drop(columns=self._dataset.get_drop_columns())
         return x_training, y_training
 
-    def _calculate_user_model_predictions(self, estimator, uk, seed: int | None) -> list[pd.Series]:
+    def _test_user_model(self, estimator, uk, seed: int | None) -> list[pd.Series]:
         pred_frames = []
         x_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
         y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
@@ -84,15 +83,3 @@ class ExperimentRunner(ABC):
             pred_frame = pd.Series(pred.to_dict())
             pred_frames.append(pred_frame)
         return pred_frames
-
-    def _reset_from_previous_execution(self):
-        self._X_genuine_training.clear()
-        self._y_genuine_training.clear()
-        self._X_impostor_training.clear()
-        self._y_impostor_training.clear()
-        self._X_genuine_test.clear()
-        self._y_genuine_test.clear()
-        self._X_impostors_test.clear()
-        self._y_impostors_test.clear()
-        self._user_model_predictions = pd.DataFrame()
-        self._one_class_estimators_hp_map.clear()
