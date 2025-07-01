@@ -17,7 +17,6 @@ class ExperimentRunner(ABC):
     _y_genuine_test: dict[str, list[int]]
     _X_impostors_test: dict[str, pd.DataFrame]
     _y_impostors_test: dict[str, list[int]]
-    _predictions_on_genuine_samples_map: dict[str, list[int]]
     _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
     _user_model_predictions: pd.DataFrame
 
@@ -35,6 +34,7 @@ class ExperimentRunner(ABC):
         self._one_class_estimators_hp_map = {}
         self._user_model_predictions = pd.DataFrame()
 
+        self._set_vectors_and_true_labels()
         self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
 
     @abstractmethod
