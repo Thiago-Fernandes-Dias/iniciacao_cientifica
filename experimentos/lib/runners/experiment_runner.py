@@ -41,9 +41,9 @@ class ExperimentRunner(ABC):
     def _calculate_predictions(self) -> None:
         pass
 
-    def exec(self) -> OneClassResults:
+    def exec(self) -> ExperimentalResults:
         self._calculate_predictions()
-        results = OneClassResults(
+        results = ExperimentalResults(
             user_model_predictions=self._user_model_predictions,
             hp=pd.DataFrame.from_dict(self._one_class_estimators_hp_map, orient='index'),
             date=datetime.now())
@@ -61,7 +61,6 @@ class ExperimentRunner(ABC):
         if self._use_impostor_samples:
             x_training = pd.concat([x_training, self._X_impostor_training[uk]])
             y_training = y_training + self._y_impostor_training[uk]
-        x_training = x_training.drop(columns=self._dataset.get_drop_columns())
         return x_training, y_training
 
     def _test_user_model(self, estimator, uk, seed: int | None) -> list[pd.Series]:

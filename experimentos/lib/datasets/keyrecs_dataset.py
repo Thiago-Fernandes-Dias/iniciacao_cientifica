@@ -13,7 +13,7 @@ class KeyrecsDataset(Dataset):
     def get_drop_columns(self) -> list[str]:
         return ["participant","session","repetition"]
     
-    def _user_key_name(self) -> str:
+    def user_key_name(self) -> str:
         return "participant"
 
     def get_session_key_name(self) -> str:

@@ -27,6 +27,6 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
         pred_frames = list[pd.Series]()
         for uk in self._dataset.user_keys():
             x_training, y_training = self._get_user_training_vectors(uk)
-            self._estimator.fit(x_training, y_training)
+            self._estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
             pred_frames += self._test_user_model(estimator=self._estimator, uk=uk, seed=seed)
         return pred_frames

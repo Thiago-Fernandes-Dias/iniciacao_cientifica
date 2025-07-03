@@ -29,7 +29,7 @@ class ExperimentWithTwoClassesRunner(ExperimentRunner):
                                      scoring="accuracy")
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)
-                estimator.fit(x_training, y_training)
+                estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
                 if not uk in self._one_class_estimators_hp_map:
                     self._one_class_estimators_hp_map[uk] = []
                 self._one_class_estimators_hp_map[uk].append(estimator.best_params_)

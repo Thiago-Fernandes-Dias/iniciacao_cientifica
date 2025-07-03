@@ -13,7 +13,7 @@ class CMUDataset(Dataset):
     def get_drop_columns(self) -> list[str]:
         return ['sessionIndex', 'rep', 'subject']
     
-    def _user_key_name(self) -> str:
+    def user_key_name(self) -> str:
         return 'subject'
 
     def get_session_key_name(self) -> str:

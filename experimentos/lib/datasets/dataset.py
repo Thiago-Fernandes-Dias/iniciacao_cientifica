@@ -17,7 +17,7 @@ class Dataset:
         pass
     
     @abstractmethod
-    def _user_key_name(self) -> str:
+    def user_key_name(self) -> str:
         pass
 
     @abstractmethod
@@ -31,7 +31,7 @@ class Dataset:
     def __init__(self, file_path: str, test_train_split: Callable[[pd.DataFrame], tuple[pd.DataFrame, pd.DataFrame]],
                  columns_filer_rg: str = '.*') -> None:
         dataset: pd.DataFrame = pd.read_csv(file_path)
-        self._user_keys: set[str] = set(dataset[self._user_key_name()].drop_duplicates().tolist())
+        self._user_keys: set[str] = set(dataset[self.user_key_name()].drop_duplicates().tolist())
         self._training_df, self._test_df = test_train_split(dataset)
         self._columns_filter_rg = columns_filer_rg
 
@@ -55,29 +55,29 @@ class Dataset:
     def two_class_training_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int], pd.DataFrame, list[int]]:
         genuine_vectors = self.user_training_samples(user_subject)
         impostor_vectors = self \
-            .training_df_query(lambda df: df[df[self._user_key_name()] != user_subject]) \
+            .training_df_query(lambda df: df[df[self.user_key_name()] != user_subject]) \
             .sample(n=data_frame_length(genuine_vectors), random_state=self._seed)
         return (genuine_vectors, create_labels(genuine_vectors, GENUINE_LABEL),
                 impostor_vectors, create_labels(impostor_vectors, IMPOSTOR_LABEL))
 
     def impostors_test_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
-        attack_vectors = self.test_df_query(lambda df: df[df[self._user_key_name()] != user_subject])
+        attack_vectors = self.test_df_query(lambda df: df[df[self.user_key_name()] != user_subject])
         labels = create_labels(attack_vectors, IMPOSTOR_LABEL)
         return attack_vectors, labels
 
     def user_test_set(self, user_subject: str) -> tuple[pd.DataFrame, list[int]]:
-        user_vectors = self.test_df_query(lambda df: df[df[self._user_key_name()] == user_subject])
+        user_vectors = self.test_df_query(lambda df: df[df[self.user_key_name()] == user_subject])
         genuine_labels = create_labels(user_vectors, GENUINE_LABEL)
         return user_vectors, genuine_labels
 
     def user_training_samples(self, user_subject: str) -> pd.DataFrame:
-        return self.training_df_query(lambda df: df[df[self._user_key_name()] == user_subject])
+        return self.training_df_query(lambda df: df[df[self.user_key_name()] == user_subject])
 
     def multi_class_training_samples(self) -> tuple[pd.DataFrame, pd.Series]:
-        return self._training_df, self._training_df[self._user_key_name()]
+        return self._training_df, self._training_df[self.user_key_name()]
 
     def multi_class_test_samples(self) -> tuple[pd.DataFrame, pd.Series]:
-        return self._test_df, self._test_df[self._user_key_name()]
+        return self._test_df, self._test_df[self.user_key_name()]
     
     def set_seed(self, seed: int):
         self._seed = seed
