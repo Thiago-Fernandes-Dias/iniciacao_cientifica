@@ -4,10 +4,12 @@ import pandas as pd
 
 from lib.datasets.dataset import Dataset
 from lib.one_class_results import *
+from lib.repositories.results_repository import ResultsRepository
 
 
 class ExperimentRunner(ABC):
     _dataset: Dataset
+    _repo: ResultsRepository
     _use_impostor_samples: bool
     _X_genuine_training: dict[str, pd.DataFrame]
     _y_genuine_training: dict[str, list[int]]
@@ -20,8 +22,9 @@ class ExperimentRunner(ABC):
     _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
     _user_model_predictions: pd.DataFrame
 
-    def __init__(self, dataset: Dataset, use_impostor_samples: bool = False):
+    def __init__(self, dataset: Dataset, repo: ResultsRepository, use_impostor_samples: bool = False):
         self._dataset = dataset
+        self._repo = repo
         self._use_impostor_samples = use_impostor_samples
         self._X_genuine_training = {}
         self._y_genuine_training = {}

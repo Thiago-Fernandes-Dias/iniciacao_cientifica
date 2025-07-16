@@ -7,7 +7,7 @@ from lib.repositories.results_repository import ResultsRepository
 from lib.utils import create_dir_if_not_exists
 
 class ParquetResultsRepository(ResultsRepository):
-    def add_one_class_result(self, result: ExperimentalResults, exp_name: str) -> None:
+    def add_one_class_result(self, result: ExperimentalResults, exp_name: str, seed: int) -> None:
         path = f"results/{exp_name}/{result.date.strftime('%Y-%m-%d_%H-%M-%S')}"
         create_dir_if_not_exists(path)
         result.model_predictions.to_parquet(f"{path}/predictions.parquet", index=True, engine='fastparquet')

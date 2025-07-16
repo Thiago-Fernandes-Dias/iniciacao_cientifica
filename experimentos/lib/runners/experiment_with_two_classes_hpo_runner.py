@@ -5,18 +5,18 @@ from sklearn.base import BaseEstimator
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
 
 from lib.datasets.dataset import Dataset
+from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
 from lib.utils import seeds_range
 
 
 class ExperimentWithTwoClassesRunner(ExperimentRunner):
     _estimator_factory: Callable[[], BaseEstimator]
-    _dataset: Dataset
     _param_grid: list[dict[str, Any]]
 
-    def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator],
+    def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator], repo: ResultsRepository,
                  params_grid: list[dict[str, Any]]) -> None:
-        super().__init__(dataset, use_impostor_samples=True)
+        super().__init__(dataset, repo, use_impostor_samples=True)
         self._estimator_factory = estimator_factory
         self._param_grid = params_grid
 
