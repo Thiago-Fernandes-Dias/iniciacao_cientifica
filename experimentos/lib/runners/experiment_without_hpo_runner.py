@@ -10,7 +10,7 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
     _estimator: BaseEstimator
 
     def __init__(self, dataset: Dataset, estimator: BaseEstimator, exp_name: str, results_repo: ResultsRepository, 
-                 use_impostor_samples: bool = False):
+                 use_impostor_samples: bool):
         super().__init__(dataset=dataset, use_impostor_samples=use_impostor_samples, exp_name=exp_name,
                          results_repo=results_repo)
         self._estimator = estimator
