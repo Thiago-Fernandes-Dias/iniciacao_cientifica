@@ -3,11 +3,14 @@ from abc import abstractmethod, ABC
 import pandas as pd
 
 from lib.datasets.dataset import Dataset
-from lib.one_class_results import *
+from lib.repositories.results_repository import ResultsRepository
+from lib.user_model_prediction import UserModelPrediction
 
 
 class ExperimentRunner(ABC):
     _dataset: Dataset
+    _results_repository: ResultsRepository
+    _exp_name: str
     _use_impostor_samples: bool
     _X_genuine_training: dict[str, pd.DataFrame]
     _y_genuine_training: dict[str, list[int]]
@@ -18,10 +21,12 @@ class ExperimentRunner(ABC):
     _X_impostors_test: dict[str, pd.DataFrame]
     _y_impostors_test: dict[str, list[int]]
     _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
-    _user_model_predictions: pd.DataFrame
 
-    def __init__(self, dataset: Dataset, use_impostor_samples: bool = False):
+    def __init__(self, dataset: Dataset, results_repo: ResultsRepository, exp_name: str, 
+                 use_impostor_samples: bool = False):
         self._dataset = dataset
+        self._results_repository = results_repo
+        self._exp_name = exp_name
         self._use_impostor_samples = use_impostor_samples
         self._X_genuine_training = {}
         self._y_genuine_training = {}
@@ -32,22 +37,13 @@ class ExperimentRunner(ABC):
         self._X_impostors_test = {}
         self._y_impostors_test = {}
         self._one_class_estimators_hp_map = {}
-        self._user_model_predictions = pd.DataFrame()
 
         self._set_vectors_and_true_labels()
         self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
 
     @abstractmethod
-    def _calculate_predictions(self) -> None:
+    def exec(self) -> None:
         pass
-
-    def exec(self) -> ExperimentalResults:
-        self._calculate_predictions()
-        results = ExperimentalResults(
-            user_model_predictions=self._user_model_predictions,
-            hp=pd.DataFrame.from_dict(self._one_class_estimators_hp_map, orient='index'),
-            date=datetime.now())
-        return results
 
     def _set_vectors_and_true_labels(self) -> None:
         for uk in self._dataset.user_keys():

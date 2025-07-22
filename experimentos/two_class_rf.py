@@ -9,13 +9,13 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 
 def main() -> None:
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
+            exp_name=str(os.path.basename(__file__).replace(".py", "")),
             dataset=ds,
             estimator=RandomForestClassifier(),
-            use_impostor_samples=True
+            use_impostor_samples=True,
+            results_repo=results_repository_factory()
         ),
-        results_repo=results_repository_factory()
     )
     executor.execute()
 

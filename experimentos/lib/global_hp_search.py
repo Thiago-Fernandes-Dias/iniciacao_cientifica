@@ -7,6 +7,7 @@ from sklearn.model_selection import KFold, ParameterGrid
 
 from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.datasets.dataset import Dataset
+from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
 from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 from lib.utils import create_labels, dict_values_average, seeds_range
@@ -55,8 +56,10 @@ class GlobalHPTuning:
         return best_param_config
 
 
-def runner_with_global_hpo_factory(ds: Dataset, params_grid: list[dict[str, Any]],
-                                   estimator_factory: Callable[[], BaseEstimator]) -> ExperimentRunner:
+def runner_with_global_hpo_factory(ds: Dataset, params_grid: list[dict[str, Any]], 
+                                   estimator_factory: Callable[[], BaseEstimator],
+                                   exp_name: str, repo: ResultsRepository,
+                                   use_impostor_samples: bool) -> ExperimentRunner:
     global_hp_tuning = GlobalHPTuning(
         dataset=ds,
         parameter_grid=params_grid,
@@ -66,5 +69,7 @@ def runner_with_global_hpo_factory(ds: Dataset, params_grid: list[dict[str, Any]
     return ExperimentWithoutHPORunner(
         dataset=ds,
         estimator=estimator_factory().set_params(**best_param_config),
-        use_impostor_samples=False
+        use_impostor_samples=use_impostor_samples,
+        results_repo=repo,
+        exp_name=exp_name
     )

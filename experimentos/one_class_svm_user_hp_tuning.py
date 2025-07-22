@@ -9,11 +9,12 @@ from lib.runners.experiment_with_one_class_hpo_runner import ExperimentWithOneCl
 
 
 def main() -> None:
+    name = str(os.path.basename(__file__).replace(".py", ""))
+    results_repo = results_repository_factory()
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
-        results_repo=results_repository_factory(),
         runner_factory=lambda ds: ExperimentWithOneClassHPORunner(
-            dataset=ds, estimator_factory=lambda: OneClassSVM(), params_grid=one_class_svm_params_grid
+            dataset=ds, estimator_factory=lambda: OneClassSVM(), params_grid=one_class_svm_params_grid,
+            results_repo=results_repo, exp_name=name
         )
     )
     executor.execute()

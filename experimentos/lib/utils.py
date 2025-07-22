@@ -92,9 +92,8 @@ def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
 
 
-def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 5)], df[(df['session'] == 2) & (df['repetition'] <= 5)]
 
 
-
-seeds_range = range(0, 30)
+seeds_range = range(0, 3)
