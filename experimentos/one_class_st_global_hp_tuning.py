@@ -8,12 +8,13 @@ from lib.global_hp_search import runner_with_global_hpo_factory
 
 
 def main() -> None:
+    exp_name = str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
-        results_repo=results_repository_factory(),
         runner_factory=lambda ds: runner_with_global_hpo_factory(ds=ds,
                                                                  estimator_factory=lambda: ImprovedStatisticalAlg(),
-                                                                 params_grid=st_params_grid),
+                                                                 params_grid=st_params_grid,
+                                                                 repo=results_repository_factory(),
+                                                                 exp_name=exp_name),
     )
     executor.execute()
 

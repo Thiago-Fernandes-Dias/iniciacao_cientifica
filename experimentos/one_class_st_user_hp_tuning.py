@@ -8,11 +8,12 @@ from lib.runners.experiment_with_one_class_hpo_runner import ExperimentWithOneCl
 
 
 def main() -> None:
+    name=str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
-        results_repo=results_repository_factory(),
         runner_factory=lambda ds: ExperimentWithOneClassHPORunner(
             dataset=ds, estimator_factory=lambda: ImprovedStatisticalAlg(), params_grid=st_params_grid,
+            results_repo=results_repository_factory(),
+            exp_name=name
         ),
     )
     executor.execute()

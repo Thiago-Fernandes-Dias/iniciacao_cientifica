@@ -9,14 +9,15 @@ from lib.runners.experiment_with_two_classes_hpo_runner import ExperimentWithTwo
 
 
 def main() -> None:
+    name = str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
         runner_factory=lambda ds: ExperimentWithTwoClassesRunner(
             params_grid=rf_params_grid,
             dataset=ds,
             estimator_factory=lambda: RandomForestClassifier(),
+            exp_name=name,
+            results_repo=results_repository_factory()
         ),
-        results_repo=results_repository_factory()
     )
     executor.execute()
 

@@ -7,11 +7,11 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 
 
 def main() -> None:
+    name=str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
-        results_repo=results_repository_factory(),
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
-            dataset=ds, estimator=ImprovedStatisticalAlg()
+            results_repo=results_repository_factory(),
+            dataset=ds, estimator=ImprovedStatisticalAlg(), exp_name=name
         ),
     )
     executor.execute()

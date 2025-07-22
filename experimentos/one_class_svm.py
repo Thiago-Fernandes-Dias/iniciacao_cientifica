@@ -8,12 +8,14 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 
 
 def main() -> None:
+    name = str(os.path.basename(__file__).replace(".py", ""))
+    results_repo = results_repository_factory()
     executor = ExperimentExecutor(
-        name=str(os.path.basename(__file__).replace(".py", "")),
-        results_repo=results_repository_factory(),
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             dataset=ds,
             estimator=OneClassSVM(),
+            exp_name=name,
+            results_repo=results_repo
         ),
     )
     executor.execute()
