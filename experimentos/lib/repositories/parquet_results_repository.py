@@ -3,14 +3,14 @@ import pickle
 import os
 from typing import Any
 import pandas as pd
-
+from pyspark.sql import SparkSession
 from lib.one_class_results import ExperimentalResults
 from lib.repositories.results_repository import ResultsRepository
 from lib.utils import create_dir_if_not_exists
 
 class ParquetResultsRepository(ResultsRepository):
     def add_predictions_frame(self, predictions_frame: pd.DataFrame, seed: int, exp_name: str, date: datetime) -> None:
-        path = f"results/{exp_name}/{date.strftime('%Y-%m-%d_%H-%M-%S')}"
+        path = f"results/{exp_name}/{date.strftime('%Y-%m-%d_%H-%M-%S')}/predictions"
         create_dir_if_not_exists(path)
         predictions_frame.to_parquet(f"{path}/predictions_{seed}.parquet", index=True, engine='fastparquet')
     
@@ -20,6 +20,27 @@ class ParquetResultsRepository(ResultsRepository):
         with open(f"{path}/hp.pickle", "wb") as f:
             pickle.dump(hp, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def get_one_class_results(self, exp_name: str) -> list[ExperimentalResults]:
-        pass
-
+    def read_results(self, exp_name: str) -> ExperimentalResults:
+        spark = SparkSession.builder.appName("IC_Keystroke_Dynamics").getOrCreate()
+        exp_results_path = f"results/{exp_name}"
+        result_dirs = sorted(os.listdir(exp_results_path), key=self._to_datetime)
+        if len(result_dirs) == 0:
+            return None
+        exp_dir = result_dirs[0]
+        file_path = f"{exp_results_path}/{exp_dir}"
+        if not os.path.isdir(file_path):
+            return None
+        try:
+            directory_path = f"{file_path}/predictions"
+            user_model_predictions = spark.read.parquet(directory_path)
+            hp = {}
+            with open(f"{file_path}/hp.pickle", "rb") as f:
+                hp = pickle.load(f)
+            date = self._to_datetime(exp_dir)
+            return ExperimentalResults(user_model_predictions=user_model_predictions, hp=hp, date=date)
+        except Exception as e:
+            print(f"Error reading {file_path}: {e}")
+            return None
+    
+    def _to_datetime(self, s: str):
+        return pd.to_datetime(s, format='%Y-%m-%d_%H-%M-%S')

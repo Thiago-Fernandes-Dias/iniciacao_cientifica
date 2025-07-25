@@ -74,13 +74,12 @@ def dict_values_average(d: dict[T, float]) -> float:
     return summation / length
 
 
-
 def create_dir_if_not_exists(name: str):
     if not os.path.exists(name):
         os.makedirs(name)
 
 
-def cmu_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def cmu_default_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['sessionIndex'] == 1)], df[(df['sessionIndex'] != 1)]
 
 
@@ -88,7 +87,7 @@ def cmu_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['sessionIndex'] == 1) & (df['rep'] <= 5)], df[(df['sessionIndex'] != 1) & (df['rep'] <= 5)]
 
 
-def keyrecs_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def keyrecs_default_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 50)], df[(df['session'] == 2) | (df['repetition'] > 50)]
 
 
@@ -97,3 +96,5 @@ def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 seeds_range = range(0, 3)
+cmu_split = cmu_test_split
+keyrecs_split = keyrecs_test_split

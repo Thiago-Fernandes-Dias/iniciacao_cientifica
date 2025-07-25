@@ -15,7 +15,8 @@ def main() -> None:
             dataset=ds,
             estimator=OneClassSVM(),
             exp_name=name,
-            results_repo=results_repo
+            results_repo=results_repo,
+            use_impostor_samples=False
         ),
     )
     executor.execute()

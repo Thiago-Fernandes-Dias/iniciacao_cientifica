@@ -41,6 +41,9 @@ class ExperimentRunner(ABC):
         self._set_vectors_and_true_labels()
         self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
 
+    def add_name_suffix(self, s: str):
+        self._exp_name += f"_{s}"
+
     @abstractmethod
     def exec(self) -> None:
         pass

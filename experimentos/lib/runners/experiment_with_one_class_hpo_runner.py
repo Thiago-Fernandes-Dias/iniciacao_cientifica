@@ -3,7 +3,7 @@ from typing import Callable, Any
 
 import pandas as pd
 from sklearn.base import BaseEstimator
-from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 
 from lib.datasets.dataset import Dataset
 from lib.estimators.one_class_search_cv import OneClassSearchCV
@@ -48,7 +48,7 @@ class ExperimentWithOneClassHPORunner(ExperimentRunner):
             
             pred_frame = pd.DataFrame(pred_series)
             self._results_repository.add_predictions_frame(predictions_frame=pred_frame, 
-                                                           date=date, seed=seed, exp_name=self._exp_name)
+                                                           seed=seed, exp_name=self._exp_name)
         
         self._results_repository.add_hp(hp=self._one_class_estimators_hp_map, exp_name=self._exp_name, date=date)
 

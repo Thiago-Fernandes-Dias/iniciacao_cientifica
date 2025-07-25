@@ -11,7 +11,9 @@ def main() -> None:
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             results_repo=results_repository_factory(),
-            dataset=ds, estimator=ImprovedStatisticalAlg(), exp_name=name
+            dataset=ds, estimator=ImprovedStatisticalAlg(),
+            exp_name=name,
+            use_impostor_samples=False
         ),
     )
     executor.execute()

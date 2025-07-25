@@ -13,7 +13,6 @@ from lib.utils import seeds_range
 
 class ExperimentWithTwoClassesRunner(ExperimentRunner):
     _estimator_factory: Callable[[], BaseEstimator]
-    _dataset: Dataset
     _param_grid: list[dict[str, Any]]
 
     def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator],
