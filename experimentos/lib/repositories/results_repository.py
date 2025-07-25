@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from datetime import datetime
 from typing import Any
-
 import pandas as pd
+
 from lib.one_class_results import ExperimentalResults
 
 class ResultsRepository:
@@ -15,5 +15,6 @@ class ResultsRepository:
         pass
 
     @abstractmethod
-    def get_one_class_results(self, exp_name: str) -> list[ExperimentalResults]:
+    def read_results(self, exp_name: str) -> ExperimentalResults:
         pass
+
