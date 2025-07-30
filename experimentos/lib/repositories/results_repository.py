@@ -5,9 +5,10 @@ import pandas as pd
 
 from lib.one_class_results import ExperimentalResults
 
+
 class ResultsRepository:
     @abstractmethod
-    def add_predictions_frame(self, predictions_frame: pd.DataFrame, seed: int, exp_name: str) -> None:
+    def add_predictions_frame(self, predictions_frame: pd.DataFrame, seed: int, exp_name: str, date: datetime) -> None:
         pass
 
     @abstractmethod
