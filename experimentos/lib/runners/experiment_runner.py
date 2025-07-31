@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABC
 
 import pandas as pd
+from icecream import ic
 
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
@@ -22,7 +23,7 @@ class ExperimentRunner(ABC):
     _y_impostors_test: dict[str, list[int]]
     _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
 
-    def __init__(self, dataset: Dataset, results_repo: ResultsRepository, exp_name: str, 
+    def __init__(self, dataset: Dataset, results_repo: ResultsRepository, exp_name: str,
                  use_impostor_samples: bool = False):
         self._dataset = dataset
         self._results_repository = results_repo
@@ -39,7 +40,7 @@ class ExperimentRunner(ABC):
         self._one_class_estimators_hp_map = {}
 
         self._set_vectors_and_true_labels()
-        self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
+        self._dataset.add_seed_change_cb(self._log_and_update_vectors_and_true_labels)
 
     def add_name_suffix(self, s: str):
         self._exp_name += f"_{s}"
@@ -81,3 +82,7 @@ class ExperimentRunner(ABC):
             pred_frame = pd.Series(pred.to_dict())
             pred_frames.append(pred_frame)
         return pred_frames
+
+    def _log_and_update_vectors_and_true_labels(self, seed: int):
+        ic(f"Atualizando conjunto de dados para treino e teste com a seed {seed}")
+        self._set_vectors_and_true_labels()

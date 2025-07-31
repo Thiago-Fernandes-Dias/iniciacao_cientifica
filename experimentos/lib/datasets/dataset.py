@@ -1,16 +1,16 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 from lib.constants import *
 from lib.utils import *
 
 import pandas as pd
 
-class Dataset:
+class Dataset(metaclass=ABCMeta):
     _training_df: pd.DataFrame
     _test_df: pd.DataFrame
     _user_keys: set[str]
     _columns_filter_rg: str
     _seed: int = 0
-    _seed_change_cbs: list[Callable[[], None]] = []
+    _seed_change_cbs: list[Callable[[int], None]] = []
 
     @abstractmethod
     def get_drop_columns(self) -> list[str]:
@@ -35,7 +35,7 @@ class Dataset:
         self._training_df, self._test_df = test_train_split(dataset)
         self._columns_filter_rg = columns_filer_rg
 
-    def add_seed_change_cb(self, cb: Callable[[], None]):
+    def add_seed_change_cb(self, cb: Callable[[int], None]):
         self._seed_change_cbs.append(cb)
 
     def training_df_query(self, query: Callable[[pd.DataFrame], pd.DataFrame]) -> pd.DataFrame:
@@ -82,4 +82,4 @@ class Dataset:
     def set_seed(self, seed: int):
         self._seed = seed
         for cb in self._seed_change_cbs:
-            cb()
+            cb(seed)

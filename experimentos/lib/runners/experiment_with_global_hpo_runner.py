@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Any, Callable
 
 import pandas as pd
+from icecream import ic
 from sklearn.base import BaseEstimator
 
 from lib.datasets.dataset import Dataset
@@ -26,8 +27,12 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
 
     def exec(self) -> None:
         date = datetime.now()
+        ic(f"Iniciando experimento {self._exp_name}")
+        ic(date)
         self._one_class_estimators_hp_map['global'] = []
         for seed in list(seeds_range):
+            ic(seed)
+
             pred_series = list[pd.Series]()
 
             self._dataset.set_seed(seed)
@@ -35,6 +40,9 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
             global_hpo_search = GlobalHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
                                                parameter_grid=self._params_grid,
                                                use_impostor_samples=self._use_impostor_samples, seed=seed)
+
+            ic("Iniciando global hpo")
+
             best_params_config = global_hpo_search.search()
             self._one_class_estimators_hp_map['global'].append(best_params_config)
             estimator = self._estimator_factory().set_params(**best_params_config)
@@ -49,3 +57,5 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
                                                            seed=seed, exp_name=self._exp_name, date=date)
 
         self._results_repository.add_hp(self._one_class_estimators_hp_map, exp_name=self._exp_name, date=date)
+
+        ic(f"Experimento {self._exp_name} finalizado")
