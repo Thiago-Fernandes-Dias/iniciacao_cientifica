@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from typing import Any, Callable
 
@@ -9,7 +10,7 @@ from lib.datasets.dataset import Dataset
 from lib.global_hp_search import GlobalHPTuning
 from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
-from lib.utils import seeds_range
+from lib.utils import seeds_range, log_time
 
 
 class ExperimentWithGlobalHPORunner(ExperimentRunner):
@@ -24,15 +25,15 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
                          results_repo=results_repo)
         self._estimator_factory = estimator_factory
         self._params_grid = params_grid
+        self.logger = logging.getLogger(__name__)
 
     def exec(self) -> None:
         date = datetime.now()
-        ic(f"Iniciando experimento {self._exp_name}")
-        ic(date)
+
+        self.logger.info(f"Starting {self._exp_name} at {date}")
+
         self._one_class_estimators_hp_map['global'] = []
         for seed in list(seeds_range):
-            ic(seed)
-
             pred_series = list[pd.Series]()
 
             self._dataset.set_seed(seed)
@@ -40,22 +41,29 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
             global_hpo_search = GlobalHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
                                                parameter_grid=self._params_grid,
                                                use_impostor_samples=self._use_impostor_samples, seed=seed)
-
-            ic("Iniciando global hpo")
-
             best_params_config = global_hpo_search.search()
             self._one_class_estimators_hp_map['global'].append(best_params_config)
             estimator = self._estimator_factory().set_params(**best_params_config)
 
             for uk in self._dataset.user_keys():
+                self.logger.info(f"Starting user \"{uk}\" estimator fit with seed {seed}.")
+
                 x_training, y_training = self._get_user_training_vectors(uk)
-                estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
+                self._fit_estimator(estimator, x_training, y_training)
+
+                self.logger.info(f"User \"{uk}\" estimator fit with seed {seed} finished.")
+
                 pred_series += self._test_user_model(estimator=estimator, uk=uk, seed=seed)
 
             pred_frame = pd.DataFrame(pred_series)
+
             self._results_repository.add_predictions_frame(predictions_frame=pred_frame,
                                                            seed=seed, exp_name=self._exp_name, date=date)
 
         self._results_repository.add_hp(self._one_class_estimators_hp_map, exp_name=self._exp_name, date=date)
 
-        ic(f"Experimento {self._exp_name} finalizado")
+        self.logger.info(f"Experimento {self._exp_name} finalizado")
+
+    @log_time
+    def _fit_estimator(self, estimator, x_training, y_training):
+        estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)

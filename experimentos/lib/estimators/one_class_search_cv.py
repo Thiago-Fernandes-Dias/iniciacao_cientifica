@@ -1,4 +1,6 @@
-﻿from typing import Self, Any
+﻿import logging
+from datetime import datetime
+from typing import Self, Any
 
 import numpy as np
 import pandas as pd
@@ -20,6 +22,7 @@ class OneClassSearchCV:
         self._estimator = estimator
         self._params_grid = params_grid
         self._cv = cv
+        self.logger = logging.getLogger(__name__)
 
     def get_params(self, deep: bool = True) -> dict[str, Any]:
         return self._best_params_config
@@ -28,6 +31,8 @@ class OneClassSearchCV:
         self._estimator = self._estimator.set_params(**params)
 
     def fit(self, x: pd.DataFrame, y: list[int], user: str, user_label: str, drop_columns: list[str]) -> None:
+        start_time = datetime.now()
+        self.logger.info(f"Starting user \"{user}\" estimator fit with hpo, ")
         self._best_params_config = {}
         best_bacc = 0.0
         for params_config in ParameterGrid(self._params_grid):

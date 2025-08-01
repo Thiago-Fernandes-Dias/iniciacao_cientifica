@@ -13,7 +13,7 @@ from lib.datasets.dataset import Dataset
 from lib.utils import create_labels, dict_values_average
 
 
-class GlobalHPTuning:
+class UserHPTuning:
     _dataset: Dataset
     _parameter_grid: list[dict[str, Any]]
     _estimator_factory: Callable[[], BaseEstimator]
@@ -30,17 +30,16 @@ class GlobalHPTuning:
         self.logger = logging.getLogger(__name__)
 
     def search(self) -> dict[str, Any]:
-        self.logger.info(f"Starting global hpo search with seed {self._seed}")
+        self.logger.info(f"Starting user hpo search with seed {self._seed}")
         start_time = datetime.now()
 
-        best_param_config: dict[str, Any] = {}
-        best_bacc: float = 0
+        user_best_param_config_map: dict[str, Any] = {}
         cv = KFold(n_splits=5, shuffle=True, random_state=self._seed)
 
-        for param_config in ParameterGrid(self._parameter_grid):
-            users_bacc_map: dict[str, float] = {}
-            for uk in self._dataset.user_keys():
-                user_baccs: list[float] = []
+        for uk in self._dataset.user_keys():
+            best_bacc = 0.0
+            for param_config in ParameterGrid(self._parameter_grid):
+                split_baccs = []
                 x_genuine, y_genuine, x_impostor, y_impostor = \
                     self._dataset.two_class_training_set(uk)
                 for gss, iss in zip(cv.split(x_genuine, y_genuine),
@@ -59,14 +58,13 @@ class GlobalHPTuning:
                     i_pred = estimator.predict(x_i_test)
                     g_recall = accuracy_score(create_labels(x_g_test, GENUINE_LABEL), g_pred)
                     i_recall = accuracy_score(create_labels(x_i_test, IMPOSTOR_LABEL), i_pred)
-                    user_baccs.append((g_recall + i_recall) / 2)
-                users_bacc_map[uk] = np.average(user_baccs).item()
-            average_bacc = dict_values_average(users_bacc_map)
-            if average_bacc > best_bacc:
-                best_bacc = average_bacc
-                best_param_config = param_config
+                    split_baccs.append((g_recall + i_recall) / 2)
+                average_bacc = np.average(split_baccs).item()
+                if average_bacc > best_bacc:
+                    best_bacc = average_bacc
+                    user_best_param_config_map[uk] = param_config
 
         minutes_elapsed = (datetime.now() - start_time) // 60
-        self.logger.info(f"Global hpo search with seed {self._seed} finished. Time elapsed: {minutes_elapsed} minutes")
+        self.logger.info(f"User hpo search with seed {self._seed} finished. Time elapsed: {minutes_elapsed} minutes")
 
-        return best_param_config
+        return user_best_param_config_map

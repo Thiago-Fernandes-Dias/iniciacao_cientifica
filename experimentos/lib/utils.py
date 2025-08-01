@@ -1,6 +1,7 @@
+import logging
 import os
 import re
-from datetime import time
+from datetime import time, datetime
 from typing import Callable, TypeVar
 
 import pandas as pd
@@ -98,11 +99,12 @@ def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def log_time(f):
     def wrapper(*args, **kwargs):
-        start_time = time.time()
+        start_time = datetime.now()
         f(*args, **kwargs)
-        end_time = time.time()
+        end_time = datetime.now()
         time_elapsed = end_time - start_time
-        ic(time_elapsed)
+        min_elapsed = time_elapsed.total_seconds() // 60
+        logging.info(f"Time elapsed: {min_elapsed} minutes.")
     return wrapper
 
 seeds_range = range(0, 3)
