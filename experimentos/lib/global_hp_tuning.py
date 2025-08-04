@@ -10,7 +10,7 @@ from sklearn.model_selection import KFold, ParameterGrid
 
 from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.datasets.dataset import Dataset
-from lib.utils import create_labels, dict_values_average
+from lib.utils import create_labels, dict_values_average, log_completion
 
 
 class GlobalHPTuning:
@@ -66,8 +66,7 @@ class GlobalHPTuning:
                 best_bacc = average_bacc
                 best_param_config = param_config
 
-        time_elapsed = datetime.now() - start_time
-        seconds_elapsed = time_elapsed.total_seconds()
-        self.logger.info(f"Global hpo search with seed {self._seed} finished. Time elapsed: {seconds_elapsed} seconds.")
+        log_completion(logger=self.logger, start_time=start_time, 
+                       msg=f"Global hpo search with seed {self._seed} finished.")
 
         return best_param_config

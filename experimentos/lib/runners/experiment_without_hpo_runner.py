@@ -32,9 +32,7 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
             self._results_repository.add_predictions_frame(predictions_frame=pd.DataFrame(self._train_and_predict()),
                                                            date=start_time, exp_name=self._exp_name)
         
-        time_elapsed = datetime.now() - start_time
-        seconds_elapsed = time_elapsed.total_seconds()
-        self.logger.info(f"Experiment {self._exp_name} finished. Time elapsed: {seconds_elapsed} seconds.")
+        self._log_experiment_completion(start_time)
 
     def _train_and_predict(self, seed: int = 0) -> list[pd.Series]:
         pred_frames: list[pd.Series] = []

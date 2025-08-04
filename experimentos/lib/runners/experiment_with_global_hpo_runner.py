@@ -57,6 +57,4 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
 
         self._results_repository.add_hp(self._one_class_estimators_hp_map, exp_name=self._exp_name, date=start_time)
 
-        time_elapsed = datetime.now() - start_time
-        seconds_elapsed = time_elapsed.total_seconds()
-        self.logger.info(f"Experiment {self._exp_name} finished. Time elapsed: {seconds_elapsed} seconds.")
+        self._log_experiment_completion(start_time)

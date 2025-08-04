@@ -1,10 +1,13 @@
 from abc import abstractmethod, ABC
+from datetime import datetime
+import logging
 
 import pandas as pd
 
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
 from lib.user_model_prediction import UserModelPrediction
+from lib.utils import log_completion
 
 
 class ExperimentRunner(ABC):
@@ -40,6 +43,8 @@ class ExperimentRunner(ABC):
 
         self._set_vectors_and_true_labels()
         self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
+
+        self.logger = logging.getLogger(__name__)
 
     def add_name_suffix(self, s: str):
         self._exp_name += f"_{s}"
@@ -80,3 +85,6 @@ class ExperimentRunner(ABC):
             pred_frame = pd.Series(pred_dict)
             pred_frames.append(pred_frame)
         return pred_frames
+
+    def _log_experiment_completion(self, start_time):
+        log_completion(logger=self.logger, msg=f"Experiment {self._exp_name} finished", start_time=start_time)

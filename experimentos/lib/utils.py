@@ -81,6 +81,12 @@ def create_dir_if_not_exists(name: str):
         os.makedirs(name)
 
 
+def log_completion(start_time: datetime, msg: str, logger: logging.Logger) -> None:
+    time_elapsed = datetime.now() - start_time
+    seconds_elapsed = time_elapsed.total_seconds()
+    logger.info(f"{msg} | Time elapsed: {seconds_elapsed} seconds")
+
+
 def cmu_default_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['sessionIndex'] == 1)], df[(df['sessionIndex'] != 1)]
 
