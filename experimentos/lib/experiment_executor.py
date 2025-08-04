@@ -17,9 +17,9 @@ class ExperimentExecutor:
     def execute(self) -> None:
         cmu = CMUDataset(CMU_PATH, cmu_split)
         cmu_runner = self._runner_factory(cmu)
-        cmu_runner.add_name_suffix("cmu")
+        cmu_runner.add_name_suffix("CMU")
         cmu_runner.exec()
         keyrecs = KeyrecsDataset(KEYRECS_PATH, keyrecs_split)
         keyrecs_runner = self._runner_factory(keyrecs)
-        keyrecs_runner.add_name_suffix("keyrecs")
+        keyrecs_runner.add_name_suffix("Keyrecs")
         keyrecs_runner.exec()

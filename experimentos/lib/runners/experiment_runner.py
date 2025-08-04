@@ -47,7 +47,7 @@ class ExperimentRunner(ABC):
         self.logger = logging.getLogger(__name__)
 
     def add_name_suffix(self, s: str):
-        self._exp_name += f"_{s}"
+        self._exp_name += f" ({s})"
 
     @abstractmethod
     def exec(self) -> None:

@@ -1,7 +1,8 @@
 import logging
 import os
 
-from lib.estimators.improved_statistical_alg import ImprovedStatisticalAlg
+from sklearn.ensemble import RandomForestClassifier
+
 from lib.experiment_executor import ExperimentExecutor
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
@@ -10,13 +11,13 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 def main() -> None:
     logging.basicConfig(level=logging.NOTSET)
 
-    name=str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
-            results_repo=results_repository_factory(),
-            dataset=ds, estimator=ImprovedStatisticalAlg(),
-            exp_name=name,
-            use_impostor_samples=False
+            exp_name="Random Forest",
+            dataset=ds,
+            estimator=RandomForestClassifier(),
+            use_impostor_samples=True,
+            results_repo=results_repository_factory()
         ),
     )
     executor.execute()

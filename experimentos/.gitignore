@@ -9,3 +9,7 @@ exec_logs/
 # IDEs and editors
 .vscode/
 .idea/
+
+# results and graphics
+results/
+charts/
