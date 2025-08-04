@@ -1,5 +1,5 @@
-GENUINE_LABEL = 1
 IMPOSTOR_LABEL = -1
+GENUINE_LABEL = 1
 RANDOM_STATE = 42
 N_JOBS=4
 CMU_PATH = "datasets/cmu/dataset.csv"

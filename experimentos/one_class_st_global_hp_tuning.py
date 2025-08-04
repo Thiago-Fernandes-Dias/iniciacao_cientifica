@@ -1,4 +1,5 @@
-﻿import os
+﻿import logging
+import os
 
 from lib.estimators.improved_statistical_alg import ImprovedStatisticalAlg
 from lib.experiment_executor import ExperimentExecutor
@@ -8,6 +9,8 @@ from lib.runners.experiment_with_global_hpo_runner import ExperimentWithGlobalHP
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.NOTSET)
+
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithGlobalHPORunner(
             estimator_factory=lambda: ImprovedStatisticalAlg(),

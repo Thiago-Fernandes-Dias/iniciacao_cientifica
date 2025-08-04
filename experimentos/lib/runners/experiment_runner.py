@@ -1,7 +1,6 @@
 from abc import abstractmethod, ABC
 
 import pandas as pd
-from icecream import ic
 
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
@@ -40,7 +39,7 @@ class ExperimentRunner(ABC):
         self._one_class_estimators_hp_map = {}
 
         self._set_vectors_and_true_labels()
-        self._dataset.add_seed_change_cb(self._log_and_update_vectors_and_true_labels)
+        self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)
 
     def add_name_suffix(self, s: str):
         self._exp_name += f"_{s}"
@@ -49,7 +48,7 @@ class ExperimentRunner(ABC):
     def exec(self) -> None:
         pass
 
-    def _set_vectors_and_true_labels(self) -> None:
+    def _set_vectors_and_true_labels(self, seed: int = 0) -> None:
         for uk in self._dataset.user_keys():
             self._X_genuine_training[uk], self._y_genuine_training[uk], \
                 self._X_impostor_training[uk], self._y_impostor_training[uk] = self._dataset.two_class_training_set(uk)
@@ -63,7 +62,7 @@ class ExperimentRunner(ABC):
             y_training = y_training + self._y_impostor_training[uk]
         return x_training, y_training
 
-    def _test_user_model(self, estimator, uk, seed: int | None) -> list[pd.Series]:
+    def _test_user_model(self, estimator, uk, seed: int = 0) -> list[pd.Series]:
         pred_frames = []
         x_test = pd.concat([self._X_genuine_test[uk], self._X_impostors_test[uk]])
         y_test = self._y_genuine_test[uk] + self._y_impostors_test[uk]
@@ -77,12 +76,7 @@ class ExperimentRunner(ABC):
                 repetition=x[self._dataset.get_repetition_key_name()],
             )
             pred_dict = pred.to_dict()
-            if seed is not None:
-                pred_dict['seed'] = seed
-            pred_frame = pd.Series(pred.to_dict())
+            pred_dict['seed'] = seed
+            pred_frame = pd.Series(pred_dict)
             pred_frames.append(pred_frame)
         return pred_frames
-
-    def _log_and_update_vectors_and_true_labels(self, seed: int):
-        ic(f"Atualizando conjunto de dados para treino e teste com a seed {seed}")
-        self._set_vectors_and_true_labels()

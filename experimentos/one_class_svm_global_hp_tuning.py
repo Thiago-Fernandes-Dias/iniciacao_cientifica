@@ -1,3 +1,4 @@
+import logging
 import os
 
 from sklearn.svm import OneClassSVM
@@ -9,6 +10,8 @@ from lib.runners.experiment_with_global_hpo_runner import ExperimentWithGlobalHP
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.NOTSET)
+
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithGlobalHPORunner(
             estimator_factory=lambda: OneClassSVM(),

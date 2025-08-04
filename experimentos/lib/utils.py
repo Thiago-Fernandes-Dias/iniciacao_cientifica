@@ -5,7 +5,6 @@ from datetime import time, datetime
 from typing import Callable, TypeVar
 
 import pandas as pd
-from icecream import ic
 
 T = TypeVar('T')
 S = TypeVar('S')
@@ -97,15 +96,6 @@ def keyrecs_default_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]
 def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 5)], df[(df['session'] == 2) & (df['repetition'] <= 5)]
 
-def log_time(f):
-    def wrapper(*args, **kwargs):
-        start_time = datetime.now()
-        f(*args, **kwargs)
-        end_time = datetime.now()
-        time_elapsed = end_time - start_time
-        min_elapsed = time_elapsed.total_seconds() // 60
-        logging.info(f"Time elapsed: {min_elapsed} minutes.")
-    return wrapper
 
 seeds_range = range(0, 3)
 cmu_split = cmu_test_split

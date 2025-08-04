@@ -53,7 +53,7 @@ class ImprovedStatisticalAlg(BaseEstimator):
         hits = []
         for digraph_name, value in x.items():
             digraph_metrics = self._digraphs_metrics[str(digraph_name)]
-            av = digraph_metrics.average
+            av = digraph_metrics.average if digraph_metrics.average != 0 else 1 
             std = digraph_metrics.std_dev
             md = digraph_metrics.median
             res = (min(av, md) * (0.95 - std / av)) <= value <= (max(av, md) * (1.05 + std / av))

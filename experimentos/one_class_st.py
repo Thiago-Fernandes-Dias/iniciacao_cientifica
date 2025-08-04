@@ -1,3 +1,4 @@
+import logging
 import os
 
 from lib.estimators.improved_statistical_alg import ImprovedStatisticalAlg
@@ -7,6 +8,8 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.NOTSET)
+
     name=str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithoutHPORunner(

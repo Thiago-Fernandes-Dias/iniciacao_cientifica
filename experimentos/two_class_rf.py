@@ -1,3 +1,4 @@
+import logging
 import os
 
 from sklearn.ensemble import RandomForestClassifier
@@ -8,6 +9,8 @@ from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.NOTSET)
+
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             exp_name=str(os.path.basename(__file__).replace(".py", "")),

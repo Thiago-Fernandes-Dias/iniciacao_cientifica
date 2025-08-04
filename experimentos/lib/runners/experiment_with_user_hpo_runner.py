@@ -1,18 +1,18 @@
-import logging
+﻿import logging
 from datetime import datetime
-from typing import Any, Callable
+from typing import Callable, Any
 
 import pandas as pd
 from sklearn.base import BaseEstimator
 
 from lib.datasets.dataset import Dataset
-from lib.global_hp_tuning import GlobalHPTuning
 from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
+from lib.user_hp_tuning import UserHPTuning
 from lib.utils import seeds_range
 
 
-class ExperimentWithGlobalHPORunner(ExperimentRunner):
+class ExperimentWithUserHPORunner(ExperimentRunner):
     _estimator_factory: Callable[[], BaseEstimator]
     _params_grid: list[dict[str, Any]]
     _dataset: Dataset
@@ -31,31 +31,33 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
 
         self.logger.info(f"Starting {self._exp_name} at {start_time}")
 
-        self._one_class_estimators_hp_map['global'] = []
-
         for seed in list(seeds_range):
             pred_series = list[pd.Series]()
 
             self._dataset.set_seed(seed)
 
-            global_hpo_search = GlobalHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
-                                               parameter_grid=self._params_grid,
-                                               use_impostor_samples=self._use_impostor_samples, seed=seed)
-            best_params_config = global_hpo_search.search()
-            self._one_class_estimators_hp_map['global'].append(best_params_config)
-            estimator = self._estimator_factory().set_params(**best_params_config)
+            user_hp_tuning = UserHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
+                                          parameter_grid=self._params_grid,
+                                          use_impostor_samples=self._use_impostor_samples, seed=seed)
+            user_best_params_map = user_hp_tuning.search()
 
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)
+                estimator = self._estimator_factory().set_params(**user_best_params_map[uk])
                 estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
+
+                if not uk in self._one_class_estimators_hp_map:
+                    self._one_class_estimators_hp_map[uk] = []
+                self._one_class_estimators_hp_map[uk].append(user_best_params_map[uk])
+
                 pred_series += self._test_user_model(estimator=estimator, uk=uk, seed=seed)
 
             pred_frame = pd.DataFrame(pred_series)
-
             self._results_repository.add_predictions_frame(predictions_frame=pred_frame,
-                                                           seed=seed, exp_name=self._exp_name, date=start_time)
+                                                           seed=seed, exp_name=self._exp_name,
+                                                           date=start_time)
 
-        self._results_repository.add_hp(self._one_class_estimators_hp_map, exp_name=self._exp_name, date=start_time)
+        self._results_repository.add_hp(hp=self._one_class_estimators_hp_map, exp_name=self._exp_name, date=start_time)
 
         time_elapsed = datetime.now() - start_time
         seconds_elapsed = time_elapsed.total_seconds()

@@ -10,7 +10,7 @@ from sklearn.model_selection import KFold, ParameterGrid
 
 from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.datasets.dataset import Dataset
-from lib.utils import create_labels, dict_values_average
+from lib.utils import create_labels
 
 
 class UserHPTuning:
@@ -64,7 +64,8 @@ class UserHPTuning:
                     best_bacc = average_bacc
                     user_best_param_config_map[uk] = param_config
 
-        minutes_elapsed = (datetime.now() - start_time) // 60
-        self.logger.info(f"User hpo search with seed {self._seed} finished. Time elapsed: {minutes_elapsed} minutes")
+        time_elapsed = datetime.now() - start_time
+        seconds_elapsed = time_elapsed.total_seconds()
+        self.logger.info(f"User hpo search with seed {self._seed} finished. Time elapsed: {seconds_elapsed} seconds")
 
         return user_best_param_config_map
