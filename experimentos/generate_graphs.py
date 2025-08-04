@@ -55,24 +55,50 @@ for exp, users_metrics in experiments_metrics_per_user.items():
         mean_far.append(np.mean(far_values))
         x = np.arange(len(user_ids))
         width = 0.35
-    plt.figure(figsize=(10, 5))
-    plt.bar(x - width/2, mean_frr, width, label='FRR', alpha=0.7)
-    plt.bar(x + width/2, mean_far, width, label='FAR', alpha=0.7)
-    plt.xlabel('User ID')
-    plt.ylabel('Rate')
-    plt.title(f'FRR and FAR per User for Experiment {exp}')
-    plt.legend()
-    plt.xticks(x, user_ids, rotation=90)
-    plt.tight_layout()
-    plt.savefig(f'./grafics/{exp}_frr_far_per_user.png')
-    # plt.figure(figsize=(10, 5))
-    # plt.bar(user_ids, mean_frr, alpha=0.7, label='FRR')
-    # plt.bar(user_ids, mean_far, alpha=0.7, label='FAR', bottom=mean_frr)
-    # plt.xlabel('User ID')
-    # plt.ylabel('Rate')
-    # plt.title(f'FRR and FAR per User for Experiment {exp}')
-    # plt.legend()
-    # plt.xticks(rotation=90)
-    # plt.tight_layout()
-    # plt.savefig(f'./grafics/{exp}_frr_far_per_user.png')
+    if "keyrecs" in exp:
+        split_index = 50
+        user_ids_part1 = user_ids[:split_index]
+        mean_frr_part1 = mean_frr[:split_index]
+        mean_far_part1 = mean_far[:split_index]
+        user_ids_part2 = user_ids[split_index:]
+        mean_frr_part2 = mean_frr[split_index:]
+        mean_far_part2 = mean_far[split_index:]
+
+        # First graph
+        x_part1 = np.arange(len(user_ids_part1))
+        plt.figure(figsize=(10, 5))
+        plt.bar(x_part1 - width/2, mean_frr_part1, width, label='FRR', alpha=0.7)
+        plt.bar(x_part1 + width/2, mean_far_part1, width, label='FAR', alpha=0.7)
+        plt.xlabel('User ID')
+        plt.ylabel('Rate')
+        plt.title(f'FRR and FAR per User for Experiment {exp} (Part 1)')
+        plt.legend()
+        plt.xticks(x_part1, user_ids_part1, rotation=90)
+        plt.tight_layout()
+        plt.savefig(f'./grafics/{exp}_frr_far_per_user_part1.png')
+
+        # Second graph
+        x_part2 = np.arange(len(user_ids_part2))
+        plt.figure(figsize=(10, 5))
+        plt.bar(x_part2 - width/2, mean_frr_part2, width, label='FRR', alpha=0.7)
+        plt.bar(x_part2 + width/2, mean_far_part2, width, label='FAR', alpha=0.7)
+        plt.xlabel('User ID')
+        plt.ylabel('Rate')
+        plt.title(f'FRR and FAR per User for Experiment {exp} (Part 2)')
+        plt.legend()
+        plt.xticks(x_part2, user_ids_part2, rotation=90)
+        plt.tight_layout()
+        plt.savefig(f'./grafics/{exp}_frr_far_per_user_part2.png')
+    else:
+        plt.figure(figsize=(10, 5))
+        plt.bar(x - width/2, mean_frr, width, label='FRR', alpha=0.7)
+        plt.bar(x + width/2, mean_far, width, label='FAR', alpha=0.7)
+        plt.xlabel('User ID')
+        plt.ylabel('Rate')
+        plt.title(f'FRR and FAR per User for Experiment {exp}')
+        plt.legend()
+        plt.xticks(x, user_ids, rotation=90)
+        plt.tight_layout()
+        plt.savefig(f'./grafics/{exp}_frr_far_per_user.png')
+ 
         
