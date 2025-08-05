@@ -27,11 +27,11 @@ for exp in experiments:
     if result is None:
         continue
     else:
-        experiments_metrics_per_user[exp] = {}
+        experiments_metrics_per_user = {}
         user_keys = result.model_predictions["user_id"].drop_duplicates().tolist()
         for user_key, seed in itertools.product(user_keys, seeds_range):
-            if user_key not in experiments_metrics_per_user[exp]:
-                experiments_metrics_per_user[exp][user_key] = []
+            if user_key not in experiments_metrics_per_user:
+                experiments_metrics_per_user[user_key] = []
             user_predictions_df = result.model_predictions[(result.model_predictions["user_id"] == user_key) & (result.model_predictions["seed"] == seed)]
             total_impostor_attempts = len(user_predictions_df[user_predictions_df["expected"] == IMPOSTOR_LABEL])
             accepted_impostor_attempts = len(user_predictions_df[(user_predictions_df["expected"] == IMPOSTOR_LABEL) & (user_predictions_df["predicted"] == GENUINE_LABEL)])
@@ -41,74 +41,108 @@ for exp in experiments:
                 frr=rejected_genuine_attempts / total_genuine_attempts if total_genuine_attempts > 0 else 0,
                 far=accepted_impostor_attempts / total_impostor_attempts if total_impostor_attempts > 0 else 0
             )
-            experiments_metrics_per_user[exp][user_key].append(user_model_metrics)
+            experiments_metrics_per_user[user_key].append(user_model_metrics)
+        user_ids = []
+        mean_frr = []
+        mean_far = []
+        mean_ba = []
+        for user_id, metrics_list in experiments_metrics_per_user.items():
+            user_ids.append(user_id)
+            frr_values = [m.frr for m in metrics_list]
+            far_values = [m.far for m in metrics_list]
+            bacc_values = [1 - (m.frr + m.far) / 2 for m in metrics_list]
+            mean_frr_user = np.mean(frr_values)
+            mean_far_user = np.mean(far_values)
+            mean_bacc_user = np.mean(bacc_values)
+            mean_frr.append(mean_frr_user)
+            mean_far.append(mean_far_user)
+            mean_ba.append(mean_bacc_user)
+        x = np.arange(len(user_ids))
+        width = 0.4
+        if "keyrecs" in exp:
+            split_index = 50
 
-for exp, users_metrics in experiments_metrics_per_user.items():
-    user_ids = []
-    mean_frr = []
-    mean_far = []
-    mean_ba = []
+            # Data splitting
+            user_ids_part1, user_ids_part2 = user_ids[:split_index], user_ids[split_index:]
+            mean_frr_part1, mean_frr_part2 = mean_frr[:split_index], mean_frr[split_index:]
+            mean_far_part1, mean_far_part2 = mean_far[:split_index], mean_far[split_index:]
+            mean_ba_part1, mean_ba_part2 = mean_ba[:split_index], mean_ba[split_index:]
 
-    for user_id, metrics_list in users_metrics.items():
-        user_ids.append(user_id)
-        frr_values = [m.frr for m in metrics_list]
-        far_values = [m.far for m in metrics_list]
-        mean_frr_user = np.mean(frr_values)
-        mean_far_user = np.mean(far_values)
-        mean_frr.append(mean_frr_user)
-        mean_far.append(mean_far_user)
-        mean_ba.append(1 - (mean_frr_user + mean_far_user) / 2)
+            # --- FRR/FAR (Part 1) ---
+            x_part1 = np.arange(len(user_ids_part1))
+            plt.figure(figsize=(10, 5))
+            plt.bar(x_part1 - width/2, mean_frr_part1, width, label='FRR', alpha=0.7)
+            plt.bar(x_part1 + width/2, mean_far_part1, width, label='FAR', alpha=0.7)
+            plt.xlabel('User ID')
+            plt.ylabel('Rate')
+            plt.title(f'FRR and FAR per User for Experiment {exp} (Part 1)')
+            plt.legend()
+            plt.xticks(x_part1, user_ids_part1, rotation=90)
+            plt.tight_layout()
+            plt.savefig(f'./charts/{exp}_frr_far_per_user_part1.png')
+            plt.close()
 
-    x = np.arange(len(user_ids))
-    width = 0.4
+            # --- FRR/FAR (Part 2) ---
+            x_part2 = np.arange(len(user_ids_part2))
+            plt.figure(figsize=(10, 5))
+            plt.bar(x_part2 - width/2, mean_frr_part2, width, label='FRR', alpha=0.7)
+            plt.bar(x_part2 + width/2, mean_far_part2, width, label='FAR', alpha=0.7)
+            plt.xlabel('User ID')
+            plt.ylabel('Rate')
+            plt.title(f'FRR and FAR per User for Experiment {exp} (Part 2)')
+            plt.legend()
+            plt.xticks(x_part2, user_ids_part2, rotation=90)
+            plt.tight_layout()
+            plt.savefig(f'./charts/{exp}_frr_far_per_user_part2.png')
+            plt.close()
 
-    if "keyrecs" in exp:
-        split_index = 50
-        # Data splitting
-        user_ids_part1, user_ids_part2 = user_ids[:split_index], user_ids[split_index:]
-        mean_frr_part1, mean_frr_part2 = mean_frr[:split_index], mean_frr[split_index:]
-        mean_far_part1, mean_far_part2 = mean_far[:split_index], mean_far[split_index:]
-        mean_ba_part1, mean_ba_part2 = mean_ba[:split_index], mean_ba[split_index:]
+            # --- BAcc (Part 1) ---
+            plt.figure(figsize=(10, 5))
+            plt.bar(x_part1, mean_ba_part1, width, label='Balanced Accuracy', alpha=0.7, color='green')
+            plt.xlabel('User ID')
+            plt.ylabel('Accuracy')
+            plt.title(f'Balanced Accuracy per User for Experiment {exp} (Part 1)')
+            plt.legend()
+            plt.grid()
+            plt.xticks(x_part1, user_ids_part1, rotation=90)
+            plt.tight_layout()
+            plt.savefig(f'./charts/{exp}_balanced_accuracy_per_user_part1.png')
+            plt.close()
 
-        # --- Part 1 Graphs ---
-        x_part1 = np.arange(len(user_ids_part1))
-        # FRR/FAR Graph Part 1
-        plt.figure(figsize=(10, 5))
-        plt.bar(x_part1 - width/2, mean_frr_part1, width, label='FRR', alpha=0.7)
-        plt.bar(x_part1 + width/2, mean_far_part1, width, label='FAR', alpha=0.7)
-        plt.xlabel('User ID')
-        plt.ylabel('Rate')
-        plt.title(f'FRR and FAR per User for Experiment {exp} (Part 1)')
-        plt.legend()
-        plt.xticks(x_part1, user_ids_part1, rotation=90)
-        plt.tight_layout()
-        plt.savefig(f'./grafics/{exp}_frr_far_per_user_part1.png')
-        plt.close()
+            # --- BAcc (Part 2) ---
+            plt.figure(figsize=(10, 5))
+            plt.bar(x_part2, mean_ba_part2, width, label='Balanced Accuracy', alpha=0.7, color='green')
+            plt.xlabel('User ID')
+            plt.ylabel('Accuracy')
+            plt.title(f'Balanced Accuracy per User for Experiment {exp} (Part 2)')
+            plt.legend()
+            plt.grid()
+            plt.xticks(x_part2, user_ids_part2, rotation=90)
+            plt.tight_layout()
+            plt.savefig(f'./charts/{exp}_balanced_accuracy_per_user_part2.png')
+            plt.close()
+        else:
+            # FAR/FRR
+            plt.figure(figsize=(10, 5))
+            plt.bar(x - width/2, mean_frr, width, label='FRR', alpha=0.7)
+            plt.bar(x + width/2, mean_far, width, label='FAR', alpha=0.7)
+            plt.xlabel('Usuário')
+            plt.ylabel('FAR/FRR')
+            plt.title(f'FAR/FRR por Usuário para o experimento {exp}')
+            plt.legend()
+            plt.grid()
+            plt.xticks(x, user_ids, rotation=90)
+            plt.tight_layout()
+            plt.savefig(join('./charts', f'{exp}_frr_vs_far.png'))
+            plt.close()
 
-        # --- Part 2 Graphs ---
-        x_part2 = np.arange(len(user_ids_part2))
-        # FRR/FAR Graph Part 2
-        plt.figure(figsize=(10, 5))
-        plt.bar(x_part2 - width/2, mean_frr_part2, width, label='FRR', alpha=0.7)
-        plt.bar(x_part2 + width/2, mean_far_part2, width, label='FAR', alpha=0.7)
-        plt.xlabel('User ID')
-        plt.ylabel('Rate')
-        plt.title(f'FRR and FAR per User for Experiment {exp} (Part 2)')
-        plt.legend()
-        plt.xticks(x_part2, user_ids_part2, rotation=90)
-        plt.tight_layout()
-        plt.savefig(f'./grafics/{exp}_frr_far_per_user_part2.png')
-        plt.close()
-    else:
-        # --- Full Graphs (non-keyrecs) ---
-        # Balanced Accuracy Graph
-        plt.figure(figsize=(10, 5))
-        plt.bar(x, mean_ba, width, label='Balanced Accuracy', alpha=0.7, color='green')
-        plt.xlabel('User ID')
-        plt.ylabel('Accuracy')
-        plt.title(f'Balanced Accuracy per User for Experiment {exp}')
-        plt.legend()
-        plt.xticks(x, user_ids, rotation=90)
-        plt.tight_layout()
-        plt.savefig(f'./grafics/{exp}_ba_per_user.png')
-        plt.close()
+            # BAcc
+            plt.figure(figsize=(10, 5))
+            plt.bar(x, mean_ba, width, label='FRR', alpha=0.7)
+            plt.xlabel('Usuário')
+            plt.ylabel('BAcc')
+            plt.title(f'BAcc por Usuário para o Experimento {exp}')
+            plt.legend()
+            plt.xticks(x, user_ids, rotation=90)
+            plt.tight_layout()
+            plt.savefig(join('./charts', f'{exp}_bacc_per_user.png'))
