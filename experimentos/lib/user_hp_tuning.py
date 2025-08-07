@@ -50,7 +50,7 @@ class UserHPTuning:
                     estimator = self._estimator_factory().set_params(**param_config)
                     y_train = create_labels(x_train, GENUINE_LABEL)
                     if self._use_impostor_samples:
-                        x_i_train = x_impostor.drop(columns=self._dataset.get_drop_columns()).iloc[gss[1]]
+                        x_i_train = x_impostor.drop(columns=self._dataset.get_drop_columns()).iloc[iss[1]]
                         x_train = pd.concat([x_train, x_i_train])
                         y_train = y_train + create_labels(x_i_train, IMPOSTOR_LABEL)
                     estimator.fit(x_train, y_train)
