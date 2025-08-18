@@ -31,8 +31,6 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
 
         self.logger.info(f"Starting {self._exp_name} at {start_time}")
 
-        self._one_class_estimators_hp_map['global'] = []
-
         for seed in list(seeds_range):
             pred_series = list[pd.Series]()
 
@@ -42,8 +40,8 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
                                                parameter_grid=self._params_grid,
                                                use_impostor_samples=self._use_impostor_samples, seed=seed)
             best_params_config = global_hpo_search.search()
-            self._one_class_estimators_hp_map['global'].append(best_params_config)
             estimator = self._estimator_factory().set_params(**best_params_config)
+            self._results_repository.add_hp(hp=best_params_config, exp_name=self._exp_name, date=start_time, seed=seed)
 
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)

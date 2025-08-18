@@ -3,6 +3,7 @@ import os
 
 from sklearn.ensemble import RandomForestClassifier
 
+from lib.constants import N_JOBS
 from lib.experiment_executor import ExperimentExecutor
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
@@ -15,7 +16,7 @@ def main() -> None:
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             exp_name="Random Forest",
             dataset=ds,
-            estimator=RandomForestClassifier(),
+            estimator=RandomForestClassifier(n_jobs=N_JOBS),
             use_impostor_samples=True,
             results_repo=results_repository_factory()
         ),

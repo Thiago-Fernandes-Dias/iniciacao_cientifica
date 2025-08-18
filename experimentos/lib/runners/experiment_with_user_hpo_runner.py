@@ -40,23 +40,17 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
                                           parameter_grid=self._params_grid,
                                           use_impostor_samples=self._use_impostor_samples, seed=seed)
             user_best_params_map = user_hp_tuning.search()
+            self._results_repository.add_hp(hp=user_best_params_map, exp_name=self._exp_name, date=start_time, seed=seed)
 
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)
                 estimator = self._estimator_factory().set_params(**user_best_params_map[uk])
                 estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
-
-                if not uk in self._one_class_estimators_hp_map:
-                    self._one_class_estimators_hp_map[uk] = []
-                self._one_class_estimators_hp_map[uk].append(user_best_params_map[uk])
-
                 pred_series += self._test_user_model(estimator=estimator, uk=uk, seed=seed)
 
             pred_frame = pd.DataFrame(pred_series)
             self._results_repository.add_predictions_frame(predictions_frame=pred_frame,
                                                            seed=seed, exp_name=self._exp_name,
                                                            date=start_time)
-
-        self._results_repository.add_hp(hp=self._one_class_estimators_hp_map, exp_name=self._exp_name, date=start_time)
 
         self._log_experiment_completion(start_time)
