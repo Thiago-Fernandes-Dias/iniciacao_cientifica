@@ -1,9 +1,6 @@
-from datetime import datetime
-import itertools
-from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.user_model_metrics import UserModelMetrics
-from lib.user_model_prediction import UserModelPrediction
 from lib.utils import *
+
 
 class ExperimentResults:
     date: datetime
@@ -28,9 +25,13 @@ class ExperimentResults:
                 predictions_df = self.model_predictions_per_seed[seed]
                 user_predictions_df = predictions_df[(predictions_df["user_id"] == user_key)]
                 total_impostor_attempts = len(user_predictions_df[user_predictions_df["expected"] == IMPOSTOR_LABEL])
-                accepted_impostor_attempts = len(user_predictions_df[(user_predictions_df["expected"] == IMPOSTOR_LABEL) & (user_predictions_df["predicted"] == GENUINE_LABEL)])
+                accepted_impostor_attempts = len(user_predictions_df[
+                                                     (user_predictions_df["expected"] == IMPOSTOR_LABEL) & (
+                                                             user_predictions_df["predicted"] == GENUINE_LABEL)])
                 total_genuine_attempts = len(user_predictions_df[user_predictions_df["expected"] == GENUINE_LABEL])
-                rejected_genuine_attempts = len(user_predictions_df[(user_predictions_df["expected"] == GENUINE_LABEL) & (user_predictions_df["predicted"] == IMPOSTOR_LABEL)])
+                rejected_genuine_attempts = len(user_predictions_df[
+                                                    (user_predictions_df["expected"] == GENUINE_LABEL) & (
+                                                            user_predictions_df["predicted"] == IMPOSTOR_LABEL)])
                 metrics = UserModelMetrics(
                     frr=rejected_genuine_attempts / total_genuine_attempts if total_genuine_attempts > 0 else 0,
                     far=accepted_impostor_attempts / total_impostor_attempts if total_impostor_attempts > 0 else 0

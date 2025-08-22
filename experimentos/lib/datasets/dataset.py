@@ -1,8 +1,10 @@
 from abc import abstractmethod, ABCMeta
-from lib.constants import *
 from lib.utils import *
 
 import pandas as pd
+
+from lib.utils import IMPOSTOR_LABEL, GENUINE_LABEL
+
 
 class Dataset(metaclass=ABCMeta):
     _training_df: pd.DataFrame

@@ -1,11 +1,10 @@
 from typing import Callable
 
-from lib.constants import CMU_PATH, KEYRECS_PATH
 from lib.datasets.cmu_dataset import CMUDataset
 from lib.datasets.dataset import Dataset
 from lib.datasets.keyrecs_dataset import KeyrecsDataset
 from lib.runners.experiment_runner import ExperimentRunner
-from lib.utils import cmu_split, keyrecs_split
+from lib.utils import cmu_split, keyrecs_split, CMU_PATH, KEYRECS_PATH
 
 
 class ExperimentExecutor:

@@ -2,16 +2,14 @@
 from datetime import datetime
 from typing import Callable, Any
 
-from joblib import Parallel, delayed
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold, ParameterGrid
 
-from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL, N_JOBS
 from lib.datasets.dataset import Dataset
-from lib.utils import create_labels, dict_values_average, log_completion
+from lib.utils import create_labels, dict_values_average, log_completion, IMPOSTOR_LABEL, GENUINE_LABEL
 
 
 class GlobalHPTuning:
@@ -34,14 +32,11 @@ class GlobalHPTuning:
         self.logger.info(f"Starting global hpo search with seed {self._seed}")
         start_time = datetime.now()
 
-        results = Parallel(n_jobs=N_JOBS)(
-            delayed(self._evaluate_config)(param_config)
-            for param_config in ParameterGrid(self._parameter_grid)
-        )
+        results = [self._evaluate_config(param_config) for param_config in ParameterGrid(self._parameter_grid)]
 
         best_param_config = max(results, key=lambda item: item[0])[1]
 
-        log_completion(logger=self.logger, start_time=start_time, 
+        log_completion(logger=self.logger, start_time=start_time,
                        msg=f"Global hpo search with seed {self._seed} finished.")
 
         return best_param_config
@@ -52,11 +47,11 @@ class GlobalHPTuning:
         for uk in self._dataset.user_keys():
             user_baccs: list[float] = []
             x_genuine, y_genuine, x_impostor, y_impostor = \
-                    self._dataset.two_class_training_set(uk)
+                self._dataset.two_class_training_set(uk)
             x_genuine = x_genuine.drop(columns=self._dataset.get_drop_columns())
             x_impostor = x_impostor.drop(columns=self._dataset.get_drop_columns())
             for gss, iss in zip(cv.split(x_genuine, y_genuine),
-                                    cv.split(x_impostor, y_impostor)):
+                                cv.split(x_impostor, y_impostor)):
                 x_train = x_genuine.iloc[gss[0]]
                 x_g_test = x_genuine.iloc[gss[1]]
                 x_i_test = x_impostor.iloc[iss[1]]

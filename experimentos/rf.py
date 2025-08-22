@@ -1,12 +1,11 @@
 import logging
-import os
 
 from sklearn.ensemble import RandomForestClassifier
 
-from lib.constants import N_JOBS
 from lib.experiment_executor import ExperimentExecutor
 from lib.repositories.results_repository_factory import results_repository_factory
 from lib.runners.experiment_without_hpo_runner import ExperimentWithoutHPORunner
+from lib.utils import N_JOBS
 
 
 def main() -> None:

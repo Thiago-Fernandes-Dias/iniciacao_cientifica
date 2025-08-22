@@ -1,5 +1,4 @@
-from lib.constants import *
-from lib.utils import float_range
+from lib.utils import float_range, N_JOBS
 
 one_class_svm_params_grid = [
     {
@@ -44,35 +43,5 @@ rf_params_grid = [
 st_params_grid = [
     {
         'threshold': [0.7, 0.6, 0.8, 0.9]
-    }
-]
-
-mlp_params_grid = [
-    {
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
-        'activation': ['identity', 'logistic', 'tanh', 'relu'],
-        'solver': ['sgd'],
-        'learning_rate': ['constant', 'adaptive', 'invscaling'],
-        'max_iter': [200, 500, 800],
-        'shuffle': [True, False],
-        'random_state': list(range(1, 31)),
-        'momentum': float_range(0, 1, 0.25) + [0.9],
-    },
-    {
-
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
-        'activation': ['identity', 'logistic', 'tanh', 'relu'],
-        'solver': ['adam'],
-        'max_iter': [200, 500, 800],
-        'shuffle': [True, False],
-        'random_state': list(range(1, 31)),
-    },
-    {
-        'hidden_layer_sizes': [(100,), (100, 100), (50,), (50, 50,)],
-        'activation': ['identity', 'logistic', 'tanh', 'relu'],
-        'solver': ['lbfgs'],
-        'max_iter': [200, 500, 800],
-        'random_state': list(range(1, 31)),
-        'warm_start': [True, False],
     }
 ]
