@@ -1,12 +1,11 @@
-from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
-import matplotlib.pyplot as plt
-import itertools
-from lib.user_model_metrics import UserModelMetrics
-from lib.utils import create_dir_if_not_exists, seeds_range
-from lib.repositories.results_repository_factory import results_repository_factory
-from os.path import join, isdir
 from os import listdir
+from os.path import join, isdir
+
+import matplotlib.pyplot as plt
 import numpy as np
+
+from lib.repositories.results_repository_factory import results_repository_factory
+from lib.utils import create_dir_if_not_exists
 
 repo = results_repository_factory()
 
@@ -48,8 +47,8 @@ for exp in experiments:
         # --- FRR/FAR (Part 1) ---
         x_part1 = np.arange(len(user_ids_part1))
         plt.figure(figsize=(10, 5))
-        plt.bar(x_part1 - width/2, mean_frr_part1, width, label='FNMR', alpha=0.7)
-        plt.bar(x_part1 + width/2, mean_far_part1, width, label='FMR', alpha=0.7)
+        plt.bar(x_part1 - width / 2, mean_frr_part1, width, label='FNMR', alpha=0.7)
+        plt.bar(x_part1 + width / 2, mean_far_part1, width, label='FMR', alpha=0.7)
         plt.xlabel('Usuário')
         plt.ylabel('FMR/FNMR')
         plt.title(f'FNMR e FMR por usuário para o experimento "{exp}" (Parte 1)')
@@ -62,8 +61,8 @@ for exp in experiments:
         # --- FRR/FAR (Part 2) ---
         x_part2 = np.arange(len(user_ids_part2))
         plt.figure(figsize=(10, 5))
-        plt.bar(x_part2 - width/2, mean_frr_part2, width, label='FNMR', alpha=0.7)
-        plt.bar(x_part2 + width/2, mean_far_part2, width, label='FMR', alpha=0.7)
+        plt.bar(x_part2 - width / 2, mean_frr_part2, width, label='FNMR', alpha=0.7)
+        plt.bar(x_part2 + width / 2, mean_far_part2, width, label='FMR', alpha=0.7)
         plt.xlabel('Usuário')
         plt.ylabel('FMR/FNMR')
         plt.title(f'FNMR e FMR por usuário para o experimento "{exp}" (Parte 2)')
@@ -101,8 +100,8 @@ for exp in experiments:
     else:
         # FMR/FNMR
         plt.figure(figsize=(10, 5))
-        plt.bar(x - width/2, mean_frr, width, label='FNMR', alpha=0.7)
-        plt.bar(x + width/2, mean_far, width, label='FMR', alpha=0.7)
+        plt.bar(x - width / 2, mean_frr, width, label='FNMR', alpha=0.7)
+        plt.bar(x + width / 2, mean_far, width, label='FMR', alpha=0.7)
         plt.xlabel('Usuário')
         plt.ylabel('FMR/FNMR')
         plt.title(f'FMR e FRR por usuário para o experimento "{exp}"')

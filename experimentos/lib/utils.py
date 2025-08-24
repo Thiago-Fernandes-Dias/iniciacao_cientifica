@@ -1,7 +1,7 @@
 import logging
 import os
 import re
-from datetime import time, datetime
+from datetime import datetime
 from typing import Callable, TypeVar
 
 import pandas as pd
@@ -106,3 +106,9 @@ def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 seeds_range = range(0, 3)
 cmu_split = cmu_test_split
 keyrecs_split = keyrecs_test_split
+IMPOSTOR_LABEL = -1
+GENUINE_LABEL = 1
+RANDOM_STATE = 42
+N_JOBS = -1
+CMU_PATH = "datasets/cmu/dataset.csv"
+KEYRECS_PATH = "datasets/keyrecs/dataset.csv"

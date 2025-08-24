@@ -2,16 +2,14 @@
 from datetime import datetime
 from typing import Callable, Any
 
-from joblib import Parallel, delayed
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold, ParameterGrid
 
-from lib.constants import GENUINE_LABEL, IMPOSTOR_LABEL
 from lib.datasets.dataset import Dataset
-from lib.utils import create_labels, log_completion
+from lib.utils import create_labels, log_completion, IMPOSTOR_LABEL, GENUINE_LABEL
 
 
 class UserHPTuning:
@@ -36,14 +34,14 @@ class UserHPTuning:
 
         user_best_param_config_map: dict[str, Any] = {}
         for uk in self._dataset.user_keys():
-            evaluations = [self._evaluate_config_by_user(param_config, uk) for param_config in ParameterGrid(self._parameter_grid)]
+            evaluations = [self._evaluate_config_by_user(pc, uk) for pc in ParameterGrid(self._parameter_grid)]
             user_best_param_config_map[uk] = max(evaluations, key=lambda item: item[0])[1]
 
-        log_completion(logger=self.logger, start_time=start_time, 
+        log_completion(logger=self.logger, start_time=start_time,
                        msg=f"User hpo search with seed {self._seed} finished.")
 
         return user_best_param_config_map
-    
+
     def _evaluate_config_by_user(self, param_config: dict[str, Any], uk: str) -> tuple[float, dict[str, Any]]:
         cv = KFold(n_splits=5, shuffle=True, random_state=self._seed)
         split_baccs = []
