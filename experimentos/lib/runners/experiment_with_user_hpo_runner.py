@@ -4,7 +4,7 @@ from typing import Callable, Any
 
 import pandas as pd
 from sklearn.base import BaseEstimator
-
+from icecream import ic
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
@@ -13,11 +13,11 @@ from lib.utils import seeds_range
 
 
 class ExperimentWithUserHPORunner(ExperimentRunner):
-    _estimator_factory: Callable[[], BaseEstimator]
+    _estimator_factory: Callable[[int], BaseEstimator]
     _params_grid: list[dict[str, Any]]
     _dataset: Dataset
 
-    def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator],
+    def __init__(self, dataset: Dataset, estimator_factory: Callable[[int], BaseEstimator],
                  params_grid: list[dict[str, Any]], exp_name: str, results_repo: ResultsRepository,
                  use_impostor_samples: bool) -> None:
         super().__init__(dataset=dataset, exp_name=exp_name, use_impostor_samples=use_impostor_samples,
@@ -36,7 +36,7 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
 
             self._dataset.set_seed(seed)
 
-            user_hp_tuning = UserHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
+            user_hp_tuning = UserHPTuning(dataset=self._dataset, estimator_factory=lambda: self._estimator_factory(seed),
                                           parameter_grid=self._params_grid,
                                           use_impostor_samples=self._use_impostor_samples, seed=seed)
             user_best_params_map = user_hp_tuning.search()
@@ -44,7 +44,8 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
 
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)
-                estimator = self._estimator_factory().set_params(**user_best_params_map[uk])
+                estimator = self._estimator_factory(seed).set_params(**user_best_params_map[uk])
+                ic(estimator.get_params())
                 estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
                 pred_series += self._test_user_model(estimator=estimator, uk=uk, seed=seed)
 

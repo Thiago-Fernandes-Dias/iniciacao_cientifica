@@ -14,7 +14,7 @@ def main() -> None:
     name = str(os.path.basename(__file__).replace(".py", ""))
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithUserHPORunner(
-            dataset=ds, estimator_factory=lambda: ImprovedStatisticalAlg(),
+            dataset=ds, estimator_factory=lambda s: ImprovedStatisticalAlg(),
             params_grid=st_params_grid,
             results_repo=results_repository_factory(),
             exp_name="Magalhães com HPO por usuário",

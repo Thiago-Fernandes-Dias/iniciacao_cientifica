@@ -13,7 +13,7 @@ def main() -> None:
 
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithGlobalHPORunner(
-            estimator_factory=lambda: ImprovedStatisticalAlg(),
+            estimator_factory=lambda s: ImprovedStatisticalAlg(),
             dataset=ds,
             params_grid=st_params_grid,
             results_repo=results_repository_factory(),

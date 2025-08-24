@@ -13,11 +13,11 @@ from lib.utils import seeds_range
 
 
 class ExperimentWithGlobalHPORunner(ExperimentRunner):
-    _estimator_factory: Callable[[], BaseEstimator]
+    _estimator_factory: Callable[[int], BaseEstimator]
     _params_grid: list[dict[str, Any]]
     _dataset: Dataset
 
-    def __init__(self, dataset: Dataset, estimator_factory: Callable[[], BaseEstimator],
+    def __init__(self, dataset: Dataset, estimator_factory: Callable[[int], BaseEstimator],
                  params_grid: list[dict[str, Any]], exp_name: str, results_repo: ResultsRepository,
                  use_impostor_samples: bool) -> None:
         super().__init__(dataset=dataset, exp_name=exp_name, use_impostor_samples=use_impostor_samples,
@@ -36,11 +36,12 @@ class ExperimentWithGlobalHPORunner(ExperimentRunner):
 
             self._dataset.set_seed(seed)
 
-            global_hpo_search = GlobalHPTuning(dataset=self._dataset, estimator_factory=self._estimator_factory,
+            global_hpo_search = GlobalHPTuning(dataset=self._dataset, 
+                                               estimator_factory=lambda: self._estimator_factory(seed),
                                                parameter_grid=self._params_grid,
                                                use_impostor_samples=self._use_impostor_samples, seed=seed)
             best_params_config = global_hpo_search.search()
-            estimator = self._estimator_factory().set_params(**best_params_config)
+            estimator = self._estimator_factory(seed).set_params(**best_params_config)
             self._results_repository.add_hp(hp=best_params_config, exp_name=self._exp_name, date=start_time, seed=seed)
 
             for uk in self._dataset.user_keys():

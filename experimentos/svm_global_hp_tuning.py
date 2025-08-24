@@ -14,7 +14,7 @@ def main() -> None:
 
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithGlobalHPORunner(
-            estimator_factory=lambda: OneClassSVM(),
+            estimator_factory=lambda s: OneClassSVM(),
             dataset=ds,
             params_grid=one_class_svm_params_grid,
             results_repo=results_repository_factory(),

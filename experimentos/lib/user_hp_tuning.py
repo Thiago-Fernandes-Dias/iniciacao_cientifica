@@ -36,10 +36,7 @@ class UserHPTuning:
 
         user_best_param_config_map: dict[str, Any] = {}
         for uk in self._dataset.user_keys():
-            evaluations = Parallel(n_jobs=-1)(
-                delayed(self._evaluate_config_by_user)(param_config, uk)
-                for param_config in ParameterGrid(self._parameter_grid)
-            )
+            evaluations = [self._evaluate_config_by_user(param_config, uk) for param_config in ParameterGrid(self._parameter_grid)]
             user_best_param_config_map[uk] = max(evaluations, key=lambda item: item[0])[1]
 
         log_completion(logger=self.logger, start_time=start_time, 

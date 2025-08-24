@@ -16,7 +16,7 @@ def main() -> None:
         runner_factory=lambda ds: ExperimentWithUserHPORunner(
             params_grid=rf_params_grid,
             dataset=ds,
-            estimator_factory=lambda: RandomForestClassifier(),
+            estimator_factory=lambda s: RandomForestClassifier(random_state=s),
             exp_name="Random Forest com HPO por usuário",
             results_repo=results_repository_factory(),
             use_impostor_samples=True

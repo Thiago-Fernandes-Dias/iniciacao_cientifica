@@ -14,7 +14,7 @@ def main() -> None:
 
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithGlobalHPORunner(
-            estimator_factory=lambda: RandomForestClassifier(),
+            estimator_factory=lambda s: RandomForestClassifier(random_state=s),
             dataset=ds,
             params_grid=rf_params_grid,
             results_repo=results_repository_factory(),

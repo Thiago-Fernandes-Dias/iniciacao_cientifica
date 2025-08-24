@@ -15,7 +15,7 @@ def main() -> None:
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             dataset=ds,
-            estimator=OneClassSVM(),
+            estimator_factory=lambda s: OneClassSVM(),
             exp_name="SVM",
             results_repo=results_repo,
             use_impostor_samples=False

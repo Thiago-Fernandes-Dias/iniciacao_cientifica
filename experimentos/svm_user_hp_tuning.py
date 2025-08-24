@@ -15,7 +15,7 @@ def main() -> None:
     results_repo = results_repository_factory()
     executor = ExperimentExecutor(
         runner_factory=lambda ds: ExperimentWithUserHPORunner(
-            dataset=ds, estimator_factory=lambda: OneClassSVM(),
+            dataset=ds, estimator_factory=lambda s: OneClassSVM(),
             params_grid=one_class_svm_params_grid,
             results_repo=results_repo,
             exp_name="SVM com HPO por usuário",

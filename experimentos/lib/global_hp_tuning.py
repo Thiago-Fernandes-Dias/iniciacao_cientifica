@@ -34,10 +34,7 @@ class GlobalHPTuning:
         self.logger.info(f"Starting global hpo search with seed {self._seed}")
         start_time = datetime.now()
 
-        results = Parallel(n_jobs=N_JOBS)(
-            delayed(self._evaluate_config)(param_config)
-            for param_config in ParameterGrid(self._parameter_grid)
-        )
+        results = [self._evaluate_config(param_config) for param_config in ParameterGrid(self._parameter_grid)]
 
         best_param_config = max(results, key=lambda item: item[0])[1]
 

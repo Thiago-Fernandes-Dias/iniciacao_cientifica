@@ -16,7 +16,7 @@ def main() -> None:
         runner_factory=lambda ds: ExperimentWithoutHPORunner(
             exp_name="Random Forest",
             dataset=ds,
-            estimator=RandomForestClassifier(n_jobs=N_JOBS),
+            estimator_factory=lambda s: RandomForestClassifier(n_jobs=N_JOBS, random_state=s),
             use_impostor_samples=True,
             results_repo=results_repository_factory()
         ),

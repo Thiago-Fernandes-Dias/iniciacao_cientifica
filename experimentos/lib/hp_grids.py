@@ -36,7 +36,6 @@ rf_params_grid = [
         'max_features': ['sqrt', 'log2', None, 10, 20, 31],
         'bootstrap': [True, False],
         'n_jobs': [N_JOBS],
-        'random_state': list(range(1, 31)),
         'warm_start': [True, False]
     }
 ]
