@@ -5,7 +5,7 @@ directory = './'
 
 cmds = []
 for filename in os.listdir(directory):
-    pattern = re.compile(r'(st|svm)(_([a-z])+)+\.py')
+    pattern = re.compile(r'(st|svm|rf)(_([a-z])+)+\.py')
     if not pattern.match(filename):
         continue
     file_path = os.path.join(directory, filename)
