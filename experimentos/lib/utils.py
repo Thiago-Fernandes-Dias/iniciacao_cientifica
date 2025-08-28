@@ -103,7 +103,7 @@ def keyrecs_test_split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return df[(df['session'] == 1) & (df['repetition'] <= 5)], df[(df['session'] == 2) & (df['repetition'] <= 5)]
 
 
-seeds_range = range(0, 30)
+default_seeds_range = range(0, 30)
 cmu_split = cmu_default_split
 keyrecs_split = keyrecs_default_split
 IMPOSTOR_LABEL = -1

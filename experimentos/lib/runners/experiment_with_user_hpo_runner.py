@@ -9,7 +9,7 @@ from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
 from lib.user_hp_tuning import UserHPTuning
-from lib.utils import seeds_range
+from lib.utils import default_seeds_range
 
 
 class ExperimentWithUserHPORunner(ExperimentRunner):
@@ -19,9 +19,9 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
 
     def __init__(self, dataset: Dataset, estimator_factory: Callable[[int], BaseEstimator],
                  params_grid: list[dict[str, Any]], exp_name: str, results_repo: ResultsRepository,
-                 use_impostor_samples: bool) -> None:
+                 use_impostor_samples: bool, seeds_range: list[int] | None) -> None:
         super().__init__(dataset=dataset, exp_name=exp_name, use_impostor_samples=use_impostor_samples,
-                         results_repo=results_repo)
+                         results_repo=results_repo, seeds_range=seeds_range)
         self._estimator_factory = estimator_factory
         self._params_grid = params_grid
         self.logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
 
         self.logger.info(f"Starting {self._exp_name} at {start_time}")
 
-        for seed in list(seeds_range):
+        for seed in self._seeds_range:
             pred_series = list[pd.Series]()
 
             self._dataset.set_seed(seed)

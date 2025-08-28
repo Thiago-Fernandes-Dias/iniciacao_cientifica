@@ -7,7 +7,7 @@ import pandas as pd
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
 from lib.user_model_prediction import UserModelPrediction
-from lib.utils import log_completion
+from lib.utils import log_completion, default_seeds_range
 
 
 class ExperimentRunner(ABC):
@@ -24,9 +24,10 @@ class ExperimentRunner(ABC):
     _X_impostors_test: dict[str, pd.DataFrame]
     _y_impostors_test: dict[str, list[int]]
     _one_class_estimators_hp_map: dict[str, list[dict[str, object]]]
+    _seeds_range: list[int]
 
     def __init__(self, dataset: Dataset, results_repo: ResultsRepository, exp_name: str,
-                 use_impostor_samples: bool = False):
+                 use_impostor_samples: bool = False, seeds_range: list[int] | None = None) -> None:
         self._dataset = dataset
         self._results_repository = results_repo
         self._exp_name = exp_name
@@ -40,6 +41,7 @@ class ExperimentRunner(ABC):
         self._X_impostors_test = {}
         self._y_impostors_test = {}
         self._one_class_estimators_hp_map = {}
+        self._seeds_range = seeds_range if seeds_range is not None else default_seeds_range
 
         self._set_vectors_and_true_labels()
         self._dataset.add_seed_change_cb(self._set_vectors_and_true_labels)

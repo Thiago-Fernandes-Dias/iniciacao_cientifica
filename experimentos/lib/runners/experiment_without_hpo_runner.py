@@ -9,9 +9,9 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
     _estimator_factory: Callable[[int], BaseEstimator]
 
     def __init__(self, dataset: Dataset, estimator_factory: Callable[[int], BaseEstimator], exp_name: str, results_repo: ResultsRepository,
-                 use_impostor_samples: bool):
+                 use_impostor_samples: bool, seeds_range: list[int] | None) -> None:
         super().__init__(dataset=dataset, use_impostor_samples=use_impostor_samples, exp_name=exp_name,
-                         results_repo=results_repo)
+                         results_repo=results_repo, seeds_range=seeds_range)
         self._estimator_factory = estimator_factory
         self.logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ class ExperimentWithoutHPORunner(ExperimentRunner):
         self.logger.info(f"Starting {self._exp_name} at {start_time}")
 
         if self._use_impostor_samples:
-            for seed in list(seeds_range):
+            for seed in self._seeds_range:
                 pred_df = pd.DataFrame(self._train_and_predict(seed=seed, start_time=start_time))
                 self._results_repository.add_predictions_frame(predictions_frame=pred_df, date=start_time,
                                                                exp_name=self._exp_name, seed=seed)
