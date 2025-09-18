@@ -4,12 +4,10 @@ from typing import Callable, Any
 
 import pandas as pd
 from sklearn.base import BaseEstimator
-from icecream import ic
 from lib.datasets.dataset import Dataset
 from lib.repositories.results_repository import ResultsRepository
 from lib.runners.experiment_runner import ExperimentRunner
 from lib.user_hp_tuning import UserHPTuning
-from lib.utils import default_seeds_range
 
 
 class ExperimentWithUserHPORunner(ExperimentRunner):
@@ -45,7 +43,6 @@ class ExperimentWithUserHPORunner(ExperimentRunner):
             for uk in self._dataset.user_keys():
                 x_training, y_training = self._get_user_training_vectors(uk)
                 estimator = self._estimator_factory(seed).set_params(**user_best_params_map[uk])
-                ic(estimator.get_params())
                 estimator.fit(x_training.drop(columns=self._dataset.get_drop_columns()), y_training)
                 pred_series += self._test_user_model(estimator=estimator, uk=uk, seed=seed)
 
