@@ -81,6 +81,16 @@ def create_dir_if_not_exists(name: str):
         os.makedirs(name)
 
 
+def exp_name_to_key(exp_name: str) -> str:
+    if "Random" in exp_name:
+        return "RF"
+    elif "SVM" in exp_name:
+        return "SVM"
+    elif "Magalhães" in exp_name:
+        return "ST"
+    return "unknown"
+
+
 def log_completion(start_time: datetime, msg: str, logger: logging.Logger) -> None:
     time_elapsed = datetime.now() - start_time
     seconds_elapsed = time_elapsed.total_seconds()

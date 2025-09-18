@@ -4,16 +4,7 @@ from lib.repositories.results_repository_factory import results_repository_facto
 import os
 import pandas as pd
 
-from lib.utils import create_dir_if_not_exists
-
-def exp_name_to_key(exp_name: str) -> str:
-    if "Random" in exp_name:
-        return "RF"
-    elif "SVM" in exp_name:
-        return "SVM"
-    elif "Magalhães" in exp_name:
-        return "ST"
-    return "unknown"
+from lib.utils import create_dir_if_not_exists, exp_name_to_key
 
 def generate_hp_comparison_table(global_hp_cmu: dict[str, ExperimentResults], user_hp_cmu: dict[str, ExperimentResults]) -> pd.DataFrame:
     table_series = []
