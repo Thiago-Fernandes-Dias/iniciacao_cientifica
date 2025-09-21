@@ -21,7 +21,9 @@ class ExperimentResults:
         user_keys = self.model_predictions_per_seed[0]["user_id"].drop_duplicates().tolist()
         for user_key in user_keys:
             user_metrics_list: list[UserModelMetrics] = []
-            for seed in range(len(self.model_predictions_per_seed)):
+            # TODO: Descomentar a linha abaixo e remover o comentário da linha seguinte, para considerar todas as seeds
+            # for seed in range(len(self.model_predictions_per_seed)):
+            for seed in range(5): # Considerando apenas as 5 primeiras seeds 
                 predictions_df = self.model_predictions_per_seed[seed]
                 user_predictions_df = predictions_df[(predictions_df["user_id"] == user_key)]
                 total_impostor_attempts = len(user_predictions_df[user_predictions_df["expected"] == IMPOSTOR_LABEL])

@@ -1,4 +1,3 @@
-from os import listdir
 from lib.experiment_results import ExperimentResults
 from lib.repositories.results_repository_factory import results_repository_factory
 import os
@@ -21,7 +20,7 @@ def generate_hp_comparison_table(global_hp_cmu: dict[str, ExperimentResults], us
                 beneficiados_ajuste_global += 1
             else:
                 beneficiados_ajuste_por_usuario += 1
-        serie = pd.Series({"Algorítmo": exp,
+        serie = pd.Series({"Algoritmo": exp,
                            "Beneficiados pelo ajuste global": beneficiados_ajuste_global,
                            "Beneficiados pelo ajuste por usuário": beneficiados_ajuste_por_usuario})
         table_series.append(serie)
