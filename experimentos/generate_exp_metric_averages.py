@@ -33,5 +33,4 @@ df = pd.DataFrame(data).T
 df.columns = list(exp_average_bacc.keys())
 df.index = ["BACC", "FRR", "FAR"]
 
-print(df)
-    
+df.to_csv(f'{results_dir}/exp_metric_averages.csv')
