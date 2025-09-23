@@ -8,7 +8,7 @@ Nesta sessão, serão apresentados os resultados dos experimentos. Nas tabelas a
 \label{tab:exp_metric_averages_cmu}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
 \hline
 Magalhães & 0.755 & 0.389 & 0.102 \\
 \hline
@@ -37,7 +37,7 @@ SVM com HPO por usuário & 0.528 & 0.881 & 0.063 \\
 \label{tab:exp_metric_averages_keyrecs}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
 \hline
 Magalhães & 0.749 & 0.147 & 0.355 \\
 \hline
@@ -60,16 +60,16 @@ SVM com HPO por usuário & 0.557 & 0.760 & 0.125 \\
 \end{tabular}
 \end{table}
 
-Na primeira tabela é possível observar que a $BACC$ média foi maior quando o ajuste por usuário foi utilizado, tanto para o Random Forest quanto para o algoritmo de~\citeonline{MagalhaesStatistical}. No SVM, no entanto, o uso do ajuste global causou uma ligeira diminuição na acurária, em comparação com o ajuste por usuário.
+Na Tabela~\ref{tab:exp_metric_averages_cmu} é possível observar que a $BAcc$ média foi maior quando o ajuste por usuário foi utilizado, tanto para o Random Forest quanto para o algoritmo de~\citeonline{MagalhaesStatistical}. No SVM, no entanto, o uso do ajuste global causou uma ligeira diminuição na acurária, em comparação com o ajuste por usuário.
 
-Outro ponto que vale a pena destacar é que o Random Forest deve um desempenho melhor no CMU do que no Keyrecs, e no primeiro conjunto de dados o ajuste por usuário causou uma diminuição significativa na $FRR$. Com isso, a acurácia do modelo ficou acima de 90\%.
+Outro ponto que vale a pena destacar é que o Random Forest deve um desempenho melhor no CMU do que no Keyrecs, e no primeiro conjunto de dados o ajuste por usuário causou uma diminuição significativa na $FNMR$. Com isso, a acurácia do modelo ficou acima de 90\%, como pode ser observado na Tabela~\ref{tab:exp_metric_averages_keyrecs}
 
-Nas tabelas abaixo é apresentada a quantidade de usuários que foram beneficiados pelo ajuste global ou individual, para cada um dos algoritmos utilizados. Uma para cada conjunto de dados.
+Para cada usuário foi comparada a acurácia dos modelos com cada abordagem de ajuste de hiperparâmetros, para  Nas Tabelas~\ref{tab:cmu_hp_comparison} e~\ref{tab:keyrecs_hp_comparison} é apresentada a quantidade de usuários que foram beneficiados pelo ajuste global ou individual, para cada um dos algoritmos utilizados, no CMU e no Keyrecs, respectivamente. 
 
 \begin{table}[htbp]
 \centering
 \caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no CMU}
-\label{tab:cmu_hp_comparison_extended}
+\label{tab:cmu_hp_comparison}
 \begin{tabular}{|l|c|c|c|}
 \hline
 \textbf{Algoritmo} & \textbf{Ajuste Global} & \textbf{Ajuste por Usuário} \\
@@ -86,7 +86,7 @@ SVM & 31 (60.8\%) & 20 (39.2\%) \\
 \begin{table}[htbp]
 \centering
 \caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no Keyrecs}
-\label{tab:keyrecs_hp_comparison_extended}
+\label{tab:keyrecs_hp_comparison}
 \begin{tabular}{|l|c|c|c|}
 \hline
 \textbf{Algoritmo} & \textbf{Ajuste global} & \textbf{Ajuste por usuário} \\
@@ -100,3 +100,4 @@ SVM & 52 (52.5\%) & 47 (47.5\%) \\
 \end{tabular}
 \end{table}
 
+Em ambos os conjuntos de dados, somente quando o SVM foi utilizados houveram mais usuários beneficiados pelo ajuste global. Além disso, para todos os usuários do CMU e do Keyrecs o ajuste individual foi melhor quando o RF foi utilizado, e para o ST o ajuste o ajuste individual foi melhor para a maioria dos usuários.
