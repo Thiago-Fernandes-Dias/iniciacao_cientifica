@@ -4,174 +4,99 @@ Nesta sessão, serão apresentados os resultados dos experimentos. Nas tabelas a
 
 \begin{table}[htbp]
 \centering
-\caption{Médias das Métricas sem HPO com o CMU}
-\label{tab:cmu_sem_hpo}
+\caption{Médias das métricas dos experimentos utilizando o CMU}
+\label{tab:exp_metric_averages_cmu}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
 \hline
-\textbf{BACC} & 
-0.755 & 
-0.813 & 
-0.534 \\
+Magalhães & 0.755 & 0.389 & 0.102 \\
 \hline
-\textbf{FRR} & 
-0.389 & 
-0.325 & 
-0.874 \\
+Magalhães com HPO global & 0.755 & 0.389 & 0.102 \\
 \hline
-\textbf{FAR} & 
-0.102 & 
-0.049 & 
-0.058 \\
+Magalhães com HPO por usuário & 0.771 & 0.365 & 0.093 \\
+\hline
+Random Forest & 0.813 & 0.325 & 0.049 \\
+\hline
+Random Forest com HPO global & 0.500 & 0.916 & 0.084 \\
+\hline
+Random Forest com HPO por usuário & 0.945 & 0.055 & 0.055 \\
+\hline
+SVM & 0.534 & 0.874 & 0.058 \\
+\hline
+SVM com HPO global & 0.534 & 0.874 & 0.058 \\
+\hline
+SVM com HPO por usuário & 0.528 & 0.881 & 0.063 \\
 \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Médias das Métricas com HPO global no CMU}
-\label{tab:cmu_hpo_global}
+\caption{Médias das métricas dos experimentos utilizando o Keyrecs}
+\label{tab:exp_metric_averages_keyrecs}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
 \hline
-\textbf{BACC} & 
-0.755 & 
-0.500 & 
-0.534 \\
+Magalhães & 0.749 & 0.147 & 0.355 \\
 \hline
-\textbf{FRR} & 
-0.389 & 
-0.916 & 
-0.874 \\
+Magalhães com HPO global & 0.750 & 0.313 & 0.187 \\
 \hline
-\textbf{FAR} & 
-0.102 & 
-0.084 & 
-0.058 \\
+Magalhães com HPO por usuário & 0.774 & 0.249 & 0.204 \\
+\hline
+Random Forest & 0.820 & 0.284 & 0.076 \\
+\hline
+Random Forest com HPO global & 0.500 & 0.926 & 0.074 \\
+\hline
+Random Forest com HPO por usuário & 0.818 & 0.289 & 0.076 \\
+\hline
+SVM & 0.554 & 0.769 & 0.124 \\
+\hline
+SVM com HPO global & 0.555 & 0.768 & 0.122 \\
+\hline
+SVM com HPO por usuário & 0.557 & 0.760 & 0.125 \\
+\hline
+\end{tabular}
+\end{table}
+
+Na primeira tabela é possível observar que a $BACC$ média foi maior quando o ajuste por usuário foi utilizado, tanto para o Random Forest quanto para o algoritmo de~\citeonline{MagalhaesStatistical}. No SVM, no entanto, o uso do ajuste global causou uma ligeira diminuição na acurária, em comparação com o ajuste por usuário.
+
+Outro ponto que vale a pena destacar é que o Random Forest deve um desempenho melhor no CMU do que no Keyrecs, e no primeiro conjunto de dados o ajuste por usuário causou uma diminuição significativa na $FRR$. Com isso, a acurácia do modelo ficou acima de 90\%.
+
+Nas tabelas abaixo é apresentada a quantidade de usuários que foram beneficiados pelo ajuste global ou individual, para cada um dos algoritmos utilizados. Uma para cada conjunto de dados.
+
+\begin{table}[htbp]
+\centering
+\caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no CMU}
+\label{tab:cmu_hp_comparison_extended}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Algoritmo} & \textbf{Ajuste Global} & \textbf{Ajuste por Usuário} \\
+\hline
+ST & 14 (27.5\%) & 37 (72.5\%) \\
+\hline
+RF & 0 (0.0\%) & 51 (100.0\%) \\
+\hline
+SVM & 31 (60.8\%) & 20 (39.2\%) \\
 \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Médias das Métricas com HPO por Usuário no CMU}
-\label{tab:cmu_hpo_usuario}
+\caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no Keyrecs}
+\label{tab:keyrecs_hp_comparison_extended}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
+\textbf{Algoritmo} & \textbf{Ajuste global} & \textbf{Ajuste por usuário} \\
 \hline
-\textbf{BACC} & 
-0.771 & 
-0.945 & 
-0.528 \\
+ST & 23 (23.2\%) & 76 (76.8\%) \\
 \hline
-\textbf{FRR} & 
-0.365 & 
-0.055 & 
-0.881 \\
+RF & 0 (0.0\%) & 99 (100.0\%) \\
 \hline
-\textbf{FAR} & 
-0.093 & 
-0.055 & 
-0.063 \\
+SVM & 52 (52.5\%) & 47 (47.5\%) \\
 \hline
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
-\centering
-\caption{Médias das Métricas sem HPO no Keyrecs}
-\label{tab:keyrecs_sem_hpo}
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
-\hline
-\textbf{BACC} & 
-0.749 & 
-0.820 & 
-0.554 \\
-\hline
-\textbf{FRR} & 
-0.147 & 
-0.284 & 
-0.769 \\
-\hline
-\textbf{FAR} & 
-0.355 & 
-0.076 & 
-0.124 \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Médias das Métricas com HPO Global no Keyrecs}
-\label{tab:keyrecs_hpo_global}
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
-\hline
-\textbf{BACC} & 
-0.750 & 
-0.500 & 
-0.555 \\
-\hline
-\textbf{FRR} & 
-0.313 & 
-0.926 & 
-0.768 \\
-\hline
-\textbf{FAR} & 
-0.187 & 
-0.074 & 
-0.122 \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Médias das Métricas com HPO por Usuário no Keyrecs}
-\label{tab:keyrecs_hpo_usuario}
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Métrica} & 
-\textbf{Magalhães} & 
-\textbf{Random Forest} & 
-\textbf{SVM} \\
-\hline
-\textbf{BACC} & 
-0.774 & 
-0.818 & 
-0.557 \\
-\hline
-\textbf{FRR} & 
-0.249 & 
-0.289 & 
-0.760 \\
-\hline
-\textbf{FAR} & 
-0.204 & 
-0.076 & 
-0.125 \\
-\hline
-\end{tabular}
-\end{table}
