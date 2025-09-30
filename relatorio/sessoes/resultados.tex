@@ -7,25 +7,25 @@ Nesta seção, serão apresentados os resultados dos experimentos. Nas tabelas a
 \caption{Médias das métricas dos experimentos utilizando o CMU}\label{tab:exp_metric_averages_cmu}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
 \hline
-ST (CMU) & 0.755 & 0.389 & 0.102 \\
+ST & 0.755 & 0.389 & 0.102 \\
 \hline
-ST com HPO global (CMU) & 0.755 & 0.389 & 0.102 \\
+ST com HPO global & 0.755 & 0.389 & 0.102 \\
 \hline
-ST com HPO por usuário (CMU) & 0.778 & 0.345 & 0.099 \\
+ST com HPO por usuário & 0.778 & 0.345 & 0.099 \\
 \hline
-RF (CMU) & 0.813 & 0.325 & 0.049 \\
+RF & 0.813 & 0.325 & 0.049 \\
 \hline
-RF com HPO global (CMU) & 0.500 & 0.916 & 0.084 \\
+RF com HPO global & 0.500 & 0.916 & 0.084 \\
 \hline
-RF com HPO por usuário (CMU) & 0.809 & 0.332 & 0.049 \\
+RF com HPO por usuário & 0.809 & 0.332 & 0.049 \\
 \hline
-SVM (CMU) & 0.534 & 0.874 & 0.058 \\
+SVM & 0.534 & 0.874 & 0.058 \\
 \hline
-SVM com HPO global (CMU) & 0.534 & 0.874 & 0.058 \\
+SVM com HPO global & 0.534 & 0.874 & 0.058 \\
 \hline
-SVM com HPO por usuário (CMU) & 0.528 & 0.881 & 0.063 \\
+SVM com HPO por usuário & 0.528 & 0.881 & 0.063 \\
 \hline
 \end{tabular}
 \end{table}
@@ -36,25 +36,25 @@ SVM com HPO por usuário (CMU) & 0.528 & 0.881 & 0.063 \\
 \label{tab:exp_metric_averages_keyrecs}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
 \hline
-ST (Keyrecs) & 0.749 & 0.147 & 0.355 \\
+ST & 0.749 & 0.147 & 0.355 \\
 \hline
-ST com HPO global (Keyrecs) & 0.765 & 0.230 & 0.240 \\
+ST com HPO global & 0.765 & 0.230 & 0.240 \\
 \hline
-ST com HPO por usuário (Keyrecs) & 0.776 & 0.248 & 0.201 \\
+ST com HPO por usuário & 0.776 & 0.248 & 0.201 \\
 \hline
-RF (Keyrecs) & 0.820 & 0.284 & 0.076 \\
+RF & 0.820 & 0.284 & 0.076 \\
 \hline
-RF com HPO global (Keyrecs) & 0.500 & 0.926 & 0.074 \\
+RF com HPO global & 0.500 & 0.926 & 0.074 \\
 \hline
-RF com HPO por usuário (Keyrecs) & 0.818 & 0.289 & 0.076 \\
+RF com HPO por usuário & 0.818 & 0.289 & 0.076 \\
 \hline
-SVM (Keyrecs) & 0.554 & 0.769 & 0.124 \\
+SVM & 0.554 & 0.769 & 0.124 \\
 \hline
-SVM com HPO global (Keyrecs) & 0.555 & 0.768 & 0.122 \\
+SVM com HPO global & 0.555 & 0.768 & 0.122 \\
 \hline
-SVM com HPO por usuário (Keyrecs) & 0.557 & 0.760 & 0.125 \\
+SVM com HPO por usuário & 0.557 & 0.760 & 0.125 \\
 \hline
 \end{tabular}
 \end{table}
@@ -116,31 +116,3 @@ Nas figuras~\ref{fig:st_t_hist_cmu} e~\ref{fig:st_t_hist_keyrecs} é mostrada a 
     \includegraphics[width=0.8\textwidth]{histograma_thresholds_medio_keyrecs.png}
     \caption{Quantidade de usuários por valor de limiar de corte no CMU, utilizando o CMU}\label{fig:st_t_hist_keyrecs}
 \end{figure}
-
-Nas figuras~\ref{fig:rf_hpo_user_cmu} e~\ref{fig:rf_hpo_user_keyrecs} são mostradas a FMR e FNMR por usuário em ambos os conjuntos de dados quando o RF foi utilizado, e nas figuras~\ref{fig:st_hpo_user_cmu} e~\ref{fig:st_hpo_user_keyrecs} quando o ST foi utilizado.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Random Forest com HPO por usuário (CMU) - FMR e FNMR.png}
-    \caption{FMR e FNMR por usuário no CMU utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_cmu}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{Random Forest com HPO por usuário (Keyrecs) - FMR e FNMR.png}
-    \caption{FMR e FNMR por usuário no Keyrecs utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_keyrecs}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{ST com HPO por usuário (CMU) - FMR e FNMR.png}
-    \caption{FMR e FNMR por usuário no CMU utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_cmu}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{ST com HPO por usuário (Keyrecs) - FMR e FNMR.png}
-    \caption{FMR e FNMR por usuário no Keyrecs utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_keyrecs}
-\end{figure}
-
-Com o ajuste de hiperparâmetros por usuário o RF e ST tiveram um desempenho superior em ambos os conjuntos de dados, se comparados com o SVM. Como pode ser observado nos gráficos há muitas variações nas métricas. Isso pode estar com o fato de que foram utilizados poucos dados para treinamento e (somente as primeiras 50 amostras de cada usuário) e, principalmente no CMU, os dados coletados para testes foram coletados ao longo de vários dias. Em modalidades biométricas comportamentais a referência biométrica de cada usuário se tornar cada vez menos representativa ao longo do tempo, por conta do estado físico e mental dos usuários~\cite{keystroke_template_update_with_adapted_thresholds}.

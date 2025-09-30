@@ -28,7 +28,7 @@ avg_t_per_user = {user_id: np.mean(thresholds) for user_id, thresholds in ts_per
 ts_global_per_seed = [hp['threshold'] for hp in st_results_global.hp_per_seed[:5] if 'threshold' in hp]
 ts_global_avg = np.mean(ts_global_per_seed).item()
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 4))
 plt.tight_layout()
 plt.axvline(ts_global_avg, color='red', linestyle='dashed', linewidth=2, label=f'Threshold global: {ts_global_avg:.2f}')
 plt.legend()
@@ -61,7 +61,7 @@ avg_t_per_user = {user_id: np.mean(thresholds) for user_id, thresholds in ts_per
 ts_global_per_seed = [hp['threshold'] for hp in st_results_globalk.hp_per_seed[:5] if 'threshold' in hp]
 ts_global_avg = np.mean(ts_global_per_seed).item()
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 4))
 plt.tight_layout()
 plt.axvline(ts_global_avg, color='red', linestyle='dashed', linewidth=2, label=f'Threshold global: {ts_global_avg:.2f}')
 plt.legend()

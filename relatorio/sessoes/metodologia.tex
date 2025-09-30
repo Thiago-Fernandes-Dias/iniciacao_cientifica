@@ -75,3 +75,71 @@ Foram utilizados três algoritmos de Aprendizado de Máquina neste trabalho, sen
 \end{itemize}
 
 Em cada uma das abordagens a melhor configuração de hiperparâmetros encontrada foi utilizada para o treinamento dos modelos para cada usuário, com todo o conjunto de dados para treinamento.
+
+Para cada algoritmo foram selecionados alguns de seus hiperparâmetros para serem otimizados, e para cada um deles foram definidos conjuntos de valores possíveis. Além disso, para cada hiperparâmetro foi escolhido um valor padrão, para ser utilizado nos experimentos sem ajuste.
+
+
+\subsubsection{SVM}\label{subsubsec:svm_hps}
+
+Para cada valor possível do parâmetro $kernel$ há hiperparâmetros diferentes.
+
+\begin{itemize}
+    \item \texttt{`kernel'}: \texttt{`poly'}
+    \begin{itemize}
+        \item \texttt{`degree'}: [1, 2, 3]
+        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
+        \item \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]
+        \item \texttt{`cache\_size'}: [4096]
+    \end{itemize}
+    \item \texttt{`kernel'}: \texttt{`linear'}
+    \begin{itemize}
+        \item \texttt{`cache\_size'}: [4096]
+    \end{itemize}
+    \item \texttt{`kernel'}: \texttt{`sigmoid'}
+    \begin{itemize}
+        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
+        \item \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]
+        \item \texttt{`cache\_size'}: [4096]
+    \end{itemize}
+    \item \texttt{`kernel'}: \texttt{`rbf'}
+    \begin{itemize}
+        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
+        \item \texttt{`cache\_size'}: [4096]
+    \end{itemize}
+\end{itemize}
+
+Os valores padrão para as variáveis são
+
+\begin{itemize}
+    \item \texttt{`kernel'}: \texttt{`rbf'}
+    \item \texttt{`degree'}: 3
+    \item \texttt{`gamma'}: `scale'
+    \item \texttt{`coef0'}: 0
+    \item \texttt{`cache\_size'}: 200
+\end{itemize}
+
+
+\subsubsection{RF}\label{subsubsec:rf_hps}
+
+\begin{itemize}
+    \item \texttt{`n\_estimators'}: [50, 100, 150]
+    \item \texttt{`criterion'}: [\texttt{`gini'}, \texttt{`entropy'}, \texttt{`log\_loss'}]
+    \item \texttt{`max\_features'}: [\texttt{`sqrt'}, \texttt{`log2'}, \texttt{None}, 10, 20, 31]
+    \item \texttt{`bootstrap'}: [\texttt{True}, \texttt{False}]
+    \item \texttt{`warm\_start'}: [\texttt{True}, \texttt{False}]
+\end{itemize}
+
+Os valores padrão dos hiperparâmetros são
+
+\begin{itemize}
+    \item \texttt{`n\_estimators'}: 100
+    \item \texttt{`criterion'}: \texttt{`gini'}
+    \item \texttt{`max\_features'}: \texttt{`sqrt'}
+    \item \texttt{`bootstrap'}: \texttt{True}
+    \item \texttt{`warm\_start'}: \texttt{False}
+\end{itemize}
+
+
+\subsubsection{ST}\label{subsubsec:st_hps}
+
+No caso do ST, há somente o limiar de corte (\textit{threshold}) como hiperparâmetro. Os valores testados foram 0,5, 0,55, 0,6, 0,65, 0,7, 0,75, 0,8, 0,85 e 0,9. O valor padrão foi 0,7, assim como em~\cite{MagalhaesStatistical}.
