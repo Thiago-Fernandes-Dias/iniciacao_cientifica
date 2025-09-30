@@ -33,6 +33,8 @@ class ParquetResultsRepository(ResultsRepository):
 
     def read_results(self, exp_name: str) -> ExperimentResults | None:
         exp_results_path = f"results/{exp_name}"
+        if not os.path.isdir(exp_results_path):
+            return None
         result_dirs = sorted(os.listdir(exp_results_path), key=self._to_datetime, reverse=True)
         if len(result_dirs) == 0:
             return None
@@ -48,16 +50,15 @@ class ParquetResultsRepository(ResultsRepository):
                     predictions_df = pd.read_parquet(os.path.join(predictions_dir, file), engine='fastparquet')
                     model_predictions_per_seed.append(predictions_df)
             hp_per_seed = []
-            # FIXME: comentado para evitar erro de leitura dos resultados atuais.
-            # hps_dir = f"{file_path}/hp"
-            # for file in os.listdir(hps_dir):
-            #     if file.endswith(".pickle"):
-            #         with open(os.path.join(hps_dir, file), "rb") as f:
-            #             hp = pickle.load(f)
-            #             hp_per_seed.append(hp)
+            hps_dir = f"{file_path}/hp"
+            for file in os.listdir(hps_dir):
+                if file.endswith(".pickle"):
+                    with open(os.path.join(hps_dir, file), "rb") as f:
+                        hp = pickle.load(f)
+                        hp_per_seed.append(hp)
             date = self._to_datetime(current_exp_results_dir)
             return ExperimentResults(model_predictions_per_seed=model_predictions_per_seed, hp_per_seed=hp_per_seed,
-                                       date=date)
+                                     date=date)
         except Exception as e:
             print(f"Error reading {file_path}: {e}")
             return None

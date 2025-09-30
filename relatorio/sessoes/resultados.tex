@@ -1,32 +1,31 @@
 \section{Resultados e discussão dos resultados}\label{sec:resultados}
 
-Nesta sessão, serão apresentados os resultados dos experimentos. Nas tabelas abaixo, são apresentadas a $FNMR$, $FMR$ e $BAcc$ médias de cada modelo, em ambos os conjuntos de dados
+Nesta seção, serão apresentados os resultados dos experimentos. Nas tabelas a seguir, são apresentadas a $FNMR$, $FMR$ e $BAcc$ médias de cada modelo, em ambos os conjuntos de dados. O ajuste de hiperparâmetros, ou HPO (\textit{Hyperparameters Optimization}), foi feito de duas formas: por usuário e global. Na primeira, considerando um usuário, todas as configurações possíveis de hiperparâmetros foram testadas, e a que resultou em um modelo com maior $BAcc$ calculada com as amostras de validação foi selecionada. No HPO global, cada configuração de hiperparâmetros foi testada com todos os usuários, e a $BAcc$ média dos modelos foi calculada utilizando os dados de validação. A configuração que resultou em uma $BAcc$ média mais alta foi selecionada.
 
 \begin{table}[htbp]
 \centering
-\caption{Médias das métricas dos experimentos utilizando o CMU}
-\label{tab:exp_metric_averages_cmu}
+\caption{Médias das métricas dos experimentos utilizando o CMU}\label{tab:exp_metric_averages_cmu}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
 \hline
-Magalhães & 0.755 & 0.389 & 0.102 \\
+ST (CMU) & 0.755 & 0.389 & 0.102 \\
 \hline
-Magalhães com HPO global & 0.755 & 0.389 & 0.102 \\
+ST com HPO global (CMU) & 0.755 & 0.389 & 0.102 \\
 \hline
-Magalhães com HPO por usuário & 0.771 & 0.365 & 0.093 \\
+ST com HPO por usuário (CMU) & 0.778 & 0.345 & 0.099 \\
 \hline
-Random Forest & 0.813 & 0.325 & 0.049 \\
+RF (CMU) & 0.813 & 0.325 & 0.049 \\
 \hline
-Random Forest com HPO global & 0.500 & 0.916 & 0.084 \\
+RF com HPO global (CMU) & 0.500 & 0.916 & 0.084 \\
 \hline
-Random Forest com HPO por usuário & 0.945 & 0.055 & 0.055 \\
+RF com HPO por usuário (CMU) & 0.809 & 0.332 & 0.049 \\
 \hline
-SVM & 0.534 & 0.874 & 0.058 \\
+SVM (CMU) & 0.534 & 0.874 & 0.058 \\
 \hline
-SVM com HPO global & 0.534 & 0.874 & 0.058 \\
+SVM com HPO global (CMU) & 0.534 & 0.874 & 0.058 \\
 \hline
-SVM com HPO por usuário & 0.528 & 0.881 & 0.063 \\
+SVM com HPO por usuário (CMU) & 0.528 & 0.881 & 0.063 \\
 \hline
 \end{tabular}
 \end{table}
@@ -37,46 +36,48 @@ SVM com HPO por usuário & 0.528 & 0.881 & 0.063 \\
 \label{tab:exp_metric_averages_keyrecs}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Experimento} & \textbf{BACC} & \textbf{FNMR} & \textbf{FMR} \\
+\textbf{Experimento} & \textbf{BACC} & \textbf{FRR} & \textbf{FAR} \\
 \hline
-Magalhães & 0.749 & 0.147 & 0.355 \\
+ST (Keyrecs) & 0.749 & 0.147 & 0.355 \\
 \hline
-Magalhães com HPO global & 0.750 & 0.313 & 0.187 \\
+ST com HPO global (Keyrecs) & 0.765 & 0.230 & 0.240 \\
 \hline
-Magalhães com HPO por usuário & 0.774 & 0.249 & 0.204 \\
+ST com HPO por usuário (Keyrecs) & 0.776 & 0.248 & 0.201 \\
 \hline
-Random Forest & 0.820 & 0.284 & 0.076 \\
+RF (Keyrecs) & 0.820 & 0.284 & 0.076 \\
 \hline
-Random Forest com HPO global & 0.500 & 0.926 & 0.074 \\
+RF com HPO global (Keyrecs) & 0.500 & 0.926 & 0.074 \\
 \hline
-Random Forest com HPO por usuário & 0.818 & 0.289 & 0.076 \\
+RF com HPO por usuário (Keyrecs) & 0.818 & 0.289 & 0.076 \\
 \hline
-SVM & 0.554 & 0.769 & 0.124 \\
+SVM (Keyrecs) & 0.554 & 0.769 & 0.124 \\
 \hline
-SVM com HPO global & 0.555 & 0.768 & 0.122 \\
+SVM com HPO global (Keyrecs) & 0.555 & 0.768 & 0.122 \\
 \hline
-SVM com HPO por usuário & 0.557 & 0.760 & 0.125 \\
+SVM com HPO por usuário (Keyrecs) & 0.557 & 0.760 & 0.125 \\
 \hline
 \end{tabular}
 \end{table}
 
 Na Tabela~\ref{tab:exp_metric_averages_cmu} é possível observar que a $BAcc$ média foi maior quando o ajuste por usuário foi utilizado, tanto para o Random Forest quanto para o algoritmo de~\citeonline{MagalhaesStatistical}. No SVM, no entanto, o uso do ajuste global causou uma ligeira diminuição na acurária, em comparação com o ajuste por usuário.
 
-Outro ponto que vale a pena destacar é que o Random Forest deve um desempenho melhor no CMU do que no Keyrecs, e no primeiro conjunto de dados o ajuste por usuário causou uma diminuição significativa na $FNMR$. Com isso, a acurácia do modelo ficou acima de 90\%, como pode ser observado na Tabela~\ref{tab:exp_metric_averages_keyrecs}
+Outro ponto que vale a pena destacar é que o Random Forest deve um desempenho melhor no CMU do que no Keyrecs, e no primeiro conjunto de dados o ajuste por usuário causou uma diminuição significativa na $FNMR$. Com isso, a acurácia do modelo ficou acima de 90\%, como pode ser observado na Tabela~\ref{tab:exp_metric_averages_keyrecs}.
 
-Para cada usuário foi comparada a acurácia dos modelos com cada abordagem de ajuste de hiperparâmetros, para  Nas Tabelas~\ref{tab:cmu_hp_comparison} e~\ref{tab:keyrecs_hp_comparison} é apresentada a quantidade de usuários que foram beneficiados pelo ajuste global ou individual, para cada um dos algoritmos utilizados, no CMU e no Keyrecs, respectivamente. 
+Como pode ser visto nas tabelas~\ref{tab:exp_metric_averages_cmu} e~\ref{tab:exp_metric_averages_keyrecs} o RF e o SVM tiveram resultados ruins, com uma FNMR alta e FMR baixa, o que significa que o modelo rejeitou a maioria das amostras, tanto do usuário genuíno quanto de impostores. Isso indica que o método de ajuste não foi adequado para estes algoritmos, e que um ajuste específico para cada usuário pode ser uma alternativa melhor se eles forem utilizados.
+
+Para cada usuário foi comparada a acurácia dos modelos com cada abordagem de ajuste de hiperparâmetros. Nas Tabelas~\ref{tab:cmu_hp_comparison} e~\ref{tab:keyrecs_hp_comparison} é apresentada a quantidade de usuários que foram beneficiados pelo ajuste global ou individual, para cada um dos algoritmos utilizados, no CMU e no Keyrecs, respectivamente. 
 
 \begin{table}[htbp]
 \centering
-\caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no CMU}
+\caption{Quantidade de usuários benefíciados pelo ajuste de hiperparâmetros no CMU}
 \label{tab:cmu_hp_comparison}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Algoritmo} & \textbf{Ajuste Global} & \textbf{Ajuste por Usuário} \\
+\textbf{Algoritmo} & \textbf{Ajuste global} & \textbf{Ajuste por usuário} \\
 \hline
 ST & 14 (27.5\%) & 37 (72.5\%) \\
 \hline
-RF & 0 (0.0\%) & 51 (100.0\%) \\
+RF & 2 (3.9\%) & 49 (96.1\%) \\
 \hline
 SVM & 31 (60.8\%) & 20 (39.2\%) \\
 \hline
@@ -85,7 +86,7 @@ SVM & 31 (60.8\%) & 20 (39.2\%) \\
 
 \begin{table}[htbp]
 \centering
-\caption{Quantidade de usuários benefícios pelo ajuste de hiperparâmetros no Keyrecs}
+\caption{Quantidade de usuários beneficiados pelo ajuste de hiperparâmetros no Keyrecs}
 \label{tab:keyrecs_hp_comparison}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -100,4 +101,46 @@ SVM & 52 (52.5\%) & 47 (47.5\%) \\
 \end{tabular}
 \end{table}
 
-Em ambos os conjuntos de dados, somente quando o SVM foi utilizados houveram mais usuários beneficiados pelo ajuste global. Além disso, para todos os usuários do CMU e do Keyrecs o ajuste individual foi melhor quando o RF foi utilizado, e para o ST o ajuste o ajuste individual foi melhor para a maioria dos usuários.
+Em ambos os conjuntos de dados, somente quando o SVM foi utilizado houveram mais usuários beneficiados pelo ajuste global. Além disso, para todos os usuários do CMU e do Keyrecs o ajuste individual foi melhor quando o RF foi utilizado, e para o ST o ajuste individual foi melhor para a maioria dos usuários.
+
+Nas figuras~\ref{fig:st_t_hist_cmu} e~\ref{fig:st_t_hist_keyrecs} é mostrada a quantidade usuários por valor aproximado de limiar de corte com uma linha vertical indicando o valor encontrado com o ajuste global, utilizando o ST no CMU e no Keyrecs, respectivamente. Como pode ser observado, houve uma quantidade maior de usuários com o limiar de corte próximo do valor global.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{histograma_thresholds_medio_cmu.png}
+    \caption{Quantidade de usuários por valor de limiar de corte no CMU, utilizando o CMU}\label{fig:st_t_hist_cmu}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{histograma_thresholds_medio_keyrecs.png}
+    \caption{Quantidade de usuários por valor de limiar de corte no CMU, utilizando o CMU}\label{fig:st_t_hist_keyrecs}
+\end{figure}
+
+Nas figuras~\ref{fig:rf_hpo_user_cmu} e~\ref{fig:rf_hpo_user_keyrecs} são mostradas a FMR e FNMR por usuário em ambos os conjuntos de dados quando o RF foi utilizado, e nas figuras~\ref{fig:st_hpo_user_cmu} e~\ref{fig:st_hpo_user_keyrecs} quando o ST foi utilizado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Random Forest com HPO por usuário (CMU) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no CMU utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_cmu}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Random Forest com HPO por usuário (Keyrecs) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no Keyrecs utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_keyrecs}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ST com HPO por usuário (CMU) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no CMU utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_cmu}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ST com HPO por usuário (Keyrecs) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no Keyrecs utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_keyrecs}
+\end{figure}
+
+Com o ajuste de hiperparâmetros por usuário o RF e ST tiveram um desempenho superior em ambos os conjuntos de dados, se comparados com o SVM. Como pode ser observado nos gráficos há muitas variações nas métricas. Isso pode estar com o fato de que foram utilizados poucos dados para treinamento e (somente as primeiras 50 amostras de cada usuário) e, principalmente no CMU, os dados coletados para testes foram coletados ao longo de vários dias. Em modalidades biométricas comportamentais a referência biométrica de cada usuário se tornar cada vez menos representativa ao longo do tempo, por conta do estado físico e mental dos usuários~\cite{keystroke_template_update_with_adapted_thresholds}.

@@ -48,7 +48,7 @@ for exp in experiments:
         y_part2 = np.arange(len(user_ids_part2))
 
         # --- FMR/FNMR Combined Chart ---
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 12))
         
         # Part 1
         ax1.barh(y_part1 - width / 2, mean_frr_part1, width, label='FNMR', alpha=0.7)
@@ -78,7 +78,7 @@ for exp in experiments:
         plt.close()
 
         # --- BAcc Combined Chart ---
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 12))
         
         # Part 1
         ax1.barh(y_part1, mean_ba_part1, width, label='Acurácia balanceada', alpha=0.7, color='green')
@@ -123,7 +123,7 @@ for exp in experiments:
 
         # BAcc
         plt.figure(figsize=(10, 4))
-        plt.bar(x, mean_ba, width, label='FNMR', alpha=0.7)
+        plt.bar(x, mean_ba, width, label='BAcc', alpha=0.7, color='green')
         plt.xlabel('Usuário')
         plt.ylabel('BAcc')
         plt.title(f'Acurácia balanceada por usuário para o experimento "{exp}"')

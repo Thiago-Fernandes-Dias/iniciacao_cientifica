@@ -18,7 +18,8 @@ def main() -> None:
             params_grid=st_params_grid,
             results_repo=results_repository_factory(),
             exp_name="Magalhães com HPO global",
-            use_impostor_samples=False
+            use_impostor_samples=False,
+            seeds_range=range(0, 5)
         )
     )
     executor.execute()
