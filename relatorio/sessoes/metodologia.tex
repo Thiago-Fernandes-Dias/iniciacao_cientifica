@@ -84,28 +84,10 @@ Para cada algoritmo foram selecionados alguns de seus hiperparâmetros para sere
 Para cada valor possível do parâmetro $kernel$ há hiperparâmetros diferentes.
 
 \begin{itemize}
-    \item \texttt{`kernel'}: \texttt{`poly'}
-    \begin{itemize}
-        \item \texttt{`degree'}: [1, 2, 3]
-        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
-        \item \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]
-        \item \texttt{`cache\_size'}: [4096]
-    \end{itemize}
-    \item \texttt{`kernel'}: \texttt{`linear'}
-    \begin{itemize}
-        \item \texttt{`cache\_size'}: [4096]
-    \end{itemize}
-    \item \texttt{`kernel'}: \texttt{`sigmoid'}
-    \begin{itemize}
-        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
-        \item \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]
-        \item \texttt{`cache\_size'}: [4096]
-    \end{itemize}
-    \item \texttt{`kernel'}: \texttt{`rbf'}
-    \begin{itemize}
-        \item \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]
-        \item \texttt{`cache\_size'}: [4096]
-    \end{itemize}
+    \item \texttt{`kernel'}: \texttt{`poly'}; \texttt{`degree'}: [1, 2, 3]; \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]; \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]; \texttt{`cache\_size'}: [4096].
+    \item \texttt{`kernel'}: \texttt{`linear'}; \texttt{`cache\_size'}: [4096].
+    \item \texttt{`kernel'}: \texttt{`sigmoid'}; \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]; \texttt{`coef0'}: [0, 0,25, 0,5, \dots, 5.0]; \texttt{`cache\_size'}: [4096]
+    \item \texttt{`kernel'}: \texttt{`rbf'}; \texttt{`gamma'}: [\texttt{`scale'}, \texttt{`auto'}, 0,1, 0,01, 0,001]; \texttt{`cache\_size'}: [4096].
 \end{itemize}
 
 Os valores padrão para as variáveis são

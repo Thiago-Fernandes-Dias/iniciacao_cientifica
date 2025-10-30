@@ -1,6 +1,8 @@
 \section{Resultados e discussão dos resultados}\label{sec:resultados}
 
-Nesta seção, serão apresentados os resultados dos experimentos. Nas tabelas a seguir, são apresentadas a $FNMR$, $FMR$ e $BAcc$ médias de cada modelo, em ambos os conjuntos de dados. O ajuste de hiperparâmetros, ou HPO (\textit{Hyperparameters Optimization}), foi feito de duas formas: por usuário e global. Na primeira, considerando um usuário, todas as configurações possíveis de hiperparâmetros foram testadas, e a que resultou em um modelo com maior $BAcc$ calculada com as amostras de validação foi selecionada. No HPO global, cada configuração de hiperparâmetros foi testada com todos os usuários, e a $BAcc$ média dos modelos foi calculada utilizando os dados de validação. A configuração que resultou em uma $BAcc$ média mais alta foi selecionada.
+Nesta seção, serão apresentados os resultados dos experimentos. O ajuste de hiperparâmetros, ou HPO (\textit{Hyperparameters Optimization}), foi feito de duas formas: por usuário e global. Na primeira, considerando um usuário, todas as configurações possíveis de hiperparâmetros foram testadas, e a que resultou em um modelo com maior $BAcc$ calculada com as amostras de validação foi selecionada. No HPO global, cada configuração de hiperparâmetros foi testada com todos os usuários, e a $BAcc$ média dos modelos foi calculada utilizando os dados de validação. A configuração que resultou em uma $BAcc$ média mais alta foi selecionada. Também foram criados modelos sem o uso de HPO. Neles, foram utilizados os valores padrões, conforme descrito na Seção~\ref{subsec:algs_e_hps}.
+
+Nas tabelas a seguir, são apresentadas a $FNMR$, $FMR$ e $BAcc$ médias de cada modelo, em ambos os conjuntos de dados. 
 
 \begin{table}[htbp]
 \centering
@@ -103,16 +105,49 @@ SVM & 52 (52.5\%) & 47 (47.5\%) \\
 
 Em ambos os conjuntos de dados, somente quando o SVM foi utilizado houveram mais usuários beneficiados pelo ajuste global. Além disso, para todos os usuários do CMU e do Keyrecs o ajuste individual foi melhor quando o RF foi utilizado, e para o ST o ajuste individual foi melhor para a maioria dos usuários.
 
-Nas figuras~\ref{fig:st_t_hist_cmu} e~\ref{fig:st_t_hist_keyrecs} é mostrada a quantidade usuários por valor aproximado de limiar de corte com uma linha vertical indicando o valor encontrado com o ajuste global, utilizando o ST no CMU e no Keyrecs, respectivamente. Como pode ser observado, houve uma quantidade maior de usuários com o limiar de corte próximo do valor global.
+Nas figuras~\ref{fig:hist_cmu} e~\ref{fig:hist_keyrecs} é mostrada a quantidade usuários por valor aproximado de limiar de corte com uma linha vertical indicando o valor encontrado com o ajuste global, utilizando o ST no CMU e no Keyrecs, respectivamente. Como pode ser observado, houve uma quantidade maior de usuários com o limiar de corte próximo do valor global.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{histograma_thresholds_cmu.png}
+        \caption{Distribuição de thresholds para o CMU.}
+        \label{fig:hist_cmu}
+    \end{minipage}
+    \hfill 
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{histograma_thresholds_keyrecs.png}
+        \caption{Distribuição de thresholds para o Keyrecs.}
+        \label{fig:hist_keyrecs}
+    \end{minipage}
+\end{figure}
+
+Nas figuras~\ref{fig:rf_hpo_user_cmu} e~\ref{fig:rf_hpo_user_keyrecs} são mostradas a FMR e FNMR por usuário em ambos os conjuntos de dados quando o RF foi utilizado, e nas figuras~\ref{fig:st_hpo_user_cmu} e~\ref{fig:st_hpo_user_keyrecs} quando o ST foi utilizado.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{histograma_thresholds_medio_cmu.png}
-    \caption{Quantidade de usuários por valor de limiar de corte no CMU, utilizando o CMU}\label{fig:st_t_hist_cmu}
+    \includegraphics[width=0.8\textwidth]{Random Forest com HPO por usuário (CMU) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no CMU utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_cmu}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{histograma_thresholds_medio_keyrecs.png}
-    \caption{Quantidade de usuários por valor de limiar de corte no CMU, utilizando o CMU}\label{fig:st_t_hist_keyrecs}
+    \includegraphics[width=0.9\textwidth]{Random Forest com HPO por usuário (Keyrecs) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no Keyrecs utilizando Random Forest com ajuste por usuário}\label{fig:rf_hpo_user_keyrecs}
 \end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ST com HPO por usuário (CMU) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no CMU utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_cmu}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ST com HPO por usuário (Keyrecs) - FMR e FNMR.png}
+    \caption{FMR e FNMR por usuário no Keyrecs utilizando ST com ajuste por usuário}\label{fig:st_hpo_user_keyrecs}
+\end{figure}
+
+Com o ajuste de hiperparâmetros por usuário o RF e ST tiveram um desempenho superior em ambos os conjuntos de dados, se comparados com o SVM. Como pode ser observado nos gráficos há muitas variações nas métricas. Isso pode estar com o fato de que foram utilizados poucos dados para treinamento e (somente as primeiras 50 amostras de cada usuário) e, principalmente no CMU, os dados coletados para testes foram coletados ao longo de vários dias. Em modalidades biométricas comportamentais a referência biométrica de cada usuário se tornar cada vez menos representativa ao longo do tempo, por conta do estado físico e mental dos usuários~\cite{keystroke_template_update_with_adapted_thresholds}.

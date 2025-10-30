@@ -131,3 +131,50 @@ for exp in experiments:
         plt.xticks(x, user_ids, rotation=90)
         plt.tight_layout()
         plt.savefig(join('./charts', f'{exp} - BAcc.png'))
+
+st_cmu_global = repo.read_results("Magalhães com HPO global (CMU)")
+st_cmu_user = repo.read_results("Magalhães com HPO por usuário (CMU)")
+
+# Comparação da BAcc por usuário entre HPO global (CMU) e HPO por usuário (CMU)
+if st_cmu_global is not None or st_cmu_user is not None:
+    mg_global = {} if st_cmu_global is None else st_cmu_global.get_metrics_per_user()
+    mg_user = {} if st_cmu_user is None else st_cmu_user.get_metrics_per_user()
+
+    # união ordenada de usuários presentes em qualquer resultado
+    user_ids = sorted(set(mg_global.keys()) | set(mg_user.keys()))
+    if len(user_ids) > 0:
+        ba_global = []
+        ba_user = []
+        for uid in user_ids:
+            m_g = mg_global.get(uid)
+            m_u = mg_user.get(uid)
+            ba_global.append(m_g.getBAcc() if m_g is not None else np.nan)
+            ba_user.append(m_u.getBAcc() if m_u is not None else np.nan)
+
+        y = np.arange(len(user_ids))
+        bar_height = 0.6
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, max(6, len(user_ids) * 0.25)))
+
+        # Global HPO
+        ax1.barh(y, ba_global, height=bar_height, color='tab:blue', alpha=0.8)
+        ax1.set_yticks(y)
+        ax1.set_yticklabels(user_ids)
+        ax1.set_xlabel('BAcc')
+        ax1.set_title('Magalhães com HPO global (CMU)')
+        ax1.grid(axis='x')
+        ax1.invert_yaxis()
+
+        # Per-user HPO
+        ax2.barh(y, ba_user, height=bar_height, color='tab:orange', alpha=0.8)
+        ax2.set_yticks(y)
+        ax2.set_yticklabels(user_ids)
+        ax2.set_xlabel('BAcc')
+        ax2.set_title('Magalhães com HPO por usuário (CMU)')
+        ax2.grid(axis='x')
+        ax2.invert_yaxis()
+
+        plt.suptitle('Comparação da BAcc por usuário (Global vs Por usuário)', fontsize=14)
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
+        plt.savefig('./charts/Magalhães CMU - BAcc Global_vs_User.png')
+        plt.close()
