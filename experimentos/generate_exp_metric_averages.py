@@ -1,6 +1,8 @@
-from lib.repositories.results_repository_factory import results_repository_factory
 import os
+
 import pandas as pd
+
+from lib.repositories.results_repository_factory import results_repository_factory
 
 repo = results_repository_factory()
 
@@ -23,14 +25,10 @@ for exp in os.listdir(results_dir):
     exp_average_frr[exp] = total_frr / num_users if num_users > 0 else 0
     exp_average_far[exp] = total_far / num_users if num_users > 0 else 0
 
-data = {
-    "BACC": exp_average_bacc,
-    "FRR": exp_average_frr,
-    "FAR": exp_average_far
-}
+data = {"BACC": exp_average_bacc, "FRR": exp_average_frr, "FAR": exp_average_far}
 
 df = pd.DataFrame(data).T
 df.columns = list(exp_average_bacc.keys())
 df.index = ["BACC", "FRR", "FAR"]
 
-df.to_csv(f'{results_dir}/exp_metric_averages.csv')
+df.to_csv(f"{results_dir}/exp_metric_averages.csv")
