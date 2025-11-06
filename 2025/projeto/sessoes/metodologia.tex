@@ -1,59 +1,14 @@
 \section{Metodologia}
 \label{sec:metodologia}
 
-Este projeto irá comparar técnicas para ajuste de hiperparâmetros de algoritmos de classificação em dinâmica da digitação. Para isso, serão utilizados conjuntos de dados disponíveis publicamente, conforme descrito na Seção \ref{sec:datasets}. Esses dados serão divididos entre treino e teste, sendo que as amostras usadas para treinamento serão referentes a dados mais antigos em comparação com os dados usados para teste. Na Seção \ref{sec:metricas}, são descritas métricas que serão usadas para avaliação de desempenho neste trabalho.
+Este projeto realizará a avaliação de diferentes técnicas de extração de características para reconhecimento de usuários pela impressão digital. Para isso, serão utilizados conjuntos de dados com imagens de impressão digital. A partir dessas imagens serão aplicadas técnicas de extração de características para realização da avaliação deste projeto.
 
-
-\subsection{Conjuntos de dados}
-\label{sec:datasets}
-
-Grande parte dos trabalhos que realizaram experimentos com dados de dinâmica da digitação não disponibilizaram os dados coletados \cite{Roy2022systematic}. Esse fato dificulta a reprodutibilidade de estudos na área. Este projeto irá utilizar dados publicamente disponíveis. Alguns conjuntos de dados que podem ser usados são descritos a seguir:
+Alguns conjuntos de dados com dados publicamente disponíveis são apresentados a seguir:
 
 \begin{itemize}
-    \item CMU \cite{Killourhy2009}: Este conjunto de dados \footnote{\url{https://www.cs.cmu.edu/~keystroke/}} possui dados de 51 indivíduos que digitaram a senha ``.tie5Roanl'' em oito sessões de captura, com 50 amostras em cada sessão. No total, cada indivíduo digitou a senha 400 vezes.
-    \item KeyRecs \cite{Dias2023keyrecs}: O conjunto de dados KeyRecs \footnote{\url{https://zenodo.org/records/7886743}} envolveu a captura de dinâmica da digitação de texto fixo e de texto livre. A princípio, o foco deste projeto será em texto fixo, portanto apenas essa parte do conjunto de dados deve ser utilizada. Para texto fixo, de acordo com a descrição do conjunto de dados, 99 indivíduos digitaram uma mesma senha em duas sessões, com 100 amostras em cada sessão, totalizando 200 amostras por indivíduo. Ao realizar o download da versão disponível, entretanto, observou-se que alguns usuários tem menos do que 200 amostras.
+    \item \textit{Fingerprint Verification Competition} (FVC): foram realizadas algumas competições organizadas por pesquisadores da \textit{University of Bologna} para avaliação de sistemas de reconhecimento de usuários pela impressão digital. Os conjuntos de dados da parte B dos anos 2000, 2002 e 2004 estão disponíveis para download \footnote{\url{http://bias.csr.unibo.it/fvc2000/download.asp}} 	\footnote{\url{http://bias.csr.unibo.it/fvc2002/download.asp}} 	\footnote{\url{http://bias.csr.unibo.it/fvc2004/download.asp}}.
+    
+    \item \textit{Neurotechnology}: a empresa Neurotechnology disponibilizou dois conjuntos de imagens de impressão digital, que podem ser acessados pelo site \footnote{\url{https://www.neurotechnology.com/download.html\#databases}}. O primeiro conjunto de dados possui imagens capturadas a partir do leitor \textit{Cross Match Verifier 300} enquanto que o segundo possui imagens obtidas a partir do leitor \textit{DigitalPersona U.are.U 4000}.
 \end{itemize}
-
-Além desses conjuntos de dados, o projeto pode eventualmente usar outros conjuntos de dados como, por exemplo, os conjuntos de dados GREYC \cite{giot2009benchmark} e também o disponibilizado por \citeonline{Risto2024dataset}.
-
-
-\subsection{Métricas}
-\label{sec:metricas}
-
-Esta seção descreve algumas métricas usadas na literatura que serão usadas para avaliação dos resultados nos experimentos realizados neste projeto de pesquisa. Essas métricas são: FMR, FNMR e acurácia balanceada \cite{Precise2014, Ferlini2021eargate}. Uma breve descrição dessas métricas é apresentadas a seguir:
-
-\begin{itemize}
-    \item FMR (\textit{False Match Rate}, Taxa de falsa correspondência): percentual de tentativas de impostores que foram aceitas como genuínas, definida como
-
-          \begin{equation}
-              \label{eqn:fmr}
-              FMR = \frac{numero\:de\:tentativas\:de\:impostores\:aceitas}{total\:de\:tentativas\:de\:impostores}.
-          \end{equation}
-
-          Uma taxa relacionada é a FAR (\textit{False Acceptance Rate}), que tem significado similar, mas considera também taxa em que o sistema biométrico falha ao obter uma amostra biométrica. Essa taxa é conhecida como FTA (\textit{Failure to Acquire Rate}).
-
-
-    \item FNMR (\textit{False Non-match Rate}, Taxa de falsa não-correspondência): percentual de tentativas genuínas que foram rejeitadas como impostoras pelo sistema, definida como
-
-          \begin{equation}
-              \label{eqn:fnmr}
-              FNMR = \frac{numero\:de\:tentativas\:genuinas\:rejeitadas}{total\:de\:tentativas\:de\:usuarios\:genuinos}.
-          \end{equation}
-
-          Uma métrica relacionada é a FRR (\textit{False Rejection Rate}), que tem um significado similar, mas considera também a FTA.
-
-    \item Acurácia balanceada: média do acerto para cada classe (genuíno e impostor). Essa métrica pode ser obtida a partir da o cálculo da (HTER - \textit{Half Total Error}, Metade do erro total)
-
-          \begin{equation}
-              \label{eqn:hter}
-              HTER = \frac{FNMR + FMR}{2},
-          \end{equation}
-
-          definida como a média entre FNMR e FMR \cite{Roy2022systematic}. A partir da HTER, então é obtida a acurácia balanceada, definida como
-
-          \begin{equation}
-              \label{eqn:bacc}
-              BAcc = 1 - HTER.
-          \end{equation}
-
-\end{itemize}
+    
+Durante a avaliação, poderá ser avaliado o desempenho preditivo de algoritmos de classificação. Neste caso, os dados disponíveis serão divididos entre treino e teste. Para avaliação do desempenho preditivo serão usadas métricas para avaliação comumente adotadas na literatura, como FMR (\textit{False Match Rate}), FNMR (\textit{False Non-Match Rate}) e acurácia balanceada \cite{Precise2014, Ferlini2021eargate}. FMR mede o percentual de tentativas de impostores incorretamente classificadas como genuínas, enquanto que a FNMR mede o percentual de tentativas genuínas incorretamente classificadas como impostoras. A acurácia balanceada representa um desempenho médio considerando o mesmo peso para tentativas impostores e genuínas.

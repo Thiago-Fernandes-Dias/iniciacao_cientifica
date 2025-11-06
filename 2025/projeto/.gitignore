@@ -26,9 +26,7 @@
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
-*.bbl-SAVE-ERROR
 *.bcf
-*.bcf-SAVE-ERROR
 *.blg
 *-blx.aux
 *-blx.bib
@@ -59,9 +57,6 @@ acs-*.bib
 # amsthm
 *.thm
 
-# attachfile2
-*.atfi
-
 # beamer
 *.nav
 *.pre
@@ -70,7 +65,6 @@ acs-*.bib
 
 # changes
 *.soc
-*.loc
 
 # comment
 *.cut
@@ -180,7 +174,6 @@ acs-*.bib
 
 # minted
 _minted*
-*.data.minted
 *.pyg
 
 # morewrites
