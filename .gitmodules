@@ -1,0 +1,12 @@
+[submodule "2025/experimentos/fingernet-updated"]
+	path = 2025/experimentos/fingernet-updated
+	url = git@github.com:Thiago-Fernandes-Dias/fingernet-updated
+[submodule "2025/experimentos/minutiaenet-updated"]
+	path = 2025/experimentos/minutiaenet-updated
+	url = git@github.com:Thiago-Fernandes-Dias/minutiaenet-updated.git
+[submodule "2025/experimentos/MSU-LatentAFIS"]
+	path = 2025/experimentos/MSU-LatentAFIS
+	url = git@github.com:Thiago-Fernandes-Dias/MSU-LatentAFIS
+[submodule "2025/experimentos/fixed-length-fingerprint-extractors"]
+	path = 2025/experimentos/fixed-length-fingerprint-extractors
+	url = git@github.com:Thiago-Fernandes-Dias/fixed-length-fingerprint-extractors.git
