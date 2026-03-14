@@ -1,0 +1,65 @@
+\section{Metodologia}\label{sec:metodologia}
+
+Nesta sessão será apresentada a metodologia de pesquisa e experimentação. Na Sessão~\ref{subsec:dataset} serão descritos os conjuntos de dados utilizados e nas Sessões~\ref{subsec:algoritmos},~\ref{subsec:experimentos} e~\ref{subsec:metricas} serão expostos detalhes sobre as técnicas de extração utilizadas, os experimentos realizados e as métricas utilizadas para avaliação, respectivamente.
+
+
+\subsection{Conjuntos de dados}\label{subsec:dataset}
+
+Foi feita uma pesquisa por bancos de impressões digitais públicos para a realização de treinamento e teste de modelos para extração de características e classificação de impressões digitais, além dos já mencionados no projeto inicial. A seguir, uma breve descrição sobre eles.
+
+
+\subsubsection{FVC}\label{subsubsec:fvc}
+
+Foram realizadas algumas competições organizadas por pesquisadores da \textit{University of Bologna} para avaliação de sistemas de reconhecimento de usuários pela impressão digital. As partes A e B dos conjuntos de dados utlizados nas edições de 2000, 2002 e 2004 foram disponibilizadas publicamente como um material adicional da publicação de~\citeonline{handbook_of_biometrics_3}\footnote{\url{https://static-content.springer.com/esm/chp%3A10.1007%2F978-3-030-83624-5_4/MediaObjects/74034_3_En_4_MOESM1_ESM.zip}}.
+
+
+\subsubsection{N}\label{subsubsec:neurotechnology}
+
+A empresa Neurotechnology disponibilizou dois conjuntos de imagens de impressão digital, que podem ser acessados pelo site~\footnote{\url{https://www.neurotechnology.com/download/UareU_sample_DB.zip}}. O primeiro conjunto de dados possui imagens capturadas a partir do leitor \textit{Cross Match Verifier 300} enquanto que o segundo possui imagens obtidas a partir do leitor~\textit{DigitalPersona U.are.U 4000}. Até o momento não foram realizados experimentos com esse conjunto de dados.
+
+
+\subsection{Algorítmos}\label{subsec:algoritmos}
+
+Para os experimentos iniciais com os conjuntos de dados encontrados foram feitas buscas por códigos disponíveis publicamente ou modelos pré-treinados que poderiam ter sido disponibilizados publicamente pelos autores dos artigos lidos na revisão bibliográfica, o que elimina a necessidade de implementar as técnicas e treinar os modelos. Até o momento foram feitos experimentos com uma implementação do modelo DeepPrint~\cite{deep_print} feita por~\citeonline{Rohwedder2023}\footnote{\url{https://github.com/tim-rohwedder/fixed-length-fingerprint-extractors}}
+
+
+\subsection{Experimentos}\label{subsec:experimentos}
+
+
+
+
+\subsection{Métricas}\label{subsec:metricas}
+
+Esta seção descreve algumas métricas usadas na literatura que serão usadas para avaliação dos resultados nos experimentos realizados neste projeto de pesquisa. Essas métricas são: FMR, FNMR e acurácia balanceada~\cite{Precise2014, Ferlini2021eargate}. Uma breve descrição dessas métricas é apresentadas a seguir:
+
+\begin{itemize}
+    \item FMR (\textit{False Match Rate}, Taxa de falsa correspondência): percentual de tentativas de impostores que foram aceitas como genuínas, definida como
+
+          \begin{equation}\label{eqn:fmr}
+              FMR = \frac{numero\:de\:tentativas\:de\:impostores\:aceitas}{total\:de\:tentativas\:de\:impostores}.
+          \end{equation}
+
+          Uma taxa relacionada é a FAR (\textit{False Acceptance Rate}), que tem significado similar, mas considera também taxa em que o sistema biométrico falha ao obter uma amostra biométrica. Essa taxa é conhecida como FTA (\textit{Failure to Acquire Rate}).
+
+
+    \item FNMR (\textit{False Non-match Rate}, Taxa de falsa não-correspondência): percentual de tentativas genuínas que foram rejeitadas como impostoras pelo sistema, definida como
+
+          \begin{equation}\label{eqn:fnmr}
+              FNMR = \frac{numero\:de\:tentativas\:genuinas\:rejeitadas}{total\:de\:tentativas\:de\:usuarios\:genuinos}.
+          \end{equation}
+
+          Uma métrica relacionada é a FRR (\textit{False Rejection Rate}), que tem um significado similar, mas considera também a FTA.
+
+    \item Acurácia balanceada: média do acerto para cada classe (genuíno e impostor). Essa métrica pode ser obtida a partir da o cálculo da (HTER -~\textit{Half Total Error}, Metade do erro total)
+
+          \begin{equation}\label{eqn:hter}
+              HTER = \frac{FNMR + FMR}{2},
+          \end{equation}
+
+          definida como a média entre FNMR e FMR~\cite{Roy2022systematic}. A partir da HTER, então é obtida a acurácia balanceada, definida como
+
+          \begin{equation}\label{eqn:bacc}
+              BAcc = 1 - HTER.
+          \end{equation}
+
+\end{itemize}
