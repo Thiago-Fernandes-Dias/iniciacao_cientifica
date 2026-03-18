@@ -20,6 +20,39 @@
   author  = {Abir Mhenni and Estelle Cherrier and Christophe Rosenberger and Najoua {Essoukri Ben Amara}}
 }
 
+@article{spatial-transformer-networks,
+  abstract = {Convolutional Neural Networks define an exceptionally powerful class of models, but are still limited by the lack of ability to be spatially invariant to the input data in a computationally and parameter efficient manner. In this work we introduce a new learnable module, the Spatial Transformer, which explicitly allows the spatial manipulation of data within the network. This differentiable module can be inserted into existing convolutional architectures, giving neural networks the ability to actively spatially transform feature maps, conditional on the feature map itself, without any extra training supervision or modification to the optimisation process. We show that the use of spatial transformers results in models which learn invariance to translation, scale, rotation and more generic warping, resulting in state-of-the-art performance on several benchmarks, and for a number of classes of transformations.},
+  author   = {Max Jaderberg and Karen Simonyan and Andrew Zisserman and Koray Kavukcuoglu},
+  month    = {2},
+  title    = {Spatial Transformer Networks},
+  url      = {http://arxiv.org/abs/1506.02025},
+  year     = {2016}
+}
+
+@article{inception-v4,
+  title        = {Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning},
+  volume       = {31},
+  url          = {https://ojs.aaai.org/index.php/AAAI/article/view/11231},
+  doi          = {10.1609/aaai.v31i1.11231},
+  abstractnote = { &lt;p&gt; Very deep convolutional networks have been central to the largest advances in image recognition performance in recent years. One example is the Inception architecture that has been shown to achieve very good performance at relatively low computational cost. Recently, the introduction of residual connections in conjunction with a more traditional architecture has yielded state-of-the-art performance in the 2015 ILSVRC challenge; its performance was similar to the latest generation Inception-v3 network. This raises the question: Are there any benefits to combining Inception architectures with residual connections? Here we give clear empirical evidence that training with residual connections accelerates the training of Inception networks significantly. There is also some evidence of residual Inception networks outperforming similarly expensive Inception networks without residual connections by a thin margin. We also present several new streamlined architectures for both residual and non-residual Inception networks. These variations improve the single-frame recognition performance on the ILSVRC 2012 classification task significantly. We further demonstrate how proper activation scaling stabilizes the training of very wide residual Inception networks. With an ensemble of three residual and one Inception-v4 networks, we achieve 3.08% top-5 error on the test set of the ImageNet classification (CLS) challenge. &lt;/p&gt; },
+  number       = {1},
+  journal      = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  author       = {Szegedy, Christian and Ioffe, Sergey and Vanhoucke, Vincent and Alemi, Alexander},
+  year         = {2017},
+  month        = {Feb.}
+}
+
+@techreport{multitask-learning,
+  abstract  = {Multitask Learning is an approach to inductive transfer that improves generalization by using the domain information contained in the training signals of related tasks as an inductive bias. It does this by learning tasks in parallel while using a shared representation; what is learned for each task can help other tasks be learned better. This paper reviews prior work on MTL, presents new evidence that MTL in backprop nets discovers task relatedness without the need of supervisory signals, and presents new results for MTL with k-nearest neighbor and kernel regression. In this paper we demonstrate multitask learning in three domains. We explain how multitask learning works, and show that there are many opportunities for multitask learning in real domains. We present an algorithm and results for multitask learning with case-based methods like k-nearest neighbor and kernel regression, and sketch an algorithm for multitask learning in decision trees. Because multitask learning works, can be applied to many different kinds of domains, and can be used with different learning algorithms, we conjecture there will be many opportunities for its use on real-world problems.},
+  author    = {Rich Caruana and Lorien Pratt and Sebastian Thrun},
+  keywords  = {backpropagation,generalization,inductive transfer,k-nearest neighbor,kernel regression,multitask learning,parallel transfer,supervised learning},
+  pages     = {41-75},
+  publisher = {Kluwer Academic Publishers},
+  title     = {Multitask Learning},
+  volume    = {28},
+  year      = {1997}
+}
+
 @article{Morales2016KeystrokeCompetition,
   author  = {Morales, Aythami and Fierrez, Julian and Tolosana, Ruben and Ortega-Garcia, Javier and Galbally, Javier and Gomez-Barrero, Marta and Anjos, André and Marcel, Sébastien},
   journal = {IEEE Access},
@@ -41,6 +74,22 @@
   issn    = {2405-9595},
   doi     = {https://doi.org/10.1016/j.icte.2023.04.003},
   author  = {Riseul Ryu and Soonja Yeom and David Herbert and Julian Dermoudy}
+}
+
+@book{Maltoni20221,
+  author            = {Maltoni, Davide and Maio, Dario and Jain, Anil K. and Feng, Jianjiang},
+  title             = {Handbook of fingerprint recognition: Third edition},
+  year              = {2022},
+  journal           = {Handbook of Fingerprint Recognition: Third Edition},
+  pages             = {1 - 522},
+  doi               = {10.1007/978-3-030-83624-5},
+  url               = {https://www.scopus.com/inward/record.uri?eid=2-s2.0-85159134415&doi=10.1007%2f978-3-030-83624-5&partnerID=40&md5=20c90152518eac119f092021f0fe4dfa},
+  abstract          = {With their distinctiveness and stability over time, fingerprints continue to be the most widely used anatomical characteristic in systems that automatically recognize a person's identity. This fully updated third edition provides in-depth coverage of the state-of-the-art in fingerprint recognition readers, feature extraction, and matching algorithms and applications. Deep learning (resurgence beginning around 2012) has been a game changer for artificial intelligence and, in particular, computer vision and biometrics. Performance improvements (both recognition accuracy and speed) for most biometric modalities can be attributed to the use of deep neural networks along with availability of large training sets and powerful hardware. Fingerprint recognition has also been approached by deep learning, resulting in effective and efficient methods for automated recognition and for learning robust fixed-length representations. However, the tiny ridge details in fingerprints known as minutiae are still competitive with the powerful representations learned by huge neural networks trained on big data. Features & Benefits: • Reflects the progress made in automated techniques for fingerprint recognition over the past five decades • Reviews the evolution of sensing technology: from bulky optical devices to in-display readers in smartphones • Dedicates an entire new chapter to latent fingerprint recognition, which is nowadays feasible in "lights-out" mode • Introduces classical and learning-based techniques for local orientation extraction, enhancement, and minutiae detection • Provides an updated review of presentation-attack-detection techniques and their performance evaluation • Discusses the evolution of minutiae matching from rich local descriptors to Minutiae Cylinder Code • Presents the development of feature-based matching: from FingerCode to handcrafted textural features to deep features • Reviews fingerprint synthesis, including recent Generative Adversarial Networks The revised edition of this must-read reference, written by leading international researchers, covers all critical aspects of fingerprint security system design and technology. It is an essential resource for all security and biometrics professionals, researchers, practitioners, developers, and systems administrators, and can serve as an easy-to-read reference for an undergraduate or graduate course on biometrics. © Springer Nature Switzerland AG 2022. All rights reserved.},
+  author_keywords   = {Classification; Fingerprint; Fingerprint matching; Fingerprint recognition; Fingerprint sensing; Performance; Policing; Sensing},
+  type              = {Book},
+  publication_stage = {Final},
+  source            = {Scopus},
+  note              = {Cited by: 42}
 }
 
 @article{hpo_foundations_algorithms_and_open_challenges,
@@ -1109,5 +1158,85 @@
   year      = {2023}
 }
 
+@article{longitudinal,
+  author   = {Soweon Yoon  and Anil K. Jain },
+  title    = {Longitudinal study of fingerprint recognition},
+  journal  = {Proceedings of the National Academy of Sciences},
+  volume   = {112},
+  number   = {28},
+  pages    = {8555-8560},
+  year     = {2015},
+  doi      = {10.1073/pnas.1410272112},
+  url      = {https://www.pnas.org/doi/abs/10.1073/pnas.1410272112},
+  eprint   = {https://www.pnas.org/doi/pdf/10.1073/pnas.1410272112},
+  abstract = {Fingerprint recognition, which is considered to be a reliable means for human identification, has been used in many applications ranging from law enforcement and forensics to unlocking mobile phones. Despite its successful deployment, the fundamental premise of fingerprint-based identification—persistence and uniqueness of fingerprints—has not yet been well studied, resulting in challenges to the admissibility of friction ridge evidence in courts of law. This study investigates the tendency of fingerprint similarity scores and recognition accuracy with respect to covariates characterizing properties of fingerprint impressions and demographics of subjects, including time interval between two fingerprints being compared in regard to the persistence of fingerprints. A multilevel statistical analysis is conducted with a longitudinal dataset of fingerprint records from 15,597 subjects. Human identification by fingerprints is based on the fundamental premise that ridge patterns from distinct fingers are different (uniqueness) and a fingerprint pattern does not change over time (persistence). Although the uniqueness of fingerprints has been investigated by developing statistical models to estimate the probability of error in comparing two random samples of fingerprints, the persistence of fingerprints has remained a general belief based on only a few case studies. In this study, fingerprint match (similarity) scores are analyzed by multilevel statistical models with covariates such as time interval between two fingerprints in comparison, subject’s age, and fingerprint image quality. Longitudinal fingerprint records of 15,597 subjects are sampled from an operational fingerprint database such that each individual has at least five 10-print records over a minimum time span of 5 y. In regard to the persistence of fingerprints, the longitudinal analysis on a single (right index) finger demonstrates that (i) genuine match scores tend to significantly decrease when time interval between two fingerprints in comparison increases, whereas the change in impostor match scores is negligible; and (ii) fingerprint recognition accuracy at operational settings, nevertheless, tends to be stable as the time interval increases up to 12 y, the maximum time span in the dataset. However, the uncertainty of temporal stability of fingerprint recognition accuracy becomes substantially large if either of the two fingerprints being compared is of poor quality. The conclusions drawn from 10-finger fusion analysis coincide with the conclusions from single-finger analysis.}
+}
 
+@book{FingerPrintTechniques,
+  title     = {Fingerprint Techniques},
+  author    = {Moenssens, A.A.},
+  isbn      = {9780801955273},
+  lccn      = {70151029},
+  series    = {Inbau law enforcement series},
+  url       = {https://books.google.com.br/books?id=aF6qQgAACAAJ},
+  year      = {1971},
+  publisher = {Chilton Book Company}
+}
+
+@book{FingerPrintMechanics,
+  title     = {Fingerprint Mechanics: A Handbook; Fingerprints from Crime Scene to Courtroom},
+  author    = {Scott, W.R.},
+  lccn      = {51011581},
+  url       = {https://books.google.com.br/books?id=zMA1AAAAIAAJ},
+  year      = {1951},
+  publisher = {Thomas}
+}
+
+@inproceedings{ZhuSeg,
+  author    = {Zhu, Yanming and Yin, Xuefei and Jia, Xiuping and Hu, Jiankun},
+  booktitle = {2017 IEEE Workshop on Information Forensics and Security (WIFS)},
+  title     = {Latent fingerprint segmentation based on convolutional neural networks},
+  year      = {2017},
+  volume    = {},
+  number    = {},
+  pages     = {1-6},
+  keywords  = {Image segmentation;Noise measurement;Correlation;Training;Feature extraction;Image quality},
+  doi       = {10.1109/WIFS.2017.8267655}
+}
+
+@inproceedings{gabor-wavelet-transform,
+  author = {Karimimehr, Naeim and Beheshti, Seyed Ali Asghar and Bahaghighat, Mahdi},
+  year   = {2010},
+  month  = {05},
+  pages  = {316-320},
+  title  = {Fingerprint image enhancement using Gabor wavelet transform},
+  isbn   = {978-1-4244-6760-0},
+  doi    = {10.1109/IRANIANCEE.2010.5507055}
+}
+
+@inproceedings{ChenSeg,
+  author    = {Chen, T.P. and Jiang, X. and Yau, W.Y.},
+  booktitle = {2004 International Conference on Image Processing, 2004. ICIP '04.},
+  title     = {Fingerprint image quality analysis},
+  year      = {2004},
+  volume    = {2},
+  number    = {},
+  pages     = {1253-1256 Vol.2},
+  keywords  = {Fingerprint recognition;Image matching;Image analysis;Image sensors;Authentication;Biosensors;Optical sensors;Area measurement;Fingers;Biometrics},
+  doi       = {10.1109/ICIP.2004.1419725}
+}
+
+@article{LEVI1972327,
+  title    = {Structural descriptions of fingerprint images},
+  journal  = {Information Sciences},
+  volume   = {4},
+  number   = {3},
+  pages    = {327-355},
+  year     = {1972},
+  issn     = {0020-0255},
+  doi      = {https://doi.org/10.1016/S0020-0255(72)80020-3},
+  url      = {https://www.sciencedirect.com/science/article/pii/S0020025572800203},
+  author   = {Giorgio Levi and Franco Sirovich},
+  abstract = {The algorithm described is the first step of an automatic fingerprint classification system, whose motivation is to permit correlation studies between fingerprints and congenital diseases. It is concerned with the generation of stylized descriptions of fingerprints, obtained by applying linguistically oriented procedures.}
+}
 @Comment{jabref-meta: databaseType:bibtex;}
