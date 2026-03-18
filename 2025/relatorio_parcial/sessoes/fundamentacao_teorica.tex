@@ -1,3 +1,31 @@
 \section{Fundamentação teórica}\label{sec:fundamentacao_teorica}
 
-Esta seção apresenta algumas constatações sobre a pesquisa na área de impressões digitais e técnicas de extração de características. Com o objetivo de selecionar os métodos que seriam avaliados neste projeto foi feita uma revisão bibliográfica sobre artigos 
+Esta seção apresenta algumas constatações sobre a pesquisa na área de impressões digitais e técnicas de extração de características. Com o objetivo de selecionar os métodos que seriam avaliados neste projeto foi feita uma revisão bibliográfica sobre artigos que descreviam métodos de extração que, preferencialmente, utilizassem algoritmos de Aprendizado de Máquina e que utilizassem conjuntos de dados públicos para treinamento e teste dos modelos, para permitir reprodutibilidade. Para eliminar a necessidade de implementação foi verificado também se os autores disponibilizaram o código para treinamento e testes dos modelos, ou modelos pré-treinados.
+
+Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e algumas informações sobre cada um.
+
+\begin{table}[h]\label{tab:revisao-bibliografica}
+\centering
+\caption{Revisão Bibliográfica}
+\begin{tabularx}{\textwidth}{ X | X | X }
+    \toprule
+    \textbf{Referência} & \textbf{Ano} & \textbf{Técnica de extração} \\
+    \midrule
+    \cite{mcc} & 2010 & Representação baseada em estruturas de dados 3D (chamadas de cilindros), construídas a partir de distâncias e ângulos. \\
+    \midrule
+    \cite{MinutiaeNet} & 2018 & Duas CNNs, a \textit{CoarseNet}, para estimar os mapas de \textit{scores} de minúcias com base em informações de domínio, e a~\textit{FineNet}, para refinamento dos~\textit{scores}. \\
+    \midrule
+    \cite{deep_print} & 2019 & Uma CNN que extrai uma representação de tamanho fixo utilizando alinhamento por transformadores espaciais, informações de domínio e aprendizado multitarefa. \\
+    \midrule
+    \cite{latent-fingerprint-segmentation} & 2017 & Rede neural profunda para segmentação de impressões digitais latentes utilizando uma pilha de Máquinas de Boltzmann Restritas (~\textit{Restricted Boltzmann Machines}, RBM). \\
+    \midrule
+    \cite{fcn} & 2017 & Extração de um mapa de minúcias através de uma Rede Neural Totalmente Convolucional (\textit{Fully Convolutional Network}, FCN) e de uma CNN para classificação de minúcias e cálculo de sua orientação. \\
+    \midrule
+    \cite{fingernet} & 2017 & CNN que extrai um mapa de minúcias utilizando informações de domínio como orientação dos cumes e segmentação que também são extraídos pela rede.
+    \midrule
+    \cite{high-res_fingerprint_matching} & 2019 & Duas CNNs baseadas na arquitetura ResNet~\cite{inception-v4}, uma que extrai uma representação de tamanho fixo e outra um mapa de minúcias, que empregadas em conjunto para identificação de impressões digitais de alta resolução.
+    \midrule
+    \cite{fcnp} & 2019 & Desenvolvimento de uma FCN que extraí uma representação de tamanho fixo com base em atributos globais e locais.
+    \bottomrule
+\end{tabularx}
+\end{table}
