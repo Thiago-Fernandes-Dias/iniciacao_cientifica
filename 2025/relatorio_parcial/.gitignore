@@ -13,7 +13,6 @@
 *.dvi
 *.xdv
 *-converted-to.*
-main.pdf
 *.bbl
 *.bbl-SAVE-ERROR
 *.bcf

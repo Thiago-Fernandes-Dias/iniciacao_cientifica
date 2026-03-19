@@ -25,11 +25,12 @@
 \usepackage[alf, abnt-etal-list=0]{abntex2cite}	% Citações padrão ABNT
 \usepackage{graphicx} % Inclusão de figuras
 \usepackage{color}
-\usepackage{tabularx}
-\newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
+\usepackage{ltablex}
+\usepackage{longtable}
 \usepackage{pdfpages}
 \usepackage{booktabs}  % Para \toprule, \midrule, \bottomrule (segunda versão)
 
+\newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
 \renewcommand{\tabularxcolumn}[1]{m{#1}} % Alinhamento vertical nas tabelas.
 
 \graphicspath{ {./charts} }

@@ -10,7 +10,7 @@ Foi feita uma pesquisa por bancos de impressões digitais públicos para a reali
 
 \subsubsection{FVC}\label{subsubsec:fvc}
 
-Foram realizadas algumas competições organizadas por pesquisadores da \textit{University of Bologna} para avaliação de sistemas de reconhecimento de usuários pela impressão digital. As partes A e B dos conjuntos de dados utilizados nas edições de 2000, 2002 e 2004 foram disponibilizadas publicamente como um material adicional da publicação de~\citeonline{handbook_of_biometrics_3}\footnote{\url{https://static-content.springer.com/esm/chp%3A10.1007%2F978-3-030-83624-5_4/MediaObjects/74034_3_En_4_MOESM1_ESM.zip}}.
+Foram realizadas algumas competições organizadas por pesquisadores da \textit{University of Bologna} para avaliação de sistemas de reconhecimento de usuários pela impressão digital. As partes A e B dos conjuntos de dados utilizados nas edições de 2000, 2002 e 2004 foram disponibilizadas publicamente como um material adicional da publicação de~\citeonline{handbook_of_biometrics_3}.
 
 Para cada ano da competição há 4 conjuntos de dados, sendo 3 deles coletados com 3 diferentes sensores e um 4° conjunto de impressões digitais sintéticas geradas através do software SFinge~\cite{handbook_of_biometrics_3}. Cada um deles foi separados nas partes ``A'', com imagens de 100 dedos, e ``B'', com imagens de 10 dedos. Para cada dedo há 8 impressões digitais, totalizando 880 imagens em cada conjunto. Portanto, no total, o FVC possui $880 \times 4 \times 3 = 10560$ imagens.
 
@@ -59,7 +59,7 @@ Esta seção descreve algumas métricas usadas na literatura que serão usadas p
 
 \subsection{Algoritmos}\label{subsec:algoritmos}
 
-Para os experimentos iniciais com os conjuntos de dados encontrados foram feitas buscas por códigos disponíveis publicamente ou modelos pré-treinados que poderiam ter sido disponibilizados publicamente pelos autores dos artigos lidos na revisão bibliográfica, o que elimina a necessidade de implementação das técnicas e de treinamento de modelos. Até o momento foram feitos experimentos com uma implementação do modelo DeepPrint\footnote{\url{https://github.com/tim-rohwedder/fixed-length-fingerprint-extractors}}~\cite{deep_print} feita por~\citeonline{Rohwedder2023}
+Para os experimentos iniciais com os conjuntos de dados encontrados foram feitas buscas por códigos disponíveis publicamente ou modelos pré-treinados que poderiam ter sido disponibilizados publicamente pelos autores dos artigos lidos na revisão bibliográfica, o que elimina a necessidade de implementação das técnicas e de treinamento de modelos. Até o momento foram feitos experimentos com uma implementação do modelo DeepPrint feita por~\citeonline{Rohwedder2023}
 
 
 \subsubsection{Arquitetura do DeepPrint}\label{subsubsec:deepprint-arch}
