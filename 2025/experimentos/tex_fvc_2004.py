@@ -14,7 +14,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 def main(db_number: str):
-    # modelo pré-treinado disponibilizado no repositório
+    # modelo pré-treinado disponibilizado no repositório'
     deep_print_tex_extractor: DeepPrintExtractor = get_DeepPrint_TexMinu(
         num_training_subjects=8000, num_dims=256
     )
