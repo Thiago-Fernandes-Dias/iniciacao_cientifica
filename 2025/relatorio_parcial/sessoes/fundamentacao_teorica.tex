@@ -36,7 +36,7 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
 \begin{tabularx}{\textwidth}{| l | X | X | l |}
     \caption{Revisão Bibliográfica}\label{tab:revisao-bibliografica} \\
     \hline
-    \textbf{Referência} & Conjuntos de dados & \textbf{Métricas} & Código aberto \\ 
+    \textbf{Referência} & \textbf{Métricas} & Código aberto \\ 
     \hline
     \endhead
     \citeonline{mcc} & FVC2006 & EER, FMR & Sim \\
@@ -45,15 +45,15 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
     \midrule
     \citeonline{deep_print} & Privado, NIST SD4, NIST SD14, FVC2004 & \textit{Acc}, FMR & Sim \\
     \midrule
-    \citeonline{latent-fingerprint-segmentation} & NIST SD27, WVU, IIITD &  & \\
+    \citeonline{latent-fingerprint-segmentation} (\textit{Restricted Boltzmann Machine}, RBM) & NIST SD27, WVU, IIITD & MDR, FDR, SA & \\
     \midrule
     \citeonline{fcn} & Privado, NIST SD27 & Recall, Precisão, F1 Score & Não \\
     \midrule
     \citeonline{fingernet} & Privado, NIST SD27 & Precisão, Recall & Sim \\
     \midrule
-    \citeonline{highres_fingerprint_matching} & Duas CNNs baseadas na arquitetura ResNet~\cite{inception-v4}, uma que extrai uma representação de tamanho fixo e outra um mapa de minúcias. A verificação é feita através de cálculo de distâncias de ambas as representações. \\
+    \citeonline{highres_fingerprint_matching} & Privado, FVC2002 & FVC2004 & EER, FMR, FNMR & Não \\
     \midrule
-    \citeonline{fcnp} & Desenvolvimento de uma FCN que extraí uma representação de tamanho fixo com base em atributos globais e locais. \\
+    \citeonline{fcnp} & Privado, NIST SD4, NIST SD14 & Top-K ER & Não \\
     \bottomrule
 \end{tabularx}
 }
@@ -82,10 +82,14 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
 %     \bottomrule
 % \end{tabularx}
 
-Destas técnicas foram encontradas implementações da MCC,~\textit{MinutiaeNet},~\textit{FingerNet} e~\textit{DeepPrint}, e um modelo pré-treinado do~\textit{DeepPrint} disponibilizado por~\citeonline{Rohwedder2023}. Como o MCC é uma representação que não envolve aprendizado, ela não será avaliada neste trabalho.
 
+Em~\cite{mcc} foi proposta uma forma de representação baseada em estruturas de dados 3D, os cilindros, que codificam os ângulos das minúcias e as distâncias entre elas.
+
+\citeonline{FingerNet} desenvolveram o~\textit{FingerNet}, uma CNN que extraí mapas de minúcias, de segmentação e orientação dos cumes, além de aplicar o realce nas digitais.
 Das técnicas que utilizam redes neurais profundas para extração de características há duas formas de representação que se destacaram: o mapa de minúcias, que é uma representação de tamanho variável que armazena a posição de cada minúcia e sua orientação, e uma representação de tamanho fixo, que são os pesos das camadas totalmente conectadas das CNN imediatamente antes do cálculo das probabilidades de cada uma das classes (normalmente de qual dedo a digital foi coletada). Conforme explica~\citeonline{deep_print}, a vantagem das representações de tamanho fixo são a necessidade de menos poder computacional para verificação, que pode ser feita por um simples calculo de distância e comparação com um limiar de corte, e de espaço para armazenamento.
 
 Outro aspecto que esteve presente nos experimentos foi a utilização de informações de domínio, que são as características intrínsecas das digitais~\cite{handbook_of_biometrics_3}. Quando essas informações são incluídas no treinamento dos modelos ou aprendida em conjunto com as representações o seu desempenho tende a ser superior do que utilizar atributos mais abstratos, como apenas a textura das digitais.
 
-Nos experimentos desenvolvidos nos artigos foram utilizados conjuntos de dados públicos e privados, com diferentes características. Por exemplo,~\citeonline{highres_fingerprint_matching} utilizou impressões digitais parciais de alta resolução, o que torna viável a inclusão de informações sobre os atributos de Nível 3 na rede neural. Já em~\cite{fcn} foram utilizadas impressões digitais latentes, que são coletadas em cenas de crimes quando pessoas tocam em objetos~\cite{handbook_of_biometrics_3} 
+Nos experimentos desenvolvidos nos artigos foram utilizados conjuntos de dados públicos e privados, com diferentes características. Por exemplo,~\citeonline{highres_fingerprint_matching} utilizou impressões digitais parciais de alta resolução, o que torna viável a inclusão de informações sobre os atributos de Nível 3 na rede neural. Já em~\cite{fcn} foram utilizadas impressões digitais latentes, que são coletadas em cenas de crimes quando pessoas tocam em objetos~\cite{handbook_of_biometrics_3}
+
+Destas técnicas foram encontradas implementações da MCC,~\textit{MinutiaeNet},~\textit{FingerNet} e~\textit{DeepPrint}, e um modelo pré-treinado do~\textit{DeepPrint} disponibilizado por~\citeonline{Rohwedder2023}. Como o MCC é uma representação que não envolve aprendizado, ela não será avaliada neste trabalho.
