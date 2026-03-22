@@ -31,9 +31,6 @@
 \usepackage{booktabs}  % Para \toprule, \midrule, \bottomrule (segunda versão)
 
 \newcommand{\hilight}[1]{\colorbox{cyan}{#1}}
-\renewcommand{\tabularxcolumn}[1]{m{#1}} % Alinhamento vertical nas tabelas.
-
-\graphicspath{ {./charts} }
 
 \urlstyle{same}
 
@@ -57,8 +54,6 @@
 	\includepdf[pages={1}]{capa_projeto.pdf}
 	\include{resumo}
 	\tableofcontents*
-    \clearpage
-    % \listoffigures* Removido por recomendação do orientador
     \clearpage
     \input{sessoes/sessoes.tex}
     \clearpage

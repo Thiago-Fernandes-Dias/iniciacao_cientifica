@@ -35,9 +35,9 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
 { \footnotesize
 \begin{tabularx}{\textwidth}{| l | X | X | l |}
     \caption{Revisão Bibliográfica}\label{tab:revisao-bibliografica} \\
-    \hline
-    \textbf{Referência} & \textbf{Métricas} & Código aberto \\ 
-    \hline
+    \midrule
+    \textbf{Referência} & \textbf{Conjunto de dados} & \textbf{Métricas} & \textbf{Código aberto} \\ 
+    \midrule
     \endhead
     \citeonline{mcc} & FVC2006 & EER, FMR & Sim \\
     \midrule
@@ -45,13 +45,13 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
     \midrule
     \citeonline{deep_print} & Privado, NIST SD4, NIST SD14, FVC2004 & \textit{Acc}, FMR & Sim \\
     \midrule
-    \citeonline{latent-fingerprint-segmentation} (\textit{Restricted Boltzmann Machine}, RBM) & NIST SD27, WVU, IIITD & MDR, FDR, SA & \\
+    \citeonline{latent-fingerprint-segmentation} & NIST SD27, WVU, IIITD & MDR, FDR, SA & Não\\
     \midrule
     \citeonline{fcn} & Privado, NIST SD27 & Recall, Precisão, F1 Score & Não \\
     \midrule
     \citeonline{fingernet} & Privado, NIST SD27 & Precisão, Recall & Sim \\
     \midrule
-    \citeonline{highres_fingerprint_matching} & Privado, FVC2002 & FVC2004 & EER, FMR, FNMR & Não \\
+    \citeonline{highres_fingerprint_matching} & Privado, FVC2002, FVC2004 & EER, FMR, FNMR & Não \\
     \midrule
     \citeonline{fcnp} & Privado, NIST SD4, NIST SD14 & Top-K ER & Não \\
     \bottomrule
@@ -60,7 +60,7 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
 
 Em~\cite{mcc} foi proposta uma forma de representação baseada em estruturas de dados 3D, os cilindros, que codificam os ângulos das minúcias e as distâncias entre elas.
 
-\citeonline{FingerNet} desenvolveram o~\textit{FingerNet}, uma CNN que extraí mapas de minúcias, de segmentação e orientação dos cumes, além de aplicar o realce nas digitais.
+\citeonline{finterget} desenvolveram o~\textit{FingerNet}, uma CNN que extraí mapas de minúcias, de segmentação e orientação dos cumes, além de aplicar o realce nas digitais.
 
 \citeonline{MinutiaeNet} criaram a \textit{MinutiaeNet}, que é um modelo composto por duas redes neurais convolucionais, a~\textit{CoarseNet}, para estimar os mapas de \textit{scores} de minúcias com base em informações de domínio, e a~\textit{FineNet}, para refinamento dos~\textit{scores}.
 
