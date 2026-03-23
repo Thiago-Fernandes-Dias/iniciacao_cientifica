@@ -4,19 +4,18 @@ Esta seção apresenta algumas constatações sobre a pesquisa na área de impre
 
 \subsection{Biometria por Impressão Digital}\label{subsec:impressoes_digitais}
 
-O termo ``Impressão Digital'' no contexto de biometria por digitais se refere ao padrão de pequenos cumes e vales que podem ser observados na ponta dos dedos das pessoas~\cite{handbook_of_fp_recognition}. Ao longo da evolução da raça humana o desenvolvimento de digitais está relacionado à capacidade de segurar objetos com as mãos, e o padrão específico de cumes e vales, assim como outras características do corpo, é definido por fatores genéticos e ambientais.
+O termo ``Impressão Digital'' no contexto de biometria por digitais se refere ao padrão de pequenos cumes e vales que podem ser observados na ponta dos dedos das pessoas. Ao longo da evolução da raça humana o desenvolvimento de digitais está relacionado à capacidade de segurar objetos com as mãos. O padrão específico de cumes e vales, assim como outras características do corpo, é definido por fatores genéticos e ambientais~\cite{handbook_of_fp_recognition}.
 
 O reconhecimento de que as impressões digitais são únicas para cada dedo de cada pessoa ocorreu em 1880 com base em observações experimentais de Henry Fauld~\cite{FingerPrintTechniques}. Em 1993, a unicidade de impressões digitais foi reconhecida por entidades governamentais do Reino Unido, e foi determinado que as digitais de criminosos seriam coletadas no momento da prisão. Dessa forma, os especialistas em investigação forense poderiam identificar criminosos com base em manchas de impressões digitais deixadas na cena de crime, chamadas de impressões digitais latentes. A partir disso, órgãos de segurança pública investiram intensamente em pesquisas sobre impressões digitais e no treinamento de especialistas em reconhecimento de digitais~\cite{FingerPrintMechanics}.
 
-Conforme explica~\citeonline{Maltoni20221}, apesar dos esforços para tornar mais eficiente o processo manual de identificação por impressões digitais, o aumento da demanda tornou esse método inviável. O sistema de classificação manual era ineficiente, o treinamento de novos profissionais capazes de empregá-lo era demorado e a comparação visual de impressões digitais era cansativa e lenta. Por isso, os órgãos de segurança pública começaram a investir em soluções eletrônicas e automatizadas, o que levou ao desenvolvimento dos \textit{Automated Fingerprint
-Identification Systems} (AFIS) ou Sistemas Automatizados de Identificação de Impressões Digitais. 
+Conforme explica~\citeonline{handbook_of_fp_recognition}, apesar dos esforços para tornar mais eficiente o processo manual de identificação por impressões digitais, o aumento da demanda tornou esse método inviável. O sistema de classificação manual era ineficiente, o treinamento de novos profissionais capazes de empregá-lo era demorado e a comparação visual de impressões digitais era cansativa e lenta. Por isso, os órgãos de segurança pública começaram a investir em soluções eletrônicas e automatizadas, o que levou ao desenvolvimento dos \textit{Automated Fingerprint Identification Systems} (AFIS) ou Sistemas Automatizados de Identificação de Impressões Digitais. 
 
 Inicialmente usados por forças de segurança, esses sistemas hoje também são aplicados em diversas áreas não forenses devido ao aumento das preocupações com segurança e fraudes de identidade. Por exemplo, sistemas biométricos tem sido adotados em \textit{Internet Banking} e autenticação de usuários em dispositivos móveis. Nesse contexto, as digitais são coletadas com sensores especializados que geram imagens das digitais, que são processadas a fim de se obter uma forma de representação que pode ser usada para verificação~\cite{handbook_of_fp_recognition}.
 
 
 \subsection{Formas de representação de impressões digitais}\label{subsec:representacao_de_digitais}
 
-\citeonline{Maltoni20221} enfatiza que uma boa representação de uma impressão digital deve: ($i$) conter informações que possibilitem distinguir entre duas amostras; ($ii$) ser extraída de forma rápida e fácil; e ($iii$) ser compacta, de modo a poder ser armazenada em sistemas biométricos com pouca capacidade. Representações baseadas em imagens, em geral, não são adequadas devido às variações de iluminação, resolução, qualidade e aos ruídos provocados por cicatrizes ou outras lesões nos dedos, especialmente em pessoas que realizam trabalhos manuais com frequência.
+\citeonline{handbook_of_fp_recognition} enfatiza que uma boa representação de uma impressão digital deve: ($i$) conter informações que possibilitem distinguir entre duas amostras; ($ii$) ser extraída de forma rápida e fácil; e ($iii$) ser compacta, de modo a poder ser armazenada em sistemas biométricos com pouca capacidade. Representações baseadas em imagens, em geral, não são adequadas devido às variações de iluminação, resolução, qualidade e aos ruídos provocados por cicatrizes ou outras lesões nos dedos, especialmente em pessoas que realizam trabalhos manuais com frequência.
 
 O autor supracitado divide os atributos que podem ser extraídos de uma impressão digital em três níveis diferentes:
 \begin{itemize}
@@ -28,7 +27,7 @@ O autor supracitado divide os atributos que podem ser extraídos de uma impress�
 
 \subsection{Extração de características de digitais}\label{sec:revisao_bibliografica}
 
-Com o objetivo de selecionar os métodos que seriam avaliados neste projeto foi feita uma revisão bibliográfica sobre artigos que descreviam métodos de extração que, preferencialmente, utilizassem algoritmos de Aprendizado de Máquina e que utilizassem conjuntos de dados públicos para treinamento e teste dos modelos, para permitir reprodutibilidade.
+Com o objetivo de selecionar os métodos que seriam avaliados neste projeto foi feita uma revisão bibliográfica sobre artigos que descreviam métodos de extração que, preferencialmente, utilizassem algoritmos de Aprendizado de Máquina e que utilizassem conjuntos de dados públicos para treinamento e teste dos modelos, para facilitar reprodutibilidade.
 
 Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as técnicas de extração de características propostas.
 
@@ -45,7 +44,7 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
     \midrule
     \citeonline{deep_print} & Privado, NIST SD4, NIST SD14, FVC2004 & \textit{Acc}, FMR & Sim \\
     \midrule
-    \citeonline{latent-fingerprint-segmentation} & NIST SD27, WVU, IIITD & MDR, FDR, SA & Não\\
+    \citeonline{latent-fingerprint-segmentation} & NIST SD27, WVU, IIITD & MDR, FDR, SA & Não \\
     \midrule
     \citeonline{fcn} & Privado, NIST SD27 & Recall, Precisão, F1 Score & Não \\
     \midrule
@@ -58,27 +57,25 @@ Na Tabela~\ref{tab:revisao-bibliografica} há alguns dos artigos lidos e as téc
 \end{tabularx}
 }
 
-Em~\cite{mcc} foi proposta uma forma de representação baseada em estruturas de dados 3D, os cilindros, que codificam os ângulos das minúcias e as distâncias entre elas.
-
-\citeonline{finterget} desenvolveram o~\textit{FingerNet}, uma CNN que extraí mapas de minúcias, de segmentação e orientação dos cumes, além de aplicar o realce nas digitais.
+Em~\cite{mcc} foi proposta uma forma de representação chamada de~\textit{Minutia Cylinder-Code}. Ela é baseada em estruturas de dados 3D, os cilindros, que codificam os ângulos das minúcias e as distâncias entre elas.
 
 \citeonline{MinutiaeNet} criaram a \textit{MinutiaeNet}, que é um modelo composto por duas redes neurais convolucionais, a~\textit{CoarseNet}, para estimar os mapas de \textit{scores} de minúcias com base em informações de domínio, e a~\textit{FineNet}, para refinamento dos~\textit{scores}.
 
-\citeonline{deep_print} introduziram a~\textit{DeepPrint}, uma CNN que extrai uma representação de tamanho fixo utilizando alinhamento por transformadores espaciais~\cite{spatial-transformer-networks}, informações de domínio e aprendizado multitarefa~\cite{multitask-learning}.
+\citeonline{deep_print} introduziram a~\textit{DeepPrint}, uma CNN que extrai uma representação de tamanho fixo utilizando alinhamento por Transformadores Espaciais~\cite{spatial-transformer-networks}, informações de domínio e Aprendizado Multitarefa~\cite{multitask-learning}.
 
-\citeonline{latent-fingerprint-segmentation} criaram uma técnica para segmentação de impressões digitais utilizando uma rede neural profunda composta por pilhas de Máquinas de Boltzmann Restritas (\textit{Restricted Boltzmann Machine}, RBM) para delimitar impressões digitais latentes classificando seções das imagem entre duas classes: ``digital'' e ``\textit{background}''. 
+\citeonline{latent-fingerprint-segmentation} criaram uma técnica para segmentação de impressões digitais utilizando uma rede neural profunda composta por pilhas de Máquinas de Boltzmann Restritas (\textit{Restricted Boltzmann Machine}, RBM) para delimitar impressões digitais latentes classificando seções das imagem entre duas classes: ``impressão digital'' e ``\textit{background}''. 
 
-\citeonline{fcn} utilizaram uma Rede Neural Totalmente Convolucional (\textit{Fully Convolutional Network}, FCN) para selecionar seções da imagem com uma probabilidade alta de conter uma minúcia e depois utilizaram uma CNN para classificação propriamente dita, que também calculava a sua orientação.
+\citeonline{fcn} utilizaram uma Rede Neural Totalmente Convolucional (\textit{Fully Convolutional Network}, FCN) para selecionar seções da imagem com uma probabilidade alta de conter uma minúcia. As seções selecionadas serviram de entrada para uma CNN dedicada a classificação propriamente dita, que também calculava a orientação das minúcias.
 
-\citeonline{fingernet} criaram a~\textit{FingerNet} é uma CNN que extrai um mapa de minúcias utilizando informações de domínio como orientação dos cumes e segmentação, que também são extraídos pela rede.
+\citeonline{fingernet} criaram a~\textit{FingerNet} é uma CNN que extrai um mapa de minúcias utilizando informações de domínio como orientação dos cumes e segmentação, que também são extraídos pela rede, além de realçar as digitais.
 
 \citeonline{highres_fingerprint_matching} utilizaram duas CNNs baseadas na arquitetura ResNet~\cite{inception-v4}, uma que extrai uma representação de tamanho fixo e outra um mapa de minúcias. A verificação é feita através de cálculo de distâncias de ambas as representações.
 
-\citeonline{fcnp} desenvolveram de uma FCN que extraí uma representação de tamanho fixo com base em atributos globais e locais. O treinamento é feito utilizando porções da imagem (chamados de ``\textit{patches}'') centrados nas minúcias. Na fase de indexação, a rede recebe a imagem completa da digital, e utiliza  utiliza a técnica de~\textit{Global Average Pooling} (GAP) para agregar todas as informações locais extraídas pela FCN em uma única representação global.
+\citeonline{fcnp} desenvolveram de uma FCN que extraí uma representação de tamanho fixo com base em atributos globais e locais. O treinamento é feito utilizando porções da imagem (chamados de ``\textit{patches}'') centrados nas minúcias. Na fase de indexação, a rede recebe a imagem completa da digital, e utiliza~\textit{Global Average Pooling} (GAP) para agregar todas as informações locais extraídas pela FCN em uma única representação global.
 
-Das técnicas que utilizam redes neurais profundas para extração de características há duas formas de representação que se destacaram: o mapa de minúcias, que é uma representação de tamanho variável que armazena a posição de cada minúcia e sua orientação, e uma representação de tamanho fixo, que são os pesos das camadas totalmente conectadas das CNN imediatamente antes do cálculo das probabilidades de cada uma das classes (normalmente de qual dedo a digital foi coletada). Conforme explica~\citeonline{deep_print}, a vantagem das representações de tamanho fixo são a necessidade de menos poder computacional para verificação, que pode ser feita por um simples calculo de distância e comparação com um limiar de corte, e de espaço para armazenamento.
+Dentre técnicas que utilizam redes neurais profundas para extração de características há duas formas de representação que se destacaram: o mapa de minúcias, que é uma representação de tamanho variável que armazena a posição de cada minúcia e sua orientação, e uma representação de tamanho fixo, que são os pesos das camadas totalmente conectadas das CNN imediatamente antes do cálculo das probabilidades de cada uma das classes (normalmente de qual dedo a digital foi coletada). Conforme explica~\citeonline{deep_print}, a vantagem das representações de tamanho fixo são a necessidade de menos poder computacional para verificação, que pode ser feita por um simples cálculo de distância e comparação com um limiar de corte, e de espaço para armazenamento.
 
-Outro aspecto que esteve presente nos experimentos foi a utilização de informações de domínio, que são as características intrínsecas das digitais~\cite{handbook_of_fp_recognition}. Quando essas informações são incluídas no treinamento dos modelos ou aprendida em conjunto com as representações o seu desempenho tende a ser superior do que utilizar atributos mais abstratos, como apenas a textura das digitais.
+Outro aspecto que esteve presente nos experimentos foi a utilização de informações de domínio, que são as características intrínsecas das digitais~\cite{handbook_of_fp_recognition}. Quando essas informações são incluídas no treinamento dos modelos ou aprendidas em conjunto com as representações o seu desempenho tende a ser superior do que utilizar atributos mais abstratos, como apenas a textura das digitais.
 
 Nos experimentos desenvolvidos nos artigos foram utilizados conjuntos de dados públicos e privados, com diferentes características. Por exemplo,~\citeonline{highres_fingerprint_matching} utilizou impressões digitais parciais de alta resolução, o que torna viável a inclusão de informações sobre os atributos de Nível 3 na rede neural. Já em~\cite{fcn} foram utilizadas impressões digitais latentes, que são coletadas em cenas de crimes quando pessoas tocam em objetos~\cite{handbook_of_fp_recognition}
 
