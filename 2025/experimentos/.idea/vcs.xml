@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/MSU-LatentAFIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/fingernet-updated" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/fixed-length-fingerprint-extractors" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/minutiaenet-updated" vcs="Git" />
+  </component>
+</project>
