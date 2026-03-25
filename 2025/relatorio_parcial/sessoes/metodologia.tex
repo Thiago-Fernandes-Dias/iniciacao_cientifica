@@ -96,7 +96,7 @@ Com o intuito de eliminar a necessidade de coletar impressões digitais ou de ut
 
 \subsubsection{Testes com o modelo pré-treinado}\label{subsubsec:deepprint-testing}
 
-Até o momento foram realizados testes utilizando a parte B de todos os conjuntos de dados do FVC2004. Eles contém, cada um, 10 dedos com 8 impressões digitais cada. Para aumentar a acurácia do modelo as imagens passaram por um refinamento utilizando filtros de Gabor~\cite{gabor-wavelet-transform} e redimensionamento para o tamanho adequado para a CNN.
+Até o momento foram realizados testes utilizando os conjuntos de dados do FVC2004. São 4 conjuntos de imagens divididos em parte A com 800 imagens (100 dedos com 8 impressões cada) e parte B com 80 imagens (10 dedos com 8 impressões cada).. Para aumentar a acurácia do modelo as imagens passaram por um refinamento utilizando filtros de Gabor~\cite{gabor-wavelet-transform} e redimensionamento para o tamanho adequado para a CNN.
 
 Em seguida, as imagens são processadas pelo modelo pré-treinado, que extrai os vetores de características de ambas as sub-redes, e a similaridade por cossenos é utilizada para calcular uma pontuação. A imagem de cada dedo é comparada com as demais imagens do mesmo dedo e com todas as imagens outros dedos.
 

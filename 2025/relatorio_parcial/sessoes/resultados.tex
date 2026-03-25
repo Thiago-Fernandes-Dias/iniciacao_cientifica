@@ -1,3 +1,45 @@
 \section{Resultados e discussão dos resultados}\label{sec:resultados}
 
-Ao realizar os testes do modelo pré-treinado do~\textit{DeepPrint} nos conjuntos de dados do FVC2004 a EER foi bem baixa, o mostra que ele teve um desempenho razoável em verificar impressões digitais desconhecidas.
+Na Tabela~\ref{tab:err} é mostrada a ERR obtida com o FVC2004.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|r|r|}
+\cline{2-3}
+\multicolumn{1}{c|}{} & Parte A & Parte B \\ \hline
+DB 1 & 0.179       & 0.156       \\ \hline
+DB 2 & 0.056       & 0.111       \\ \hline
+DB 3 & 0.043       & 0.020       \\ \hline
+DB 4 & 0.126       & 0.059       \\ \hline
+\end{tabular}
+\end{table}
+
+Na Figura~\ref{fig:fmr/fnmr_x_threshold} são exibidas as curvas que relacionam a FMR e FNMR com os valores de limiar de corte escolhidos. Quando o valor de limiar de corte em que as curvas se cruzam é selecionado as taxas se igualam.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{DB1 A.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB2 A.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB3 A.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB4 A.png}
+    \caption*{Parte A}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{DB1 B.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB2 B.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB3 B.png}
+    \par\smallskip
+    \includegraphics[width=\linewidth]{DB4 B.png}
+    \caption*{Parte B}
+\end{minipage}
+\caption{FMR e FNMR - FVC2004}\label{fig:fmr/fnmr_x_threshold}
+\end{figure}
