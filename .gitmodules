@@ -10,3 +10,6 @@
 [submodule "2025/experimentos/fixed-length-fingerprint-extractors"]
 	path = 2025/experimentos/fixed-length-fingerprint-extractors
 	url = git@github.com:Thiago-Fernandes-Dias/fixed-length-fingerprint-extractors.git
+[submodule "2025/experimentos/MinutiaCylinderCode"]
+    path = 2025/experimentos/MinutiaCylinderCode
+    url = git@github.com:Thiago-Fernandes-Dias/MinutiaCylinderCode.git
