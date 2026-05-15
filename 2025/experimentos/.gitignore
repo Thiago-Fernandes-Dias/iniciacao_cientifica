@@ -1,6 +1,0 @@
-*.tif
-.venv/
-*.png
-datasets/
-*.pyt
-*.json
