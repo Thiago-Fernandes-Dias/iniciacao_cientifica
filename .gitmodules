@@ -1,15 +1,28 @@
 [submodule "2025/experimentos/fingernet-updated"]
 	path = 2025/experimentos/fingernet-updated
 	url = git@github.com:Thiago-Fernandes-Dias/fingernet-updated
+    branch = master
 [submodule "2025/experimentos/minutiaenet-updated"]
 	path = 2025/experimentos/minutiaenet-updated
 	url = git@github.com:Thiago-Fernandes-Dias/minutiaenet-updated.git
+    branch = master
 [submodule "2025/experimentos/MSU-LatentAFIS"]
 	path = 2025/experimentos/MSU-LatentAFIS
 	url = git@github.com:Thiago-Fernandes-Dias/MSU-LatentAFIS
+    branch = master
 [submodule "2025/experimentos/fixed-length-fingerprint-extractors"]
 	path = 2025/experimentos/fixed-length-fingerprint-extractors
 	url = git@github.com:Thiago-Fernandes-Dias/fixed-length-fingerprint-extractors.git
+    branch = main
 [submodule "2025/experimentos/MinutiaCylinderCode"]
     path = 2025/experimentos/MinutiaCylinderCode
     url = git@github.com:Thiago-Fernandes-Dias/MinutiaCylinderCode.git
+    branch = master
+[submodule "2025/experimentos/FLARE_ENH"]
+    path = 2025/experimentos/FLARE_ENH
+    url = git@github.com:Thiago-Fernandes-Dias/FLARE_ENH.git
+    branch = master
+[submodule "2025/experimentos/FLARE"]
+    path = 2025/experimentos/FLARE
+    url = git@github.com:Thiago-Fernandes-Dias/FLARE.git
+    branch = master
