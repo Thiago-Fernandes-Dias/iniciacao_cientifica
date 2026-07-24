@@ -7,57 +7,409 @@ SOURCES: list[tuple[Path, list[tuple[str, Path]]]] = [
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db1_a/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB1_A/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB1_A/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB1_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB1_A/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db1_b/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB1_B/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB1_B/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB1_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB1_B/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db2_a/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB2_A/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB2_A/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB2_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB2_A/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db2_b/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB2_B/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB2_B/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB2_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB2_B/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db3_a/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB3_A/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB3_A/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB3_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB3_A/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db3_b/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB3_B/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB3_B/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB3_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB3_B/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db4_a/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB4_A/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB4_A/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB4_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB4_A/image/query"
+                ),
+            ),
         ],
     ),
     (
         Path("/mnt/d/Datasets/FVC/FVC2000/Dbs/Db4_b/bmp"),
         [
-            (r"_[1-4]", Path("/mnt/d/Datasets/FVC_2000_DB4_B/image/gallery")),
-            (r"_[5-8]", Path("/mnt/d/Datasets/FVC_2000_DB4_B/image/query")),
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB4_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2000_DB4_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db1_a/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB1_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB1_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db1_b/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB1_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB1_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db2_a/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB2_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB2_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db2_b/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB2_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB2_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db3_a/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB3_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB3_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db3_b/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB3_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB3_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db4_a/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB4_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB4_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2002/Dbs/Db4_b/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB4_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2002_DB4_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB1_A/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB1_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB1_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB1_B/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB1_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB1_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB2_A/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB2_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB2_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB2_B/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB2_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB2_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB3_A/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB3_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB3_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB3_B/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB3_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB3_B/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB4_A/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB4_A/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB4_A/image/query"
+                ),
+            ),
+        ],
+    ),
+    (
+        Path("/mnt/d/Datasets/FVC/FVC2004/Dbs/DB4_B/bmp"),
+        [
+            (
+                r"_[1-4]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB4_B/image/gallery"
+                ),
+            ),
+            (
+                r"_[5-8]",
+                Path(
+                    "/mnt/d/Datasets/FVC_FLARE_GALLERY_QUERY_SPLIT/FVC_2004_DB4_B/image/query"
+                ),
+            ),
         ],
     ),
 ]

@@ -1,23 +1,72 @@
-import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 
+FOLDERS = [
+    ("../results/DeepPrint/fvc_2000_db1_a.csv", "../results/DeepPrint/fvc_2000_db1_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db1_b.csv", "../results/DeepPrint/fvc_2000_db1_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db2_a.csv", "../results/DeepPrint/fvc_2000_db2_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db2_b.csv", "../results/DeepPrint/fvc_2000_db2_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db3_a.csv", "../results/DeepPrint/fvc_2000_db3_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db3_b.csv", "../results/DeepPrint/fvc_2000_db3_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db4_a.csv", "../results/DeepPrint/fvc_2000_db4_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2000_db4_b.csv", "../results/DeepPrint/fvc_2000_db4_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db1_a.csv", "../results/DeepPrint/fvc_2002_db1_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db1_b.csv", "../results/DeepPrint/fvc_2002_db1_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db2_a.csv", "../results/DeepPrint/fvc_2002_db2_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db2_b.csv", "../results/DeepPrint/fvc_2002_db2_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db3_a.csv", "../results/DeepPrint/fvc_2002_db3_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db3_b.csv", "../results/DeepPrint/fvc_2002_db3_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db4_a.csv", "../results/DeepPrint/fvc_2002_db4_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2002_db4_b.csv", "../results/DeepPrint/fvc_2002_db4_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db1_a.csv", "../results/DeepPrint/fvc_2004_db1_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db1_b.csv", "../results/DeepPrint/fvc_2004_db1_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db2_a.csv", "../results/DeepPrint/fvc_2004_db2_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db2_b.csv", "../results/DeepPrint/fvc_2004_db2_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db3_a.csv", "../results/DeepPrint/fvc_2004_db3_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db3_b.csv", "../results/DeepPrint/fvc_2004_db3_b_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db4_a.csv", "../results/DeepPrint/fvc_2004_db4_a_metrics.csv"),
+    ("../results/DeepPrint/fvc_2004_db4_b.csv", "../results/DeepPrint/fvc_2004_db4_b_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB1_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB1_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB1_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB1_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB2_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB2_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB2_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB2_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB3_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB3_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB3_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB3_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB4_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB4_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2000_DB4_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2000_DB4_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB1_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB1_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB1_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB1_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB2_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB2_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB2_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB2_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB3_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB3_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB3_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB3_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB4_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB4_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2002_DB4_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2002_DB4_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB1_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB1_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB1_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB1_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB2_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB2_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB2_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB2_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB3_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB3_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB3_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB3_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB4_A/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB4_A/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+    ("../results/FLARE/FVC_2004_DB4_B/FDD_feat_VotingPose/score_FDD.csv", "../results/FLARE/FVC_2004_DB4_B/FDD_feat_VotingPose/score_FDD_metrics.csv"),
+]
+
+
 def map_range(value, src_min, src_max, dst_min, dst_max):
     return (value - src_min) / (src_max - src_min) * (dst_max - dst_min) + dst_min
 
 
-def main():
-    csv = Path(sys.argv[1]).resolve()
+def calculate_metrics(input_csv, output_csv):
+    csv = Path(input_csv).resolve()
     if not csv.is_file() or not csv.name.endswith(".csv"):
-        sys.exit(1)
+        print(f"Skipping invalid input csv: {input_csv}")
+        return
 
     comps = pd.read_csv(csv)
-
-    score_min, score_max = comps["score"].min(), comps["score"].max()
-    comps["score"] = comps["score"].apply(lambda x: map_range(x, score_min, score_max, 0.0, 1.0))
 
     thresholds = comps["score"].unique()
     min_t, max_t = thresholds.max(), thresholds.min()
@@ -45,7 +94,13 @@ def main():
         results_series[i] = result_serie
 
     result = pd.DataFrame(results_series)
-    result.to_csv(Path(sys.argv[2]))
+    result.to_csv(Path(output_csv), index=False)
+
+
+def main():
+    for input_csv, output_csv in FOLDERS:
+        print(f"Processing: {input_csv} (saving results to: {output_csv})")
+        calculate_metrics(input_csv, output_csv)
 
 
 if __name__ == "__main__":
