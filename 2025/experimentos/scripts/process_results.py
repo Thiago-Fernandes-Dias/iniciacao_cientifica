@@ -64,6 +64,8 @@ DEFAULT_FILES = [
 
 def derive_metrics_csv_path(input_csv: str | Path) -> Path:
     csv_path = Path(input_csv)
+    if csv_path.name.endswith("_metrics.csv"):
+        return csv_path
     if csv_path.name.endswith(".csv"):
         return csv_path.with_name(csv_path.name[:-4] + "_metrics.csv")
     return csv_path.with_name(csv_path.name + "_metrics.csv")
@@ -179,18 +181,39 @@ def find_min_diff(csv_path: str | Path) -> dict | None:
         print(f"No data found in {csv_path}")
         return None
 
-    frr = float(best_row["frr"])
-    far = float(best_row["far"])
-    avg = (frr + far) / 2.0
-    threshold = best_row["threshold"]
+    frr = round(float(best_row["frr"]), 3)
+    far = round(float(best_row["far"]), 3)
+    err = round((float(best_row["frr"]) + float(best_row["far"])) / 2.0, 3)
+    threshold = round(float(best_row["threshold"]), 3)
+
+    path_parts = [p.lower() for p in path.parts]
+    if "deepprint" in path_parts:
+        stem = path.name[:-12] if path.name.endswith("_metrics.csv") else (path.name[:-4] if path.name.endswith(".csv") else path.name)
+        filename = f"deep_print_{stem}"
+    elif "flare" in path_parts:
+        idx = path_parts.index("flare")
+        db_name = path_parts[idx + 1]
+        filename = f"flare_{db_name}"
+    else:
+        filename = path.name
+        if filename.endswith("_metrics.csv"):
+            filename = filename[:-12]
+        elif filename.endswith(".csv"):
+            filename = filename[:-4]
 
     print(f"File: {path.name}")
     print(f"Row with minimal |frr - far| (diff = {best_diff:.10f}):")
-    print(f"  frr = {frr}")
     print(f"  far = {far}")
-    print(f"  Average = {avg}")
-    print(f"  Threshold = {threshold}")
-    return best_row
+    print(f"  frr = {frr}")
+    print(f"  err = {err}")
+    print(f"  threshold = {threshold}")
+    return {
+        "file": filename,
+        "far": far,
+        "frr": frr,
+        "err": err,
+        "threshold": threshold,
+    }
 
 
 def run_metrics_command(files: list[str]) -> None:
@@ -205,11 +228,21 @@ def run_histogram_command(files: list[str], bin_width: float) -> None:
         plot_histogram(input_csv, bin_width)
 
 
-def run_min_diff_command(files: list[str]) -> None:
+def run_min_diff_command(files: list[str], output_csv: str | Path = "../results/min_diff.csv") -> None:
+    results = []
     for input_csv in files:
         metrics_csv = derive_metrics_csv_path(input_csv)
         print(f"Finding min diff for: {metrics_csv}")
-        find_min_diff(metrics_csv)
+        row_dict = find_min_diff(metrics_csv)
+        if row_dict is not None:
+            results.append(row_dict)
+
+    if results:
+        out_path = (SCRIPT_DIR / output_csv).resolve()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        results_dataframe = pd.DataFrame(results, columns=["file", "far", "frr", "err", "threshold"])
+        results_dataframe.to_csv(out_path, index=False)
+        print(f"Min diff results saved to: {out_path}")
 
 
 def main() -> None:
@@ -225,10 +258,12 @@ def main() -> None:
 
     min_diff_parser = subparsers.add_parser("min-diff", help="Find row with minimal |frr - far| from metrics CSV files.")
     min_diff_parser.add_argument("--files", nargs="*", default=DEFAULT_FILES, help="Score CSV files (or metrics CSV files) to process.")
+    min_diff_parser.add_argument("--output", default="../results/min_diff.csv", help="Output CSV file path for min diff results.")
 
     all_parser = subparsers.add_parser("all", help="Run metrics, histogram, and min-diff analysis on target files.")
     all_parser.add_argument("--files", nargs="*", default=DEFAULT_FILES, help="Score CSV files to process.")
     all_parser.add_argument("--bin-width", type=float, default=BIN_WIDTH, help="Bin width for histogram.")
+    all_parser.add_argument("--output", default="../results/min_diff.csv", help="Output CSV file path for min diff results.")
 
     args = parser.parse_args()
 
@@ -237,14 +272,15 @@ def main() -> None:
     elif args.command == "histogram":
         run_histogram_command(args.files, args.bin_width)
     elif args.command == "min-diff":
-        run_min_diff_command(args.files)
+        run_min_diff_command(args.files, args.output)
     elif args.command == "all":
         run_metrics_command(args.files)
         run_histogram_command(args.files, args.bin_width)
-        run_min_diff_command(args.files)
+        run_min_diff_command(args.files, args.output)
     else:
         parser.print_help()
 
 
 if __name__ == "__main__":
     main()
+
